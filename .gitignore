@@ -23,4 +23,8 @@
 hs_err_pid*
 replay_pid*
 
+*.log
+.env
+.env.*
+!.env.example
 .DS_Store
