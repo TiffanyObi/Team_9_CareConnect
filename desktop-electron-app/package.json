@@ -1,0 +1,13 @@
+{
+  "name": "careconnect-electron-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CareConnect Electron starter application for Team 9",
+  "main": "main.js",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "postinstall": "install-electron",
+    "start": "electron ."
+  },
+  "devDependencies": { "electron": "43.4.0" }
+}
