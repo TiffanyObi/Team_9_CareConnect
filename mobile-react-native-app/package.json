@@ -1,0 +1,19 @@
+{
+  "name": "careconnect-react-native-app",
+  "private": true,
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo start --ios",
+    "android": "expo start --android",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "57.0.14",
+    "react": "19.2.3",
+    "react-native": "0.86.2"
+  },
+  "devDependencies": {}
+}
