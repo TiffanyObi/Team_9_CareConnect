@@ -1,4 +1,4 @@
-# Team_9_CareConnect Safeview
+# Team 9 - CareConnect Safeview
 
 Team 9 UI Design Implementation for a CareConnect Recipient with Photosensitive Epilepsy.
 
@@ -88,6 +88,8 @@ npm start
 From the Expo terminal, press `i` for the iOS Simulator or `a` for an Android emulator. You can also run `npm run ios` or `npm run android` directly.
 
 ### Flutter
+
+Note: iOS simulator and/or Android emulator should be running prior to running 'flutter run'
 
 ```bash
 cd mobile-flutter-app
