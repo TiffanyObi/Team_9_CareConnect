@@ -22,6 +22,7 @@ Team 9's assigned focus is **photosensitive epilepsy**. The starter screens ther
 | `desktop-electron-app/` | Electron | Desktop CareConnect starter |
 | `mobile-react-native-app/` | React Native + Expo | Cross-platform mobile starter |
 | `mobile-flutter-app/` | Flutter | Flutter mobile starter for Android and iOS |
+| `design-samples/careconnect-calm-flutter/` | Flutter | Five runnable CareConnect interface samples focused on photosensitive-epilepsy safety |
 | `docs/` | Markdown | Developer setup and troubleshooting documentation |
 
 These are project folders inside one repository, not separate Git submodules or sub-repositories.
@@ -95,6 +96,18 @@ Note: iOS simulator and/or Android emulator should be running prior to running '
 cd mobile-flutter-app
 flutter pub get
 flutter run
+```
+
+### CareConnect Calm design samples
+
+The design samples are kept separate from the shared Flutter starter so teammates can review and modify them without replacing the existing application:
+
+```bash
+cd design-samples/careconnect-calm-flutter
+flutter pub get
+flutter analyze
+flutter test
+flutter run -d chrome
 ```
 
 Run the automated Flutter checks with:
