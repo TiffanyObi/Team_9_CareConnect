@@ -1,6 +1,8 @@
-# CareConnect Flutter Starter
+# CareConnect Safeview Flutter
 
-This folder contains Team 9's Flutter environment-verification application. It displays the shared CareConnect Hello World screen without animation, autoplay, or flashing effects.
+This folder contains Team 9's Flutter implementation of the CareConnect Safeview mobile design system. The current foundation includes final light and dark themes, reusable accessible components, a responsive navigation shell, the Today dashboard, and persistent returning-user accessibility preferences.
+
+All visual feedback is static by default. The implementation intentionally avoids flashing, pulsing, autoplay, and animation-only status cues.
 
 From this folder:
 
