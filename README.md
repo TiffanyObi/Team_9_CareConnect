@@ -116,3 +116,15 @@ flutter test
 - No flashing or animated content is included, but future features still require accessibility review and testing.
 
 See [Developer Setup and Troubleshooting](docs/DEVELOPER_SETUP.md) for a clean-checkout checklist and common fixes.
+
+## Week 4 Flutter workflow
+
+Week 4 development continues in the existing `mobile-flutter-app/`; do not create or add another Flutter application. The reviewable requirements, implementation phases, risk controls, push boundary, and verification checklist are under [`docs/week4/`](docs/week4/README.md).
+
+From `mobile-flutter-app/`, run the repeatable local gate with:
+
+```bash
+./tool/verify_week4.sh
+```
+
+The current Week 4 documentation is planning and verification scaffolding. It does not claim that the required 7-10 functional screens, final screenshots, or course submission are complete.
