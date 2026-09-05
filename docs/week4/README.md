@@ -11,6 +11,8 @@ Week 4 continues Team 9's existing CareConnect Safeview Flutter application in `
 5. Run `../../mobile-flutter-app/tool/verify_week4.sh`.
 6. Complete the manual checks in `VERIFICATION.md` and review the diff before proposing a commit.
 
+Current local evidence is summarized in `FINAL_LOCAL_EVIDENCE_2026-09-04.md`; current screenshots are indexed in `SCREENSHOT_INDEX.md`.
+
 ## Boundaries
 
 - Preserve the current Flutter foundation and its accessibility settings; do not run `flutter create`.

@@ -1,6 +1,16 @@
 # Week 4 Project Context
 
-## Verified repository baseline
+## Current implementation - September 4, 2026
+
+- The canonical `mobile-flutter-app/` now contains eight functional screens: Today, Accessibility Settings, Medications, Medication detail, Care team, Care member detail, Messages, and Message detail.
+- The three former placeholders are replaced by list/detail workflows backed by fictional immutable models and deterministic repositories.
+- Each list passes its selected model through `Navigator` to the matching detail screen; Back navigation returns to the originating list.
+- Shared accessibility preferences continue to use `AccessibilityController` (`ChangeNotifier`) with persistent storage. Remaining `setState` usage is local and transient.
+- Unit, widget, accessibility-guideline, four-surface 100%/200% reflow, and screenshot-regression tests are present.
+- Current screenshots and their review record are indexed in `SCREENSHOT_INDEX.md`.
+- TalkBack/VoiceOver, external-keyboard, and physical-device checks remain user/device verification items and are not inferred from automated tests.
+
+## Historical verified baseline before Week 4 implementation
 
 - Canonical repository: `TiffanyObi/Team_9_CareConnect`.
 - Canonical Flutter application: `mobile-flutter-app/` on `main`.
@@ -12,7 +22,7 @@
 - Existing widget tests cover Today rendering, persisted accessibility settings, and 200% text scaling.
 - Existing photosensitive-epilepsy safeguards include reduced-motion settings, static alerts, text/semantic feedback, and avoidance of flashing/autoplay.
 
-## Week 4 gaps
+## Historical Week 4 gaps at baseline
 
 - Replace three placeholder destinations with meaningful workflows.
 - Reach 7-10 functional screens; target eight rather than counting placeholders.

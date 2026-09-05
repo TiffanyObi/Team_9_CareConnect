@@ -1,5 +1,8 @@
 import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/features/dashboard/today_screen.dart';
+import 'package:careconnect_flutter/features/care/care_screen.dart';
+import 'package:careconnect_flutter/features/medications/medications_screen.dart';
+import 'package:careconnect_flutter/features/messages/messages_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppShell extends StatefulWidget {
@@ -22,9 +25,9 @@ class _AppShellState extends State<AppShell> {
           index: _selectedIndex,
           children: [
             TodayScreen(controller: widget.controller),
-            const _PlaceholderScreen(title: 'Medications'),
-            const _PlaceholderScreen(title: 'Care'),
-            const _PlaceholderScreen(title: 'Messages'),
+            const MedicationsScreen(),
+            const CareScreen(),
+            const MessagesScreen(),
           ],
         ),
       ),
@@ -54,17 +57,4 @@ class _AppShellState extends State<AppShell> {
       ),
     );
   }
-}
-
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen({required this.title});
-  final String title;
-
-  @override
-  Widget build(BuildContext context) => Center(
-    child: Semantics(
-      header: true,
-      child: Text(title, style: Theme.of(context).textTheme.displayMedium),
-    ),
-  );
 }

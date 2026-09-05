@@ -106,7 +106,7 @@ flutter test
 
 ## Current Limitations and Known Issues
 
-- These are environment-verification starters, not completed CareConnect product features.
+- The web, desktop, and React Native folders remain environment-verification starters; the Flutter app contains the current Week 4 functional workflow.
 - Each application is installed and run independently; there is no shared API or backend yet.
 - iOS builds require macOS and Xcode.
 - Android builds require a configured Android SDK and accepted SDK licenses.
@@ -127,4 +127,4 @@ From `mobile-flutter-app/`, run the repeatable local gate with:
 ./tool/verify_week4.sh
 ```
 
-The current Week 4 documentation is planning and verification scaffolding. It does not claim that the required 7-10 functional screens, final screenshots, or course submission are complete.
+The current Week 4 implementation reaches eight functional Flutter screens. On September 4, 2026, the local gate passed with no analyzer issues, 31 passing tests, and 367/407 lines covered (90.17%). Eight reviewed screenshots are indexed in [`docs/week4/SCREENSHOT_INDEX.md`](docs/week4/SCREENSHOT_INDEX.md). TalkBack/VoiceOver, external-keyboard, physical-device, remote PR, and course-submission states remain separate review items.

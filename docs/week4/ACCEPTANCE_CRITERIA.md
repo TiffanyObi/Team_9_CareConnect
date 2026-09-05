@@ -1,43 +1,46 @@
 # Week 4 Acceptance Criteria
 
+Checked items have current local evidence. Unchecked items require hardware, assistive technology, or an external system and are not represented as complete.
+
 ## Continuity and structure
 
-- [ ] The existing `mobile-flutter-app/` is extended; no replacement Flutter application is added.
-- [ ] UI, models, repositories/services, shared state/controllers, reusable widgets, and routes remain clearly separated.
-- [ ] `setState` is limited to local transient UI state; cross-screen data uses the documented shared-state approach.
+- [x] The existing `mobile-flutter-app/` is extended; no replacement Flutter application is added.
+- [x] UI, models, repositories, shared state/controllers, reusable widgets, and routes are separated.
+- [x] `setState` is limited to transient shell selection; cross-screen preferences use `AccessibilityController`.
 
 ## Screens and navigation
 
-- [ ] Seven to ten meaningful functional screens are reachable; the planned target is eight.
-- [ ] The Medications, Care, and Messages placeholders are replaced or excluded from the count.
-- [ ] Selecting an item opens its matching detail screen with the selected model's information.
-- [ ] Back navigation returns to the originating screen while preserving relevant state.
-- [ ] Bottom navigation opens the correct destinations and remains operable.
+- [x] Eight meaningful functional screens are reachable.
+- [x] Medications, Care, and Messages contain list and detail workflows rather than placeholders.
+- [x] Selecting an item opens the matching immutable model data.
+- [x] Back navigation returns to the originating screen while shared state remains available.
+- [x] Bottom navigation opens the correct destinations and remains operable.
 
 ## Accessibility and seizure safety
 
-- [ ] Interactive and informative elements expose meaningful labels, roles, values/status, and logical reading order.
-- [ ] Primary touch targets are approximately 48 x 48 logical pixels or larger.
-- [ ] Measured text and essential UI contrast meet the team's documented WCAG thresholds.
-- [ ] Core flows remain usable at 200% text scaling on representative phone/tablet portrait and landscape layouts without clipping, overlap, lost content, or unreachable controls.
-- [ ] TalkBack or VoiceOver and external-keyboard results are recorded; code inspection alone cannot satisfy this criterion.
-- [ ] No intentional flashing, strobing, unsafe autoplay, looping decorative motion, or motion-only feedback is introduced.
-- [ ] Reduced-motion and static-alert preferences remain effective throughout new screens.
+- [x] Automated semantics checks and the live browser accessibility tree expose meaningful labels, roles, selected states, and reading order.
+- [x] Primary touch targets pass Flutter's Android tap-target guideline.
+- [x] Text and essential controls pass Flutter's named automated text-contrast guideline.
+- [x] All eight screens pass phone/tablet portrait/landscape reflow tests at 100% and 200% text scale.
+- [ ] TalkBack or VoiceOver results. **User/device verification pending.**
+- [ ] External-keyboard focus-order results. **User/device verification pending.**
+- [x] No intentional flashing, strobing, unsafe autoplay, looping decorative motion, or motion-only feedback is introduced.
+- [x] Reduced-motion and static-alert preferences remain effective and are controller-tested.
 
 ## Tests and coverage
 
-- [ ] Unit tests cover meaningful model, validation, controller/state, and repository behavior, including invalid or empty cases.
-- [ ] Widget tests cover rendering, interaction, navigation, data passing, state retention, and at least one disabled/empty/recovery behavior.
-- [ ] Automated accessibility guideline tests pass.
-- [ ] `flutter analyze --no-pub` succeeds.
-- [ ] `flutter test --coverage --no-pub` succeeds with all tests passing.
-- [ ] `coverage/lcov.info` demonstrates at least 60% aggregate line coverage.
-- [ ] Tests use behavior-based assertions and are not written only to increase coverage.
+- [x] Unit tests cover models, validation, repositories, and shared accessibility state, including invalid values.
+- [x] Widget tests cover rendering, interaction, navigation, selected-data passing, state retention, and empty-state recovery.
+- [x] Automated accessibility guideline tests pass.
+- [x] `flutter analyze --no-pub` succeeds with no issues.
+- [x] `flutter test --coverage --no-pub` succeeds: 31 passed, 0 failed.
+- [x] `coverage/lcov.info` records 367/407 lines, or 90.17%, above the 60% minimum.
+- [x] Tests use behavior-based assertions and exercise visible workflows.
 
 ## Documentation and evidence
 
-- [ ] The README accurately explains the app, setup/run steps, major screens, state-management approach, navigation, and important configuration.
-- [ ] Current screenshots show major screens and key navigation/interactions using fictional data.
-- [ ] Test and coverage evidence records the command, date, test count, lines hit/found, percentage, and failures.
-- [ ] Manual accessibility evidence records device/target, OS, orientation, text scale, assistive technology, result, and limitations.
-- [ ] Local completion, branch/commit state, remote push, and course submission are reported separately.
+- [x] The Flutter README explains the app, commands, screens, state, navigation, and evidence locations.
+- [x] Eight current screenshots show every major screen using fictional data.
+- [x] Verification records the command, date, test count, lines hit/found, percentage, and failures.
+- [x] The verification record names the untested device, assistive-technology, and keyboard limitations.
+- [x] Local completion, branch/commit state, remote push, and course submission are reported separately.
