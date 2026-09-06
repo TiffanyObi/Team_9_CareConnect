@@ -13,6 +13,10 @@ Week 4 continues Team 9's existing CareConnect Safeview Flutter application in `
 
 Current local evidence is summarized in `FINAL_LOCAL_EVIDENCE_2026-09-04.md`; current screenshots are indexed in `SCREENSHOT_INDEX.md`.
 
+The current screen flow and recommended route improvements are documented in `NAVIGATION_PLAN.md`.
+
+The current repository-link and ZIP checklist is documented in `SUBMISSION_PACKAGE_2026-09-06.md`.
+
 ## Boundaries
 
 - Preserve the current Flutter foundation and its accessibility settings; do not run `flutter create`.

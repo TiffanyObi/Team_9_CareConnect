@@ -14,14 +14,14 @@ From `mobile-flutter-app/` run:
 ./tool/verify_week4.sh
 ```
 
-### Current local result - September 4, 2026
+### Current local result - September 6, 2026
 
 - `./tool/verify_week4.sh`: Pass
 - Flutter 3.47.0 and Dart 3.13.0; `flutter doctor`: Pass, no issues found
 - Formatting: Pass; 30 files checked, 0 changed
 - `flutter analyze --no-pub`: Pass; no issues found
 - `flutter test --coverage --no-pub`: Pass; 31 tests passed, 0 failed
-- Aggregate line coverage: 367/407 (90.17%); required minimum: 60%
+- Aggregate line coverage: 365/407 (89.68%); required minimum: 60%
 - `git diff --check`: reviewed separately before handoff
 - Local branch at verification: `feature/week4-workflow`; the working tree was intentionally uncommitted until review authorization
 

@@ -2,7 +2,7 @@
 
 Team 9 UI Design Implementation for a CareConnect Recipient with Photosensitive Epilepsy.
 
-This repository provides one shared starting point for the CareConnect recipient experience across web, desktop, and mobile platforms. The current applications are intentionally small "Hello, SWEN 661!" starters. Their purpose is to prove that another developer can clone the repository, install its dependencies, and launch each required technology before feature development begins.
+This repository provides one shared starting point for the CareConnect recipient experience across web, desktop, and mobile platforms. The Flutter folder contains the functional Week 4 mobile workflow. The web, desktop, and React Native folders remain small environment-verification starters.
 
 ## Team Members
 
@@ -127,4 +127,4 @@ From `mobile-flutter-app/`, run the repeatable local gate with:
 ./tool/verify_week4.sh
 ```
 
-The current Week 4 implementation reaches eight functional Flutter screens. On September 4, 2026, the local gate passed with no analyzer issues, 31 passing tests, and 367/407 lines covered (90.17%). Eight reviewed screenshots are indexed in [`docs/week4/SCREENSHOT_INDEX.md`](docs/week4/SCREENSHOT_INDEX.md). TalkBack/VoiceOver, external-keyboard, physical-device, remote PR, and course-submission states remain separate review items.
+The current Week 4 implementation reaches eight functional Flutter screens. On September 6, 2026, the local gate passed with no analyzer issues, 31 passing tests, and 365/407 lines covered (89.68%). Eight reviewed screenshots are indexed in [`docs/week4/SCREENSHOT_INDEX.md`](docs/week4/SCREENSHOT_INDEX.md). TalkBack/VoiceOver, external-keyboard, physical-device, remote PR, and course-submission states remain separate review items.

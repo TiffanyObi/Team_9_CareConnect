@@ -6,6 +6,8 @@
 - TalkBack/VoiceOver, external-keyboard, and physical-device checks remain user/device actions.
 - This local evidence snapshot was prepared before Git delivery. Current commit, push, and pull-request state must be verified from the repository; course submission remains separate.
 
+The later September 6 submission check supersedes the coverage total in this dated snapshot. See `SUBMISSION_PACKAGE_2026-09-06.md` for the current figure.
+
 ## Implementation evidence
 
 - Eight functional screens: Today, Accessibility Settings, Medications, Medication details, Care team, Care details, Messages, and Message details.

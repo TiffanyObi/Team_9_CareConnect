@@ -34,7 +34,7 @@ Checked items have current local evidence. Unchecked items require hardware, ass
 - [x] Automated accessibility guideline tests pass.
 - [x] `flutter analyze --no-pub` succeeds with no issues.
 - [x] `flutter test --coverage --no-pub` succeeds: 31 passed, 0 failed.
-- [x] `coverage/lcov.info` records 367/407 lines, or 90.17%, above the 60% minimum.
+- [x] The September 6 `coverage/lcov.info` records 365/407 lines, or 89.68%, above the 60% minimum.
 - [x] Tests use behavior-based assertions and exercise visible workflows.
 
 ## Documentation and evidence
