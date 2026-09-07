@@ -6,9 +6,10 @@ import 'package:careconnect_flutter/core/accessibility/accessibility_settings_st
 import 'package:flutter/material.dart';
 
 class CareConnectApp extends StatefulWidget {
-  const CareConnectApp({super.key, this.store});
+  const CareConnectApp({super.key, this.store, this.fontFamily});
 
   final AccessibilitySettingsStore? store;
+  final String? fontFamily;
 
   @override
   State<CareConnectApp> createState() => _CareConnectAppState();
@@ -33,6 +34,15 @@ class _CareConnectAppState extends State<CareConnectApp> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData applyVerificationFont(ThemeData theme) {
+      final fontFamily = widget.fontFamily;
+      return fontFamily == null
+          ? theme
+          : theme.copyWith(
+              textTheme: theme.textTheme.apply(fontFamily: fontFamily),
+            );
+    }
+
     return ListenableBuilder(
       listenable: _controller,
       builder: (context, _) {
@@ -40,8 +50,8 @@ class _CareConnectAppState extends State<CareConnectApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'CareConnect Safeview',
-          theme: AppTheme.light(),
-          darkTheme: AppTheme.dark(),
+          theme: applyVerificationFont(AppTheme.light()),
+          darkTheme: applyVerificationFont(AppTheme.dark()),
           themeMode: switch (settings.themePreference) {
             AppThemePreference.light => ThemeMode.light,
             AppThemePreference.dark => ThemeMode.dark,

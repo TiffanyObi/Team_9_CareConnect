@@ -2,7 +2,7 @@
 
 Team 9 UI Design Implementation for a CareConnect Recipient with Photosensitive Epilepsy.
 
-This repository provides one shared starting point for the CareConnect recipient experience across web, desktop, and mobile platforms. The current applications are intentionally small "Hello, SWEN 661!" starters. Their purpose is to prove that another developer can clone the repository, install its dependencies, and launch each required technology before feature development begins.
+This repository provides one shared starting point for the CareConnect recipient experience across web, desktop, and mobile platforms. The Flutter folder contains the functional Week 4 mobile workflow. The web, desktop, and React Native folders remain small environment-verification starters.
 
 ## Team Members
 
@@ -106,7 +106,7 @@ flutter test
 
 ## Current Limitations and Known Issues
 
-- These are environment-verification starters, not completed CareConnect product features.
+- The web, desktop, and React Native folders remain environment-verification starters; the Flutter app contains the current Week 4 functional workflow.
 - Each application is installed and run independently; there is no shared API or backend yet.
 - iOS builds require macOS and Xcode.
 - Android builds require a configured Android SDK and accepted SDK licenses.
@@ -116,3 +116,15 @@ flutter test
 - No flashing or animated content is included, but future features still require accessibility review and testing.
 
 See [Developer Setup and Troubleshooting](docs/DEVELOPER_SETUP.md) for a clean-checkout checklist and common fixes.
+
+## Week 4 Flutter workflow
+
+Week 4 development continues in the existing `mobile-flutter-app/`; do not create or add another Flutter application. The reviewable requirements, implementation phases, risk controls, push boundary, and verification checklist are under [`docs/week4/`](docs/week4/README.md).
+
+From `mobile-flutter-app/`, run the repeatable local gate with:
+
+```bash
+./tool/verify_week4.sh
+```
+
+The current Week 4 implementation reaches eight functional Flutter screens. On September 6, 2026, the local gate passed with no analyzer issues, 31 passing tests, and 365/407 lines covered (89.68%). Eight reviewed screenshots are indexed in [`docs/week4/SCREENSHOT_INDEX.md`](docs/week4/SCREENSHOT_INDEX.md). TalkBack/VoiceOver, external-keyboard, physical-device, remote PR, and course-submission states remain separate review items.

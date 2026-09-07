@@ -20,12 +20,16 @@ class TodayScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'CareConnect',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
+                  Expanded(
+                    child: Text(
+                      'CareConnect',
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
                   ),
+                  const SizedBox(width: 8),
                   const SizedBox(
                     width: 48,
                     height: 48,

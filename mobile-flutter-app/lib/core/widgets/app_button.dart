@@ -19,9 +19,15 @@ class AppButton extends StatelessWidget {
     final child = icon == null
         ? Text(label)
         : Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(icon), const SizedBox(width: 8), Text(label)],
+            children: [
+              Icon(icon),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(label, textAlign: TextAlign.center, softWrap: true),
+              ),
+            ],
           );
     final button = secondary
         ? OutlinedButton(onPressed: onPressed, child: child)
