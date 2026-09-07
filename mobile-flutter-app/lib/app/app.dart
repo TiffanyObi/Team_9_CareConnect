@@ -3,13 +3,23 @@ import 'package:careconnect_flutter/app/theme/app_theme.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings_store.dart';
+import 'package:careconnect_flutter/features/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 
 class CareConnectApp extends StatefulWidget {
-  const CareConnectApp({super.key, this.store, this.fontFamily});
+  const CareConnectApp({
+    super.key,
+    this.store,
+    this.fontFamily,
+    this.startAuthenticated = true,
+  });
 
   final AccessibilitySettingsStore? store;
   final String? fontFamily;
+
+  /// Keeps feature tests focused on the signed-in workspace. The production
+  /// entry point opts into the sign-in screen.
+  final bool startAuthenticated;
 
   @override
   State<CareConnectApp> createState() => _CareConnectAppState();
@@ -17,6 +27,7 @@ class CareConnectApp extends StatefulWidget {
 
 class _CareConnectAppState extends State<CareConnectApp> {
   late final AccessibilityController _controller;
+  late bool _isAuthenticated;
 
   @override
   void initState() {
@@ -24,6 +35,7 @@ class _CareConnectAppState extends State<CareConnectApp> {
     _controller = AccessibilityController(
       store: widget.store ?? SharedPreferencesAccessibilitySettingsStore(),
     )..load();
+    _isAuthenticated = widget.startAuthenticated;
   }
 
   @override
@@ -72,7 +84,12 @@ class _CareConnectAppState extends State<CareConnectApp> {
               child: child!,
             );
           },
-          home: AppShell(controller: _controller),
+          home: _isAuthenticated
+              ? AppShell(controller: _controller)
+              : AuthScreen(
+                  onAuthenticated: () =>
+                      setState(() => _isAuthenticated = true),
+                ),
         );
       },
     );
