@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:careconnect_flutter/app/app.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings_store.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -52,7 +53,7 @@ void main() {
         await tester.pumpAndSettle();
         _expectNoLayoutException(tester, '$name Today');
 
-        await tester.tap(find.text('Meds'));
+        await tester.tap(find.byIcon(Icons.medication_outlined));
         await tester.pumpAndSettle();
         _expectNoLayoutException(tester, '$name Medications');
         await tester.tap(find.text('Levetiracetam'));
@@ -61,16 +62,28 @@ void main() {
         await tester.pageBack();
         await tester.pumpAndSettle();
 
-        await tester.tap(find.text('Care'));
+        await tester.tap(find.byIcon(Icons.calendar_month_outlined));
         await tester.pumpAndSettle();
-        _expectNoLayoutException(tester, '$name Care team');
-        await tester.tap(find.text('Maya Johnson'));
+        _expectNoLayoutException(tester, '$name Appointments');
+        await tester.tap(find.text('Physical therapy'));
         await tester.pumpAndSettle();
-        _expectNoLayoutException(tester, '$name Care details');
+        _expectNoLayoutException(tester, '$name Appointment details');
+        await tester.scrollUntilVisible(
+          find.text('Check in'),
+          300,
+          scrollable: find.byType(Scrollable).last,
+        );
+        await tester.ensureVisible(find.text('Check in'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Check in'));
+        await tester.pumpAndSettle();
+        _expectNoLayoutException(tester, '$name Health log');
+        await tester.pageBack();
+        await tester.pumpAndSettle();
         await tester.pageBack();
         await tester.pumpAndSettle();
 
-        await tester.tap(find.text('Messages'));
+        await tester.tap(find.byIcon(Icons.message_outlined));
         await tester.pumpAndSettle();
         _expectNoLayoutException(tester, '$name Messages');
         await tester.tap(find.text('Checking in'));

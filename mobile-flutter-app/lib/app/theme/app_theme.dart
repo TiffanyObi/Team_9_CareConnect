@@ -132,13 +132,24 @@ abstract final class AppTheme {
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
-        height: 72,
+        height: 64,
         backgroundColor: brightness == Brightness.dark
             ? AppColors.darkNavigation
             : surface,
         indicatorColor: brightness == Brightness.dark
-            ? AppColors.darkSurface
+            ? AppColors.darkAction
             : const Color(0xFFE3F3F2),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return IconThemeData(
+              color: brightness == Brightness.dark
+                  ? Colors.white
+                  : AppColors.primary,
+              size: 28,
+            );
+          }
+          return IconThemeData(color: secondaryText, size: 25);
+        }),
         labelTextStyle: WidgetStatePropertyAll(
           textTheme.bodyMedium?.copyWith(color: foreground),
         ),

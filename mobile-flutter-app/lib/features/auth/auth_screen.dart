@@ -9,9 +9,14 @@ enum _AuthMode { signIn, signUp }
 /// This local-only flow intentionally does not persist credentials. It provides
 /// a complete, accessible interaction path until a backend is connected.
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({required this.onAuthenticated, super.key});
+  const AuthScreen({
+    required this.onSignedIn,
+    required this.onSignedUp,
+    super.key,
+  });
 
-  final VoidCallback onAuthenticated;
+  final VoidCallback onSignedIn;
+  final VoidCallback onSignedUp;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -45,7 +50,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _submit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    widget.onAuthenticated();
+    switch (_mode) {
+      case _AuthMode.signIn:
+        widget.onSignedIn();
+      case _AuthMode.signUp:
+        widget.onSignedUp();
+    }
   }
 
   String? _required(String? value, String label) {

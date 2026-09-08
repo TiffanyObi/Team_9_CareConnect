@@ -1,9 +1,12 @@
+import 'package:careconnect_flutter/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:careconnect_flutter/core/widgets/app_button.dart';
+import 'package:careconnect_flutter/core/widgets/app_card.dart';
 
 import 'message_detail_screen.dart';
 import 'message_repository.dart';
 
-class MessagesScreen extends StatelessWidget {
+class MessagesScreen extends StatefulWidget {
   const MessagesScreen({
     this.repository = const MessageRepository(),
     super.key,
@@ -12,8 +15,18 @@ class MessagesScreen extends StatelessWidget {
   final MessageRepository repository;
 
   @override
+  State<MessagesScreen> createState() => _MessagesScreenState();
+}
+
+class _MessagesScreenState extends State<MessagesScreen> {
+  Future<void> _newMessage() => showDialog<void>(
+    context: context,
+    builder: (_) => const _NewMessageDialog(),
+  );
+
+  @override
   Widget build(BuildContext context) {
-    final messages = repository.loadMessages();
+    final messages = widget.repository.loadMessages();
     return CustomScrollView(
       key: const Key('messages-scroll-view'),
       slivers: [
@@ -24,12 +37,12 @@ class MessagesScreen extends StatelessWidget {
               Semantics(
                 header: true,
                 child: Text(
-                  'Messages',
+                  'Care team messages',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text('Private updates from your care team'),
+              const Text('Private conversations with clear sharing'),
               const SizedBox(height: 20),
               if (messages.isEmpty)
                 const Text('No messages right now.')
@@ -53,10 +66,71 @@ class MessagesScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+              const SizedBox(height: 8),
+              AppButton(label: 'New message', onPressed: _newMessage),
+              const SizedBox(height: 12),
+              const AppCard(
+                color: Color(0xFFEAF7EE),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Privacy note',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.lightText,
+                      ),
+                    ),
+                    Text(
+                      'Messages show only the sender’s name on the lock screen.',
+                      style: TextStyle(color: AppColors.lightTextSecondary),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ],
     );
   }
+}
+
+class _NewMessageDialog extends StatefulWidget {
+  const _NewMessageDialog();
+
+  @override
+  State<_NewMessageDialog> createState() => _NewMessageDialogState();
+}
+
+class _NewMessageDialogState extends State<_NewMessageDialog> {
+  final _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('New message'),
+    content: TextField(
+      controller: _messageController,
+      minLines: 3,
+      maxLines: 5,
+      decoration: const InputDecoration(
+        labelText: 'Message caregiver',
+        border: OutlineInputBorder(),
+      ),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text('Cancel'),
+      ),
+      const FilledButton(onPressed: null, child: Text('Send')),
+    ],
+  );
 }

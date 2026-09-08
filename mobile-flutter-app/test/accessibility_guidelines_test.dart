@@ -61,14 +61,7 @@ void main() {
         CareConnectApp(store: _MemorySettingsStore(), fontFamily: 'Roboto'),
       );
       await tester.pumpAndSettle();
-      await tester.drag(
-        find.byKey(const Key('today-scroll-view')),
-        const Offset(0, -300),
-      );
-      await tester.pumpAndSettle();
-      await tester.tap(
-        find.widgetWithText(OutlinedButton, 'Accessibility settings'),
-      );
+      await tester.tap(find.byIcon(Icons.settings_outlined));
       await tester.pumpAndSettle();
 
       await expectAutomatedGuidelines(tester);
@@ -88,7 +81,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Meds'));
+      await tester.tap(find.byIcon(Icons.medication_outlined));
       await tester.pumpAndSettle();
       await expectAutomatedGuidelines(tester);
       await tester.tap(find.text('Levetiracetam'));
@@ -97,16 +90,21 @@ void main() {
       await tester.pageBack();
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Care'));
+      await tester.tap(find.byIcon(Icons.calendar_month_outlined));
       await tester.pumpAndSettle();
       await expectAutomatedGuidelines(tester);
-      await tester.tap(find.text('Maya Johnson'));
+      await tester.tap(find.text('Physical therapy'));
+      await tester.pumpAndSettle();
+      await expectAutomatedGuidelines(tester);
+      await tester.tap(find.text('Check in'));
       await tester.pumpAndSettle();
       await expectAutomatedGuidelines(tester);
       await tester.pageBack();
       await tester.pumpAndSettle();
+      await tester.pageBack();
+      await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Messages'));
+      await tester.tap(find.byIcon(Icons.message_outlined));
       await tester.pumpAndSettle();
       await expectAutomatedGuidelines(tester);
       await tester.tap(find.text('Checking in'));

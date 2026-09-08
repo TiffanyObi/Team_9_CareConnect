@@ -55,6 +55,45 @@ void main() {
     expect(find.text('Good morning, Olivia'), findsOneWidget);
   });
 
+  testWidgets('new account configures accessibility before Today', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final store = _MemorySettingsStore();
+    await tester.pumpWidget(
+      CareConnectApp(store: store, startAuthenticated: false),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Create a new account'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(EditableText).at(0), 'Olivia Martinez');
+    await tester.enterText(
+      find.byType(EditableText).at(1),
+      'olivia@example.com',
+    );
+    await tester.enterText(find.byType(EditableText).at(2), 'password1');
+    await tester.enterText(find.byType(EditableText).at(3), 'password1');
+    await tester.tap(find.text('Create account and continue'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Make Safeview comfortable'), findsOneWidget);
+    expect(find.text('Good morning, Olivia'), findsNothing);
+
+    await tester.scrollUntilVisible(
+      find.text('Save my preferences'),
+      400,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.tap(find.text('Save my preferences'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Good morning, Olivia'), findsOneWidget);
+  });
+
   testWidgets('auth screens reflow at 200 percent text scale', (tester) async {
     tester.view.physicalSize = const Size(412, 915);
     tester.view.devicePixelRatio = 1;

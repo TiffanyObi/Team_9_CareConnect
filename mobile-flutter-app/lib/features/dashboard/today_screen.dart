@@ -1,12 +1,39 @@
 import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:careconnect_flutter/core/widgets/app_card.dart';
-import 'package:careconnect_flutter/features/settings/accessibility_settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class TodayScreen extends StatelessWidget {
-  const TodayScreen({required this.controller, super.key});
+  const TodayScreen({
+    required this.controller,
+    this.onLogout,
+    this.onShowMedications,
+    super.key,
+  });
   final AccessibilityController controller;
+  final VoidCallback? onLogout;
+  final VoidCallback? onShowMedications;
+
+  Future<void> _confirmLogout(BuildContext context) async {
+    final shouldLogout = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Log out?'),
+        content: const Text('Are you sure you want to log out of CareConnect?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Log out'),
+          ),
+        ],
+      ),
+    );
+    if (shouldLogout == true) onLogout?.call();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +57,15 @@ class TodayScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const SizedBox(
+                  SizedBox(
                     width: 48,
                     height: 48,
                     child: IconButton(
-                      tooltip: 'Help',
-                      onPressed: null,
-                      icon: Icon(Icons.help_outline),
+                      tooltip: 'Log out',
+                      onPressed: onLogout == null
+                          ? null
+                          : () => _confirmLogout(context),
+                      icon: const Icon(Icons.logout),
                     ),
                   ),
                 ],
@@ -79,7 +108,10 @@ class TodayScreen extends StatelessWidget {
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
-                child: AppButton(label: 'Log medication', onPressed: () {}),
+                child: AppButton(
+                  label: 'Log medication',
+                  onPressed: onShowMedications,
+                ),
               ),
               const SizedBox(height: 16),
               const AppCard(
@@ -113,21 +145,6 @@ class TodayScreen extends StatelessWidget {
                     ),
                     Text('Mom can view medication status, not private notes.'),
                   ],
-                ),
-              ),
-              const SizedBox(height: 28),
-              SizedBox(
-                width: double.infinity,
-                child: AppButton(
-                  label: 'Accessibility settings',
-                  icon: Icons.accessibility_new,
-                  secondary: true,
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) =>
-                          AccessibilitySettingsScreen(controller: controller),
-                    ),
-                  ),
                 ),
               ),
             ],

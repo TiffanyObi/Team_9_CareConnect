@@ -6,8 +6,15 @@ import 'package:careconnect_flutter/core/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 
 class AccessibilitySettingsScreen extends StatefulWidget {
-  const AccessibilitySettingsScreen({required this.controller, super.key});
+  const AccessibilitySettingsScreen({
+    required this.controller,
+    this.onboarding = false,
+    this.onSaved,
+    super.key,
+  });
   final AccessibilityController controller;
+  final bool onboarding;
+  final VoidCallback? onSaved;
 
   @override
   State<AccessibilitySettingsScreen> createState() =>
@@ -26,19 +33,33 @@ class _AccessibilitySettingsScreenState
 
   Future<void> _save() async {
     await widget.controller.save();
-    if (mounted) setState(() => _saved = true);
+    if (!mounted) return;
+    if (widget.onboarding) {
+      widget.onSaved?.call();
+    } else {
+      setState(() => _saved = true);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Accessibility settings')),
+      appBar: AppBar(
+        automaticallyImplyLeading: !widget.onboarding,
+        title: Text(
+          widget.onboarding
+              ? 'Make Safeview comfortable'
+              : 'Accessibility settings',
+        ),
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
           children: [
             Text(
-              'Changes preview immediately without animation.',
+              widget.onboarding
+                  ? 'Choose a comfortable, seizure-safe environment. You can change these settings any time.'
+                  : 'Changes preview immediately without animation.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             if (_saved) ...[
@@ -195,7 +216,10 @@ class _AccessibilitySettingsScreenState
               ),
             ),
             const SizedBox(height: 12),
-            AppButton(label: 'Save changes', onPressed: _save),
+            AppButton(
+              label: widget.onboarding ? 'Save my preferences' : 'Save changes',
+              onPressed: _save,
+            ),
             const SizedBox(height: 8),
             AppButton(
               label: 'Reset to recommended safe settings',

@@ -4,7 +4,10 @@ import 'package:careconnect_flutter/core/accessibility/accessibility_controller.
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings_store.dart';
 import 'package:careconnect_flutter/features/auth/auth_screen.dart';
+import 'package:careconnect_flutter/features/settings/accessibility_settings_screen.dart';
 import 'package:flutter/material.dart';
+
+enum _AppStage { authentication, accessibilitySetup, workspace }
 
 class CareConnectApp extends StatefulWidget {
   const CareConnectApp({
@@ -27,7 +30,7 @@ class CareConnectApp extends StatefulWidget {
 
 class _CareConnectAppState extends State<CareConnectApp> {
   late final AccessibilityController _controller;
-  late bool _isAuthenticated;
+  late _AppStage _stage;
 
   @override
   void initState() {
@@ -35,7 +38,9 @@ class _CareConnectAppState extends State<CareConnectApp> {
     _controller = AccessibilityController(
       store: widget.store ?? SharedPreferencesAccessibilitySettingsStore(),
     )..load();
-    _isAuthenticated = widget.startAuthenticated;
+    _stage = widget.startAuthenticated
+        ? _AppStage.workspace
+        : _AppStage.authentication;
   }
 
   @override
@@ -84,12 +89,22 @@ class _CareConnectAppState extends State<CareConnectApp> {
               child: child!,
             );
           },
-          home: _isAuthenticated
-              ? AppShell(controller: _controller)
-              : AuthScreen(
-                  onAuthenticated: () =>
-                      setState(() => _isAuthenticated = true),
-                ),
+          home: switch (_stage) {
+            _AppStage.authentication => AuthScreen(
+              onSignedIn: () => setState(() => _stage = _AppStage.workspace),
+              onSignedUp: () =>
+                  setState(() => _stage = _AppStage.accessibilitySetup),
+            ),
+            _AppStage.accessibilitySetup => AccessibilitySettingsScreen(
+              controller: _controller,
+              onboarding: true,
+              onSaved: () => setState(() => _stage = _AppStage.workspace),
+            ),
+            _AppStage.workspace => AppShell(
+              controller: _controller,
+              onLogout: () => setState(() => _stage = _AppStage.authentication),
+            ),
+          },
         );
       },
     );
