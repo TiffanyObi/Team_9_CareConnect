@@ -4,9 +4,11 @@ import 'package:careconnect_flutter/app/theme/app_theme.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings_store.dart';
-import 'package:careconnect_flutter/features/care/care_recipient.dart';
-import 'package:careconnect_flutter/features/care/care_recipient_detail_screen.dart';
+import 'package:careconnect_flutter/features/care/appointment.dart';
+import 'package:careconnect_flutter/features/care/appointment_detail_screen.dart';
 import 'package:careconnect_flutter/features/care/care_screen.dart';
+import 'package:careconnect_flutter/features/care/emergency_assistance_screen.dart';
+import 'package:careconnect_flutter/features/care/health_log_screen.dart';
 import 'package:careconnect_flutter/features/dashboard/today_screen.dart';
 import 'package:careconnect_flutter/features/medications/medication.dart';
 import 'package:careconnect_flutter/features/medications/medication_detail_screen.dart';
@@ -44,7 +46,14 @@ void main() {
   tearDown(() => controller.dispose());
 
   final screens = <(String, Widget Function())>[
-    ('01-today.png', () => TodayScreen(controller: controller)),
+    (
+      '01-today.png',
+      () => TodayScreen(
+        controller: controller,
+        onLogout: _noOp,
+        onShowMedications: _noOp,
+      ),
+    ),
     (
       '02-accessibility-settings.png',
       () => AccessibilitySettingsScreen(controller: controller),
@@ -61,15 +70,16 @@ void main() {
         ),
       ),
     ),
-    ('05-care-team.png', () => const CareScreen()),
+    ('05-appointments.png', () => const CareScreen()),
     (
-      '06-care-details.png',
-      () => const CareRecipientDetailScreen(
-        recipient: CareRecipient(
-          name: 'Maya Johnson',
-          relationship: 'Caregiver',
-          supportNote: 'Can view medication status and appointments.',
+      '06-appointment-details.png',
+      () => const AppointmentDetailScreen(
+        appointment: Appointment(
+          title: 'Physical therapy',
+          dateAndTime: 'Today • 3:30 PM',
+          location: 'Northside Clinic • Room 204',
         ),
+        onMessageCaregiver: _noOp,
       ),
     ),
     ('07-messages.png', () => const MessagesScreen()),
@@ -83,6 +93,8 @@ void main() {
         ),
       ),
     ),
+    ('09-health-log.png', () => const HealthLogScreen()),
+    ('10-emergency-assistance.png', () => const EmergencyAssistanceScreen()),
   ];
 
   for (final (filename, buildScreen) in screens) {
@@ -109,6 +121,8 @@ void main() {
     });
   }
 }
+
+void _noOp() {}
 
 ThemeData _visualEvidenceTheme() {
   final baseTheme = AppTheme.light();

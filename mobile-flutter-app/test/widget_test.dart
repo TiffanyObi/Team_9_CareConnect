@@ -33,7 +33,7 @@ void main() {
 
     expect(find.text('Good morning, Olivia'), findsOneWidget);
     expect(find.text('Medication due at 8:00 AM'), findsOneWidget);
-    expect(find.text('Accessibility settings'), findsOneWidget);
+    expect(find.text('Settings'), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
   });
 
@@ -44,16 +44,7 @@ void main() {
     await tester.pumpWidget(CareConnectApp(store: store));
     await tester.pumpAndSettle();
 
-    final settingsButton = find.widgetWithText(
-      OutlinedButton,
-      'Accessibility settings',
-    );
-    await tester.drag(
-      find.byKey(const Key('today-scroll-view')),
-      const Offset(0, -300),
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(settingsButton);
+    await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
     expect(find.text('Safety and motion'), findsOneWidget);
     await tester.tap(find.text('Dark'));
@@ -77,6 +68,27 @@ void main() {
     expect(find.text(confirmation), findsOneWidget);
   });
 
+  testWidgets('logout requires confirmation and returns to sign in', (
+    tester,
+  ) async {
+    await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Log out'));
+    await tester.pumpAndSettle();
+    expect(find.text('Log out?'), findsOneWidget);
+
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(find.text('Good morning, Olivia'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Log out'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Log out'));
+    await tester.pumpAndSettle();
+    expect(find.text('Use your existing CareConnect account.'), findsOneWidget);
+  });
+
   testWidgets('supports 200 percent text without horizontal overflow', (
     tester,
   ) async {
@@ -95,19 +107,24 @@ void main() {
     await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Meds'));
+    await tester.tap(find.byIcon(Icons.medication_outlined));
     await tester.pumpAndSettle();
     expect(find.text('Levetiracetam'), findsOneWidget);
 
     await tester.tap(find.text('Levetiracetam'));
     await tester.pumpAndSettle();
     expect(find.text('Medication details'), findsOneWidget);
-    expect(find.text('500 mg'), findsOneWidget);
-    expect(find.text('Take with water.'), findsOneWidget);
+    expect(find.textContaining('500 mg'), findsOneWidget);
+    expect(find.textContaining('Take with water.'), findsOneWidget);
+
+    await tester.tap(find.text('Mark as taken'));
+    await tester.pumpAndSettle();
+    expect(find.text('Taken'), findsOneWidget);
 
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('Medications'), findsOneWidget);
+    expect(find.text('Levetiracetam taken'), findsOneWidget);
   });
 
   testWidgets('shows an empty medication recovery state', (tester) async {
@@ -124,29 +141,89 @@ void main() {
     expect(find.text('No medications have been added yet.'), findsOneWidget);
   });
 
-  testWidgets('opens care and message details from their destinations', (
+  testWidgets('appointment check-in logs health and messaging changes tabs', (
     tester,
   ) async {
     await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Care'));
+    await tester.tap(find.byIcon(Icons.calendar_month_outlined));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Maya Johnson'));
+    await tester.tap(find.text('Physical therapy'));
     await tester.pumpAndSettle();
-    expect(find.text('Support permissions'), findsOneWidget);
-    expect(
-      find.text('Can view medication status and appointments.'),
-      findsOneWidget,
+    expect(find.text('Appointment details'), findsOneWidget);
+    await tester.tap(find.text('Check in'));
+    await tester.pumpAndSettle();
+    expect(find.text('How are you feeling?'), findsOneWidget);
+    await tester.tap(find.text('Symptom'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Knee pain').last);
+    await tester.enterText(
+      find.byType(TextField),
+      'Pain increased after walking.',
     );
+    await tester.tap(find.text('Save today’s log'));
+    await tester.pumpAndSettle();
+    expect(find.text('Pain increased after walking.'), findsOneWidget);
     await tester.pageBack();
     await tester.pumpAndSettle();
-
-    await tester.tap(find.text('Messages'));
+    await tester.tap(find.text('Message caregiver'));
     await tester.pumpAndSettle();
+    expect(find.text('Care team messages'), findsOneWidget);
     await tester.tap(find.text('Checking in'));
     await tester.pumpAndSettle();
     expect(find.text('From Maya Johnson'), findsOneWidget);
     expect(find.textContaining('Hope your appointment'), findsOneWidget);
+  });
+
+  testWidgets('unfinished form actions are disabled', (tester) async {
+    await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.calendar_month_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add appointment'));
+    await tester.pumpAndSettle();
+    final saveAppointment = tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, 'Save appointment'),
+    );
+    expect(saveAppointment.onPressed, isNull);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.message_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('New message'));
+    await tester.pumpAndSettle();
+    final send = tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, 'Send'),
+    );
+    expect(send.onPressed, isNull);
+  });
+
+  testWidgets('Care emergency action opens assistance and confirms call', (
+    tester,
+  ) async {
+    await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
+    await tester.pumpAndSettle();
+
+    Visibility emergencyVisibility() => tester.widget<Visibility>(
+      find.ancestor(
+        of: find.text('Emergency'),
+        matching: find.byType(Visibility),
+      ),
+    );
+    expect(emergencyVisibility().visible, isFalse);
+    await tester.tap(find.byIcon(Icons.calendar_month_outlined));
+    await tester.pumpAndSettle();
+    expect(emergencyVisibility().visible, isTrue);
+    await tester.tap(find.text('Emergency'));
+    await tester.pumpAndSettle();
+    expect(find.text('Call emergency services'), findsOneWidget);
+
+    await tester.tap(find.text('Call emergency services'));
+    await tester.pumpAndSettle();
+    expect(find.text('Emergency services called'), findsOneWidget);
+    expect(find.text('Emergency services have been called.'), findsOneWidget);
   });
 }

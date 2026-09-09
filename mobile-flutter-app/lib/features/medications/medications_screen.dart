@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 import 'medication_detail_screen.dart';
 import 'medication_repository.dart';
 
-class MedicationsScreen extends StatelessWidget {
+class MedicationsScreen extends StatefulWidget {
   const MedicationsScreen({
     this.repository = const MedicationRepository(),
     super.key,
   });
-
   final MedicationRepository repository;
 
   @override
+  State<MedicationsScreen> createState() => _MedicationsScreenState();
+}
+
+class _MedicationsScreenState extends State<MedicationsScreen> {
+  final List<(String, DateTime)> _logs = [];
+
+  @override
   Widget build(BuildContext context) {
-    final medications = repository.loadMedications();
+    final medications = widget.repository.loadMedications();
     return CustomScrollView(
       key: const Key('medications-scroll-view'),
       slivers: [
@@ -52,10 +58,32 @@ class MedicationsScreen extends StatelessWidget {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute<void>(
-                          builder: (_) =>
-                              MedicationDetailScreen(medication: medication),
+                          builder: (_) => MedicationDetailScreen(
+                            medication: medication,
+                            onMarkedTaken: (time) => setState(
+                              () => _logs.insert(0, (medication.name, time)),
+                            ),
+                          ),
                         ),
                       ),
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 12),
+              Text(
+                'Medication logs',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              if (_logs.isEmpty)
+                const Text('No doses logged yet.')
+              else
+                ..._logs.map(
+                  (log) => Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.check_circle_outline),
+                      title: Text('${log.$1} taken'),
+                      subtitle: Text(_formatTime(log.$2)),
                     ),
                   ),
                 ),
@@ -64,5 +92,12 @@ class MedicationsScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _formatTime(DateTime value) {
+    final hour = value.hour % 12 == 0 ? 12 : value.hour % 12;
+    final minute = value.minute.toString().padLeft(2, '0');
+    final period = value.hour >= 12 ? 'PM' : 'AM';
+    return 'Today at $hour:$minute $period';
   }
 }
