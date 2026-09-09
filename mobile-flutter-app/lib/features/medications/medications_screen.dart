@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import 'medication_detail_screen.dart';
+import '../../app/app_routes.dart';
 import 'medication_repository.dart';
 
 class MedicationsScreen extends StatefulWidget {
@@ -56,13 +57,12 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                         '${medication.dosage} • ${medication.schedule}',
                       ),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute<void>(
-                          builder: (_) => MedicationDetailScreen(
-                            medication: medication,
-                            onMarkedTaken: (time) => setState(
-                              () => _logs.insert(0, (medication.name, time)),
-                            ),
+                      onTap: () => context.push(
+                        AppRoutes.medicationDetail,
+                        extra: MedicationRouteArguments(
+                          medication: medication,
+                          onMarkedTaken: (time) => setState(
+                            () => _logs.insert(0, (medication.name, time)),
                           ),
                         ),
                       ),

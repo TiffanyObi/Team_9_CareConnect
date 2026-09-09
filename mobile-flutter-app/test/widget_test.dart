@@ -1,4 +1,6 @@
 import 'package:careconnect_flutter/app/app.dart';
+import 'package:careconnect_flutter/app/app_routes.dart';
+import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings_store.dart';
 import 'package:careconnect_flutter/features/medications/medication.dart';
@@ -6,6 +8,8 @@ import 'package:careconnect_flutter/features/medications/medication_repository.d
 import 'package:careconnect_flutter/features/medications/medications_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class MemorySettingsStore implements AccessibilitySettingsStore {
   AccessibilitySettings value = const AccessibilitySettings();
@@ -35,6 +39,22 @@ void main() {
     expect(find.text('Medication due at 8:00 AM'), findsOneWidget);
     expect(find.text('Settings'), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
+  });
+
+  testWidgets('Provider supplies state and GoRouter tracks workspace routes', (
+    tester,
+  ) async {
+    await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
+    await tester.pumpAndSettle();
+
+    var context = tester.element(find.text('Good morning, Olivia'));
+    expect(context.read<AccessibilityController>(), isNotNull);
+    expect(GoRouterState.of(context).uri.path, AppRoutes.today);
+
+    await tester.tap(find.byIcon(Icons.medication_outlined));
+    await tester.pumpAndSettle();
+    context = tester.element(find.text('Medications'));
+    expect(GoRouterState.of(context).uri.path, AppRoutes.medications);
   });
 
   testWidgets('opens, edits, saves, and announces accessibility settings', (

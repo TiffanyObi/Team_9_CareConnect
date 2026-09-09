@@ -2,7 +2,7 @@
 
 ## Result
 
-- Local file-completeness verdict on September 4, 2026: **Pass for every locally verifiable Week 4 category.**
+- Local verification on September 8, 2026: **Pass for every locally verifiable Week 4 category.**
 - Remaining device-only checks: TalkBack or VoiceOver, external-keyboard focus order, and physical phone/tablet confirmation.
 - Git delivery occurs after this local verification snapshot and must be confirmed from the current branch and pull-request state. Course submission remains separate.
 
@@ -14,31 +14,33 @@ From `mobile-flutter-app/` run:
 ./tool/verify_week4.sh
 ```
 
-### Current local result - September 6, 2026
+### Current local result - September 8, 2026
 
 - `./tool/verify_week4.sh`: Pass
 - Flutter 3.47.0 and Dart 3.13.0; `flutter doctor`: Pass, no issues found
-- Formatting: Pass; 30 files checked, 0 changed
+- Formatting: Pass; 38 files checked, 0 changed
 - `flutter analyze --no-pub`: Pass; no issues found
-- `flutter test --coverage --no-pub`: Pass; 31 tests passed, 0 failed
-- Aggregate line coverage: 365/407 (89.68%); required minimum: 60%
+- `flutter test --coverage --no-pub`: Pass; 41 tests passed, 0 failed
+- Aggregate line coverage: 718/780 (92.05%); required minimum: 60%
+- HTML coverage: generated locally at `mobile-flutter-app/coverage/html/index.html`
 - `git diff --check`: reviewed separately before handoff
 - Local branch at verification: `feature/week4-workflow`; the working tree was intentionally uncommitted until review authorization
 
 ## Functional checks
 
-- [x] Eight meaningful screens are documented with purpose and evidence.
+- [x] Ten meaningful evidence screens plus authentication and onboarding flows are documented.
 - [x] Every counted screen is reachable and contains functional content.
 - [x] Today, Meds, Care, and Messages bottom-navigation destinations work.
 - [x] Medication, care-recipient, and message lists open matching detail data; Back returns correctly.
-- [x] Shared accessibility state loads, previews, saves, persists during navigation, and resets.
+- [x] Provider supplies shared accessibility state, which loads, previews, saves, persists during navigation, and resets.
+- [x] GoRouter owns app-level routes, typed selected-data arguments, and Back behavior.
 - [x] Empty medication data presents a recovery action; required-field model validation rejects empty values.
 
 ## Accessibility and responsive checks
 
-- [x] Flutter's named text-contrast, labeled-tap-target, and Android tap-target guidelines pass on all eight screens.
+- [x] Flutter's named text-contrast, labeled-tap-target, and Android tap-target guidelines pass on the tested screens.
 - [x] Automated semantics tests cover labels, roles, announcements, and the major navigation flows.
-- [x] All eight screens render without Flutter clipping or overflow exceptions on phone portrait, phone landscape, tablet portrait, and tablet landscape at both 100% and 200% text scale.
+- [x] All ten evidence screens render without Flutter clipping or overflow exceptions on tested phone and tablet surfaces at both 100% and 200% text scale.
 - [x] Source inspection and rendered evidence confirm no intentional flashing, strobing, autoplay, looping decorative motion, or motion-only feedback.
 - [x] Reduced-motion and static-alert preferences are implemented and controller-tested.
 - [ ] TalkBack or VoiceOver core-flow check on an Android/iOS target. **User/device verification pending.**
@@ -47,12 +49,16 @@ From `mobile-flutter-app/` run:
 
 ## Visual and live evidence
 
-- [x] Eight deterministic 412 x 915 light-theme PNGs use fictional data and are indexed in `SCREENSHOT_INDEX.md`.
+- [x] Ten deterministic 412 x 915 light-theme PNGs use fictional data and are indexed in `SCREENSHOT_INDEX.md`.
 - [x] Every PNG was visually inspected at original resolution for readability, clipping, overlap, debug banners, and private data.
 - [x] A local Chrome launch at `127.0.0.1:7357` displayed the Today dashboard and labeled navigation.
 - [x] The live accessibility tree exposed meaningful headings, tabs, buttons, selected states, and list-to-detail content for Medications, Care, and Messages.
 
 ## Completion boundaries
+
+- Security audit: **Verified pass.** See `SECURITY_ANALYSIS_2026-09-08.md`.
+- Android debug and unsigned iOS Simulator builds: **Verified pass.**
+- Android release build: **Not completed; R8 stalled and was interrupted.**
 
 - Local files and automated evidence: **Verified pass.**
 - Live local browser launch: **Verified pass.**

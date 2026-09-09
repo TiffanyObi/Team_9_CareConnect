@@ -11,18 +11,18 @@ Week 4 continues Team 9's existing CareConnect Safeview Flutter application in `
 5. Run `../../mobile-flutter-app/tool/verify_week4.sh`.
 6. Complete the manual checks in `VERIFICATION.md` and review the diff before proposing a commit.
 
-Current local evidence is summarized in `FINAL_LOCAL_EVIDENCE_2026-09-04.md`; current screenshots are indexed in `SCREENSHOT_INDEX.md`.
+Current local evidence is summarized in `FINAL_LOCAL_EVIDENCE_2026-09-08.md`; current screenshots are indexed in `SCREENSHOT_INDEX.md`.
 
 The current screen flow and recommended route improvements are documented in `NAVIGATION_PLAN.md`.
 
-The current repository-link and ZIP checklist is documented in `SUBMISSION_PACKAGE_2026-09-06.md`.
+The current package checklist is documented in `SUBMISSION_PACKAGE_2026-09-08.md`. Security results and limits are recorded in `SECURITY_ANALYSIS_2026-09-08.md`.
 
 ## Boundaries
 
 - Preserve the current Flutter foundation and its accessibility settings; do not run `flutter create`.
 - Do not count placeholder-only destinations toward the 7-10 screen requirement.
 - Use fictional data and keep instructor handouts, book PDFs, personal Codex workspace files, generated caches, and coverage output out of Git.
-- Do not regenerate golden files, commit, push, upload, or submit without review and authorization.
+- Regenerate golden files only after a visible review, and keep commit, push, upload, and course submission as separate actions.
 - Planning documents and automated checks are not proof that implementation or manual accessibility testing is complete.
 
 See `PUSH_SCOPE.md` for the prepared branch boundary.

@@ -1,9 +1,10 @@
 import 'package:careconnect_flutter/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:careconnect_flutter/core/widgets/app_card.dart';
 
-import 'message_detail_screen.dart';
+import '../../app/app_routes.dart';
 import 'message_repository.dart';
 
 class MessagesScreen extends StatefulWidget {
@@ -58,10 +59,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       title: Text(message.subject),
                       subtitle: Text(message.sender),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute<void>(
-                          builder: (_) => MessageDetailScreen(message: message),
-                        ),
+                      onTap: () => context.push(
+                        AppRoutes.messageDetail,
+                        extra: MessageRouteArguments(message: message),
                       ),
                     ),
                   ),

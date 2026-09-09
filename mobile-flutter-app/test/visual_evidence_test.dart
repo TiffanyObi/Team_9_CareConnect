@@ -20,6 +20,7 @@ import 'package:careconnect_flutter/features/settings/accessibility_settings_scr
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 
 class _MemorySettingsStore implements AccessibilitySettingsStore {
   AccessibilitySettings value = const AccessibilitySettings();
@@ -48,15 +49,11 @@ void main() {
   final screens = <(String, Widget Function())>[
     (
       '01-today.png',
-      () => TodayScreen(
-        controller: controller,
-        onLogout: _noOp,
-        onShowMedications: _noOp,
-      ),
+      () => TodayScreen(onLogout: _noOp, onShowMedications: _noOp),
     ),
     (
       '02-accessibility-settings.png',
-      () => AccessibilitySettingsScreen(controller: controller),
+      () => const AccessibilitySettingsScreen(),
     ),
     ('03-medications.png', () => const MedicationsScreen()),
     (
@@ -79,7 +76,6 @@ void main() {
           dateAndTime: 'Today • 3:30 PM',
           location: 'Northside Clinic • Room 204',
         ),
-        onMessageCaregiver: _noOp,
       ),
     ),
     ('07-messages.png', () => const MessagesScreen()),
@@ -106,10 +102,13 @@ void main() {
 
       final screen = buildScreen();
       await tester.pumpWidget(
-        MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: _visualEvidenceTheme(),
-          home: screen is Scaffold ? screen : Scaffold(body: screen),
+        ChangeNotifierProvider.value(
+          value: controller,
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: _visualEvidenceTheme(),
+            home: screen is Scaffold ? screen : Scaffold(body: screen),
+          ),
         ),
       );
       await tester.pumpAndSettle();

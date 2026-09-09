@@ -140,4 +140,4 @@ From `mobile-flutter-app/`, run the repeatable local gate with:
 ./tool/verify_week4.sh
 ```
 
-The current Week 4 implementation reaches eight functional Flutter screens. On September 6, 2026, the local gate passed with no analyzer issues, 31 passing tests, and 365/407 lines covered (89.68%). Eight reviewed screenshots are indexed in [`docs/week4/SCREENSHOT_INDEX.md`](docs/week4/SCREENSHOT_INDEX.md). TalkBack/VoiceOver, external-keyboard, physical-device, remote PR, and course-submission states remain separate review items.
+The current Week 4 implementation has ten core evidence screens plus sign-in and account-setup flows. Provider supplies shared accessibility state, and GoRouter owns app-level routes and Back behavior. On September 8, 2026, the local gate passed with no analyzer issues, 41 passing tests, and 718/780 lines covered (92.05%). Ten reviewed screenshots are indexed in [`docs/week4/SCREENSHOT_INDEX.md`](docs/week4/SCREENSHOT_INDEX.md). The repeatable security audit also passed. TalkBack/VoiceOver, external-keyboard, physical-device, remote PR, and course-submission states remain separate review items.

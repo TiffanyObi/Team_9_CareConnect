@@ -1,12 +1,12 @@
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../app/app_routes.dart';
 import 'appointment.dart';
-import 'appointment_detail_screen.dart';
 
 class CareScreen extends StatefulWidget {
-  const CareScreen({this.onMessageCaregiver, super.key});
-  final VoidCallback? onMessageCaregiver;
+  const CareScreen({super.key});
   @override
   State<CareScreen> createState() => _CareScreenState();
 }
@@ -61,13 +61,9 @@ class _CareScreenState extends State<CareScreen> {
                     '${appointment.dateAndTime}\n${appointment.location}',
                   ),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => AppointmentDetailScreen(
-                        appointment: appointment,
-                        onMessageCaregiver: widget.onMessageCaregiver ?? () {},
-                      ),
-                    ),
+                  onTap: () => context.push(
+                    AppRoutes.appointmentDetail,
+                    extra: AppointmentRouteArguments(appointment: appointment),
                   ),
                 ),
               ),

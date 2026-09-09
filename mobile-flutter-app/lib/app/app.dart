@@ -1,13 +1,11 @@
-import 'package:careconnect_flutter/app/app_shell.dart';
+import 'package:careconnect_flutter/app/app_router.dart';
 import 'package:careconnect_flutter/app/theme/app_theme.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings_store.dart';
-import 'package:careconnect_flutter/features/auth/auth_screen.dart';
-import 'package:careconnect_flutter/features/settings/accessibility_settings_screen.dart';
 import 'package:flutter/material.dart';
-
-enum _AppStage { authentication, accessibilitySetup, workspace }
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class CareConnectApp extends StatefulWidget {
   const CareConnectApp({
@@ -30,7 +28,7 @@ class CareConnectApp extends StatefulWidget {
 
 class _CareConnectAppState extends State<CareConnectApp> {
   late final AccessibilityController _controller;
-  late _AppStage _stage;
+  late final GoRouter _router;
 
   @override
   void initState() {
@@ -38,13 +36,12 @@ class _CareConnectAppState extends State<CareConnectApp> {
     _controller = AccessibilityController(
       store: widget.store ?? SharedPreferencesAccessibilitySettingsStore(),
     )..load();
-    _stage = widget.startAuthenticated
-        ? _AppStage.workspace
-        : _AppStage.authentication;
+    _router = createAppRouter(startAuthenticated: widget.startAuthenticated);
   }
 
   @override
   void dispose() {
+    _router.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -60,53 +57,40 @@ class _CareConnectAppState extends State<CareConnectApp> {
             );
     }
 
-    return ListenableBuilder(
-      listenable: _controller,
-      builder: (context, _) {
-        final settings = _controller.settings;
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'CareConnect Safeview',
-          theme: applyVerificationFont(AppTheme.light()),
-          darkTheme: applyVerificationFont(AppTheme.dark()),
-          themeMode: switch (settings.themePreference) {
-            AppThemePreference.light => ThemeMode.light,
-            AppThemePreference.dark => ThemeMode.dark,
-            AppThemePreference.system => ThemeMode.system,
-          },
-          builder: (context, child) {
-            final media = MediaQuery.of(context);
-            final platformScale = media.textScaler.scale(1);
-            final requestedScale = settings.textScale.clamp(1.0, 2.0);
-            return MediaQuery(
-              data: media.copyWith(
-                textScaler: TextScaler.linear(
-                  (platformScale * requestedScale).clamp(1.0, 2.0),
+    return ChangeNotifierProvider.value(
+      value: _controller,
+      child: Consumer<AccessibilityController>(
+        builder: (context, controller, _) {
+          final settings = controller.settings;
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'CareConnect Safeview',
+            theme: applyVerificationFont(AppTheme.light()),
+            darkTheme: applyVerificationFont(AppTheme.dark()),
+            themeMode: switch (settings.themePreference) {
+              AppThemePreference.light => ThemeMode.light,
+              AppThemePreference.dark => ThemeMode.dark,
+              AppThemePreference.system => ThemeMode.system,
+            },
+            builder: (context, child) {
+              final media = MediaQuery.of(context);
+              final platformScale = media.textScaler.scale(1);
+              final requestedScale = settings.textScale.clamp(1.0, 2.0);
+              return MediaQuery(
+                data: media.copyWith(
+                  textScaler: TextScaler.linear(
+                    (platformScale * requestedScale).clamp(1.0, 2.0),
+                  ),
+                  disableAnimations:
+                      media.disableAnimations || settings.reducedMotion,
                 ),
-                disableAnimations:
-                    media.disableAnimations || settings.reducedMotion,
-              ),
-              child: child!,
-            );
-          },
-          home: switch (_stage) {
-            _AppStage.authentication => AuthScreen(
-              onSignedIn: () => setState(() => _stage = _AppStage.workspace),
-              onSignedUp: () =>
-                  setState(() => _stage = _AppStage.accessibilitySetup),
-            ),
-            _AppStage.accessibilitySetup => AccessibilitySettingsScreen(
-              controller: _controller,
-              onboarding: true,
-              onSaved: () => setState(() => _stage = _AppStage.workspace),
-            ),
-            _AppStage.workspace => AppShell(
-              controller: _controller,
-              onLogout: () => setState(() => _stage = _AppStage.authentication),
-            ),
-          },
-        );
-      },
+                child: child!,
+              );
+            },
+            routerConfig: _router,
+          );
+        },
+      ),
     );
   }
 }
