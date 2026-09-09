@@ -1,16 +1,9 @@
-import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:careconnect_flutter/core/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 
 class TodayScreen extends StatelessWidget {
-  const TodayScreen({
-    required this.controller,
-    this.onLogout,
-    this.onShowMedications,
-    super.key,
-  });
-  final AccessibilityController controller;
+  const TodayScreen({this.onLogout, this.onShowMedications, super.key});
   final VoidCallback? onLogout;
   final VoidCallback? onShowMedications;
 

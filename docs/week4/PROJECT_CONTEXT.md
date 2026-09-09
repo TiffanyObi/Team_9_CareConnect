@@ -1,6 +1,8 @@
 # Week 4 Project Context
 
-## Current implementation - September 4, 2026
+> Current update: Provider and GoRouter were implemented on September 8, 2026. The current app has ten evidence screens plus authentication and onboarding flows. See `ROUTING_AND_STATE_2026-09-08.md` and `FINAL_LOCAL_EVIDENCE_2026-09-08.md`. The September 4 sections below are retained as historical context.
+
+## Historical implementation snapshot - September 4, 2026
 
 - The canonical `mobile-flutter-app/` now contains eight functional screens: Today, Accessibility Settings, Medications, Medication detail, Care team, Care member detail, Messages, and Message detail.
 - The three former placeholders are replaced by list/detail workflows backed by fictional immutable models and deterministic repositories.

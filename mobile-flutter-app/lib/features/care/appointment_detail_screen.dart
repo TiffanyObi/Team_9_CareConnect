@@ -2,18 +2,14 @@ import 'package:careconnect_flutter/app/theme/app_colors.dart';
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:careconnect_flutter/core/widgets/app_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../app/app_routes.dart';
 import 'appointment.dart';
-import 'health_log_screen.dart';
 
 class AppointmentDetailScreen extends StatelessWidget {
-  const AppointmentDetailScreen({
-    required this.appointment,
-    required this.onMessageCaregiver,
-    super.key,
-  });
+  const AppointmentDetailScreen({required this.appointment, super.key});
   final Appointment appointment;
-  final VoidCallback onMessageCaregiver;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -64,15 +60,13 @@ class AppointmentDetailScreen extends StatelessWidget {
         const SizedBox(height: 12),
         AppButton(
           label: 'Check in',
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute<void>(builder: (_) => const HealthLogScreen()),
-          ),
+          onPressed: () => context.push(AppRoutes.healthLog),
         ),
         const SizedBox(height: 12),
         AppButton(
           label: 'Message caregiver',
           secondary: true,
-          onPressed: onMessageCaregiver,
+          onPressed: () => context.go(AppRoutes.messages),
         ),
       ],
     ),

@@ -4,15 +4,14 @@ import 'package:careconnect_flutter/core/accessibility/accessibility_settings.da
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:careconnect_flutter/core/widgets/app_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AccessibilitySettingsScreen extends StatefulWidget {
   const AccessibilitySettingsScreen({
-    required this.controller,
     this.onboarding = false,
     this.onSaved,
     super.key,
   });
-  final AccessibilityController controller;
   final bool onboarding;
   final VoidCallback? onSaved;
 
@@ -24,15 +23,14 @@ class AccessibilitySettingsScreen extends StatefulWidget {
 class _AccessibilitySettingsScreenState
     extends State<AccessibilitySettingsScreen> {
   var _saved = false;
-  AccessibilitySettings get _settings => widget.controller.settings;
 
   void _update(AccessibilitySettings settings) {
     setState(() => _saved = false);
-    widget.controller.preview(settings);
+    context.read<AccessibilityController>().preview(settings);
   }
 
   Future<void> _save() async {
-    await widget.controller.save();
+    await context.read<AccessibilityController>().save();
     if (!mounted) return;
     if (widget.onboarding) {
       widget.onSaved?.call();
@@ -43,6 +41,8 @@ class _AccessibilitySettingsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<AccessibilityController>();
+    final settings = controller.settings;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: !widget.onboarding,
@@ -101,15 +101,15 @@ class _AccessibilitySettingsScreenState
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Slider(
-                    value: _settings.textScale,
+                    value: settings.textScale,
                     min: 1,
                     max: 2,
                     divisions: 4,
-                    label: '${(_settings.textScale * 100).round()}%',
+                    label: '${(settings.textScale * 100).round()}%',
                     semanticFormatterCallback: (value) =>
                         '${(value * 100).round()} percent',
                     onChanged: (value) =>
-                        _update(_settings.copyWith(textScale: value)),
+                        _update(settings.copyWith(textScale: value)),
                   ),
                   SegmentedButton<AppThemePreference>(
                     showSelectedIcon: false,
@@ -127,9 +127,9 @@ class _AccessibilitySettingsScreenState
                         label: Text('Device'),
                       ),
                     ],
-                    selected: {_settings.themePreference},
+                    selected: {settings.themePreference},
                     onSelectionChanged: (value) => _update(
-                      _settings.copyWith(themePreference: value.single),
+                      settings.copyWith(themePreference: value.single),
                     ),
                   ),
                 ],
@@ -147,16 +147,16 @@ class _AccessibilitySettingsScreenState
                   _SettingSwitch(
                     title: 'Reduced motion',
                     subtitle: 'Recommended for seizure safety',
-                    value: _settings.reducedMotion,
+                    value: settings.reducedMotion,
                     onChanged: (value) =>
-                        _update(_settings.copyWith(reducedMotion: value)),
+                        _update(settings.copyWith(reducedMotion: value)),
                   ),
                   _SettingSwitch(
                     title: 'Static visual alerts',
                     subtitle: 'No flashing or pulsing',
-                    value: _settings.staticAlerts,
+                    value: settings.staticAlerts,
                     onChanged: (value) =>
-                        _update(_settings.copyWith(staticAlerts: value)),
+                        _update(settings.copyWith(staticAlerts: value)),
                   ),
                 ],
               ),
@@ -173,16 +173,16 @@ class _AccessibilitySettingsScreenState
                   _SettingSwitch(
                     title: 'Haptic reminders',
                     subtitle: 'Paired with readable text',
-                    value: _settings.hapticReminders,
+                    value: settings.hapticReminders,
                     onChanged: (value) =>
-                        _update(_settings.copyWith(hapticReminders: value)),
+                        _update(settings.copyWith(hapticReminders: value)),
                   ),
                   _SettingSwitch(
                     title: 'Larger touch targets',
                     subtitle: 'Minimum 48 × 48 logical pixels',
-                    value: _settings.largeTouchTargets,
+                    value: settings.largeTouchTargets,
                     onChanged: (value) =>
-                        _update(_settings.copyWith(largeTouchTargets: value)),
+                        _update(settings.copyWith(largeTouchTargets: value)),
                   ),
                 ],
               ),
@@ -225,7 +225,7 @@ class _AccessibilitySettingsScreenState
               label: 'Reset to recommended safe settings',
               secondary: true,
               onPressed: () {
-                widget.controller.resetToSafeDefaults();
+                controller.resetToSafeDefaults();
                 setState(() => _saved = false);
               },
             ),

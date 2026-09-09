@@ -1,8 +1,10 @@
 # Week 4 Screen Navigation Plan
 
+> Implemented update: the app now uses Provider and GoRouter. See `ROUTING_AND_STATE_2026-09-08.md` for the current route map and verified behavior. The earlier plan below is retained to show the prior design and decision history.
+
 ## Purpose
 
-This plan covers the eight current CareConnect screens. It records the working flow and lists small improvements. The app will keep Flutter `Navigator` and `MaterialPageRoute`. A new routing package is not needed for this scope.
+This historical plan covered the earlier eight-screen CareConnect flow before the approved Provider and GoRouter migration.
 
 ## Current screen map
 
