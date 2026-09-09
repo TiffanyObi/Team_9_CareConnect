@@ -3,6 +3,13 @@ import 'package:careconnect_flutter/app/theme/app_theme.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_settings_store.dart';
+import 'package:careconnect_flutter/core/database/app_database.dart';
+import 'package:careconnect_flutter/features/auth/auth_controller.dart';
+import 'package:careconnect_flutter/features/auth/auth_repository.dart';
+import 'package:careconnect_flutter/features/care/health_log_controller.dart';
+import 'package:careconnect_flutter/features/care/health_log_repository.dart';
+import 'package:careconnect_flutter/features/medications/medication_controller.dart';
+import 'package:careconnect_flutter/features/medications/medication_log_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +20,9 @@ class CareConnectApp extends StatefulWidget {
     this.store,
     this.fontFamily,
     this.startAuthenticated = true,
+    this.authRepository,
+    this.medicationLogRepository,
+    this.healthLogRepository,
   });
 
   final AccessibilitySettingsStore? store;
@@ -21,6 +31,9 @@ class CareConnectApp extends StatefulWidget {
   /// Keeps feature tests focused on the signed-in workspace. The production
   /// entry point opts into the sign-in screen.
   final bool startAuthenticated;
+  final AuthRepository? authRepository;
+  final MedicationLogRepository? medicationLogRepository;
+  final HealthLogRepository? healthLogRepository;
 
   @override
   State<CareConnectApp> createState() => _CareConnectAppState();
@@ -28,6 +41,9 @@ class CareConnectApp extends StatefulWidget {
 
 class _CareConnectAppState extends State<CareConnectApp> {
   late final AccessibilityController _controller;
+  late final AuthController _authController;
+  late final MedicationController _medicationController;
+  late final HealthLogController _healthLogController;
   late final GoRouter _router;
 
   @override
@@ -36,13 +52,40 @@ class _CareConnectAppState extends State<CareConnectApp> {
     _controller = AccessibilityController(
       store: widget.store ?? SharedPreferencesAccessibilitySettingsStore(),
     )..load();
-    _router = createAppRouter(startAuthenticated: widget.startAuthenticated);
+    final database = AppDatabase();
+    final useMemory = widget.store != null;
+    _authController = AuthController(
+      repository:
+          widget.authRepository ??
+          (useMemory ? MemoryAuthRepository() : SqliteAuthRepository(database)),
+    );
+    _medicationController = MedicationController(
+      logRepository:
+          widget.medicationLogRepository ??
+          (useMemory
+              ? MemoryMedicationLogRepository()
+              : SqliteMedicationLogRepository(database)),
+    )..load();
+    _healthLogController = HealthLogController(
+      repository:
+          widget.healthLogRepository ??
+          (useMemory
+              ? MemoryHealthLogRepository()
+              : SqliteHealthLogRepository(database)),
+    )..load();
+    _router = createAppRouter(
+      startAuthenticated: widget.startAuthenticated,
+      authController: _authController,
+    );
   }
 
   @override
   void dispose() {
     _router.dispose();
     _controller.dispose();
+    _authController.dispose();
+    _medicationController.dispose();
+    _healthLogController.dispose();
     super.dispose();
   }
 
@@ -57,8 +100,13 @@ class _CareConnectAppState extends State<CareConnectApp> {
             );
     }
 
-    return ChangeNotifierProvider.value(
-      value: _controller,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: _controller),
+        ChangeNotifierProvider.value(value: _authController),
+        ChangeNotifierProvider.value(value: _medicationController),
+        ChangeNotifierProvider.value(value: _healthLogController),
+      ],
       child: Consumer<AccessibilityController>(
         builder: (context, controller, _) {
           final settings = controller.settings;

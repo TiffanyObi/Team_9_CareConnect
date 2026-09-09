@@ -1,21 +1,28 @@
 import 'package:careconnect_flutter/app/app_routes.dart';
 import 'package:careconnect_flutter/app/app_shell.dart';
 import 'package:careconnect_flutter/features/auth/auth_screen.dart';
+import 'package:careconnect_flutter/features/auth/auth_controller.dart';
 import 'package:careconnect_flutter/features/care/appointment_detail_screen.dart';
 import 'package:careconnect_flutter/features/care/emergency_assistance_screen.dart';
 import 'package:careconnect_flutter/features/care/health_log_screen.dart';
+import 'package:careconnect_flutter/features/care/health_log_controller.dart';
 import 'package:careconnect_flutter/features/medications/medication_detail_screen.dart';
 import 'package:careconnect_flutter/features/messages/message_detail_screen.dart';
 import 'package:careconnect_flutter/features/settings/accessibility_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-GoRouter createAppRouter({required bool startAuthenticated}) => GoRouter(
+GoRouter createAppRouter({
+  required bool startAuthenticated,
+  required AuthController authController,
+}) => GoRouter(
   initialLocation: startAuthenticated ? AppRoutes.today : AppRoutes.signIn,
   routes: [
     GoRoute(
       path: AppRoutes.signIn,
       builder: (context, state) => AuthScreen(
+        controller: authController,
         onSignedIn: () => context.go(AppRoutes.today),
         onSignedUp: () => context.go(AppRoutes.accessibilitySetup),
       ),
@@ -70,7 +77,8 @@ GoRouter createAppRouter({required bool startAuthenticated}) => GoRouter(
     ),
     GoRoute(
       path: AppRoutes.healthLog,
-      builder: (context, state) => const HealthLogScreen(),
+      builder: (context, state) =>
+          HealthLogScreen(controller: context.read<HealthLogController>()),
     ),
     GoRoute(
       path: AppRoutes.emergency,

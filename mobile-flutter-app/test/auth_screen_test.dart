@@ -110,4 +110,49 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.text('Sign in'), findsWidgets);
   });
+
+  testWidgets('new account can log out and sign back in', (tester) async {
+    tester.view.physicalSize = const Size(800, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      CareConnectApp(store: _MemorySettingsStore(), startAuthenticated: false),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Create a new account'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(EditableText).at(0), 'Jordan Patient');
+    await tester.enterText(
+      find.byType(EditableText).at(1),
+      'jordan@example.com',
+    );
+    await tester.enterText(find.byType(EditableText).at(2), 'password1');
+    await tester.enterText(find.byType(EditableText).at(3), 'password1');
+    await tester.tap(find.text('Create account and continue'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Save my preferences'),
+      400,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.tap(find.text('Save my preferences'));
+    await tester.pumpAndSettle();
+    expect(find.text('Good morning, Jordan'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Log out'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Log out'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byType(EditableText).at(0),
+      'jordan@example.com',
+    );
+    await tester.enterText(find.byType(EditableText).at(1), 'password1');
+    await tester.tap(find.text('Sign in').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Good morning, Jordan'), findsOneWidget);
+  });
 }

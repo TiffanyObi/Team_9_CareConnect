@@ -2,6 +2,8 @@ import 'package:careconnect_flutter/app/theme/app_colors.dart';
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
+import 'auth_controller.dart';
+
 enum _AuthMode { signIn, signUp }
 
 /// The entry screen for returning and new CareConnect members.
@@ -12,11 +14,13 @@ class AuthScreen extends StatefulWidget {
   const AuthScreen({
     required this.onSignedIn,
     required this.onSignedUp,
+    this.controller,
     super.key,
   });
 
   final VoidCallback onSignedIn;
   final VoidCallback onSignedUp;
+  final AuthController? controller;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -31,6 +35,8 @@ class _AuthScreenState extends State<AuthScreen> {
   var _mode = _AuthMode.signIn;
   var _obscurePassword = true;
   var _obscureConfirmation = true;
+  String? _authError;
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -48,8 +54,34 @@ class _AuthScreenState extends State<AuthScreen> {
     });
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
+    final controller = widget.controller;
+    if (controller == null) {
+      _mode == _AuthMode.signIn ? widget.onSignedIn() : widget.onSignedUp();
+      return;
+    }
+    setState(() {
+      _isSubmitting = true;
+      _authError = null;
+    });
+    final error = switch (_mode) {
+      _AuthMode.signIn => await controller.signIn(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ),
+      _AuthMode.signUp => await controller.register(
+        fullName: _nameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      ),
+    };
+    if (!mounted) return;
+    setState(() {
+      _isSubmitting = false;
+      _authError = error;
+    });
+    if (error != null) return;
     switch (_mode) {
       case _AuthMode.signIn:
         widget.onSignedIn();
@@ -247,8 +279,18 @@ class _AuthScreenState extends State<AuthScreen> {
                           label: isSignUp
                               ? 'Create account and continue'
                               : 'Sign in',
-                          onPressed: _submit,
+                          onPressed: _isSubmitting ? null : _submit,
                         ),
+                        if (_authError != null) ...[
+                          const SizedBox(height: 8),
+                          Semantics(
+                            liveRegion: true,
+                            child: Text(
+                              _authError!,
+                              style: TextStyle(color: scheme.error),
+                            ),
+                          ),
+                        ],
                         const SizedBox(height: 12),
                         if (!isSignUp) ...[
                           _SignedInNotice(

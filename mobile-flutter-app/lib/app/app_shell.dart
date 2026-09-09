@@ -1,12 +1,15 @@
 import 'package:careconnect_flutter/app/app_routes.dart';
 import 'package:careconnect_flutter/app/theme/app_colors.dart';
+import 'package:careconnect_flutter/features/auth/auth_controller.dart';
 import 'package:careconnect_flutter/features/dashboard/today_screen.dart';
 import 'package:careconnect_flutter/features/care/care_screen.dart';
 import 'package:careconnect_flutter/features/medications/medications_screen.dart';
+import 'package:careconnect_flutter/features/medications/medication_controller.dart';
 import 'package:careconnect_flutter/features/messages/messages_screen.dart';
 import 'package:careconnect_flutter/features/settings/accessibility_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({required this.selectedIndex, super.key});
@@ -27,10 +30,16 @@ class _AppShellState extends State<AppShell> {
           index: selectedIndex,
           children: [
             TodayScreen(
-              onLogout: () => context.go(AppRoutes.signIn),
+              userName: _firstName(
+                context.watch<AuthController>().account?.fullName,
+              ),
+              onLogout: () {
+                context.read<AuthController>().logout();
+                context.go(AppRoutes.signIn);
+              },
               onShowMedications: () => context.go(AppRoutes.medications),
             ),
-            const MedicationsScreen(),
+            MedicationsScreen(controller: context.read<MedicationController>()),
             const CareScreen(),
             const MessagesScreen(),
             const AccessibilitySettingsScreen(),
@@ -88,5 +97,11 @@ class _AppShellState extends State<AppShell> {
       ),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.noAnimation,
     );
+  }
+
+  String _firstName(String? fullName) {
+    final trimmed = fullName?.trim();
+    if (trimmed == null || trimmed.isEmpty) return 'Olivia';
+    return trimmed.split(RegExp(r'\s+')).first;
   }
 }

@@ -1,8 +1,12 @@
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
+import 'health_log_controller.dart';
+import 'health_log_repository.dart';
+
 class HealthLogScreen extends StatefulWidget {
-  const HealthLogScreen({super.key});
+  const HealthLogScreen({this.controller, super.key});
+  final HealthLogController? controller;
   @override
   State<HealthLogScreen> createState() => _HealthLogScreenState();
 }
@@ -16,12 +20,30 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
     'Seizure activity',
   ];
   final _notesController = TextEditingController();
-  final List<(String, String, DateTime)> _entries = [];
+  late final HealthLogController _controller;
+  late final bool _ownsController;
   String? _symptom;
+
+  @override
+  void initState() {
+    super.initState();
+    _ownsController = widget.controller == null;
+    _controller =
+        widget.controller ??
+        HealthLogController(repository: MemoryHealthLogRepository());
+    _controller.addListener(_refresh);
+    _controller.load();
+  }
+
+  void _refresh() {
+    if (mounted) setState(() {});
+  }
 
   @override
   void dispose() {
     _notesController.dispose();
+    _controller.removeListener(_refresh);
+    if (_ownsController) _controller.dispose();
     super.dispose();
   }
 
@@ -32,12 +54,8 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
       );
       return;
     }
+    _controller.add(symptom: _symptom!, notes: _notesController.text.trim());
     setState(() {
-      _entries.insert(0, (
-        _symptom!,
-        _notesController.text.trim(),
-        DateTime.now(),
-      ));
       _symptom = null;
       _notesController.clear();
     });
@@ -93,15 +111,17 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
-        if (_entries.isEmpty)
+        if (_controller.logs.isEmpty)
           const Text('No symptoms logged yet.')
         else
-          ..._entries.map(
+          ..._controller.logs.map(
             (entry) => Card(
               child: ListTile(
-                title: Text(entry.$1),
-                subtitle: Text(entry.$2.isEmpty ? 'No note added' : entry.$2),
-                trailing: Text(_time(entry.$3)),
+                title: Text(entry.symptom),
+                subtitle: Text(
+                  entry.notes.isEmpty ? 'No note added' : entry.notes,
+                ),
+                trailing: Text(_time(entry.recordedAt)),
               ),
             ),
           ),
