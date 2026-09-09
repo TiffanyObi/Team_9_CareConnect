@@ -3,24 +3,54 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/app_routes.dart';
 import 'medication_repository.dart';
+import 'medication_controller.dart';
+import 'medication_log_repository.dart';
 
 class MedicationsScreen extends StatefulWidget {
   const MedicationsScreen({
     this.repository = const MedicationRepository(),
+    this.controller,
     super.key,
   });
   final MedicationRepository repository;
+  final MedicationController? controller;
 
   @override
   State<MedicationsScreen> createState() => _MedicationsScreenState();
 }
 
 class _MedicationsScreenState extends State<MedicationsScreen> {
-  final List<(String, DateTime)> _logs = [];
+  late final MedicationController _controller;
+  late final bool _ownsController;
+
+  @override
+  void initState() {
+    super.initState();
+    _ownsController = widget.controller == null;
+    _controller =
+        widget.controller ??
+        MedicationController(
+          logRepository: MemoryMedicationLogRepository(),
+          medicationRepository: widget.repository,
+        );
+    _controller.addListener(_refresh);
+    _controller.load();
+  }
+
+  void _refresh() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_refresh);
+    if (_ownsController) _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final medications = widget.repository.loadMedications();
+    final medications = _controller.medications;
     return CustomScrollView(
       key: const Key('medications-scroll-view'),
       slivers: [
@@ -61,9 +91,8 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                         AppRoutes.medicationDetail,
                         extra: MedicationRouteArguments(
                           medication: medication,
-                          onMarkedTaken: (time) => setState(
-                            () => _logs.insert(0, (medication.name, time)),
-                          ),
+                          onMarkedTaken: (time) =>
+                              _controller.markTaken(medication, at: time),
                         ),
                       ),
                     ),
@@ -75,15 +104,15 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
-              if (_logs.isEmpty)
+              if (_controller.logs.isEmpty)
                 const Text('No doses logged yet.')
               else
-                ..._logs.map(
+                ..._controller.logs.map(
                   (log) => Card(
                     child: ListTile(
                       leading: const Icon(Icons.check_circle_outline),
-                      title: Text('${log.$1} taken'),
-                      subtitle: Text(_formatTime(log.$2)),
+                      title: Text('${log.medicationName} taken'),
+                      subtitle: Text(_formatTime(log.takenAt)),
                     ),
                   ),
                 ),

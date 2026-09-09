@@ -3,9 +3,15 @@ import 'package:careconnect_flutter/core/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 
 class TodayScreen extends StatelessWidget {
-  const TodayScreen({this.onLogout, this.onShowMedications, super.key});
+  const TodayScreen({
+    this.onLogout,
+    this.onShowMedications,
+    this.userName = 'Olivia',
+    super.key,
+  });
   final VoidCallback? onLogout;
   final VoidCallback? onShowMedications;
+  final String userName;
 
   Future<void> _confirmLogout(BuildContext context) async {
     final shouldLogout = await showDialog<bool>(
@@ -67,7 +73,7 @@ class TodayScreen extends StatelessWidget {
               Semantics(
                 header: true,
                 child: Text(
-                  'Good morning, Olivia',
+                  'Good morning, $userName',
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),

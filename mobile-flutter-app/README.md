@@ -10,7 +10,16 @@ The screen inventory is:
 - Care team list and care member detail
 - Messages list and message detail
 
-The list and detail workflows use fictional repositories and pass selected immutable models through typed GoRouter route arguments. Provider supplies the shared `AccessibilityController`, while `SharedPreferences` stores only accessibility preferences. Local `setState` remains limited to forms, short feedback, and screen-local sample data. Visual feedback is static by default, with no flashing, pulsing, autoplay, or animation-only status cues.
+Provider supplies shared accessibility, authentication, medication-log, and health-log controllers. GoRouter handles the authentication, onboarding, workspace, and detail-screen routes. SharedPreferences stores accessibility preferences, while SQLite stores locally registered accounts, medication logs, and health logs behind repository interfaces. Passwords are never stored directly; local accounts use a random salt and PBKDF2-derived hash. In-memory repository implementations keep automated tests isolated and deterministic.
+
+This local database is prototype persistence, not a production healthcare backend. Only fictional demonstration accounts and health information should be used. A deployed version would require a secured remote identity service, server-side authorization, encrypted transport, protected device secrets, audit controls, and a formal privacy/security review.
+
+### Fictional demo account
+
+- Email: `omartinez@careconnect.com`
+- Password: `password`
+
+The demo account is inserted only when it does not already exist. Its password is represented in the database by a salt and PBKDF2-derived hash rather than plaintext. These public demonstration credentials must never be used for real patient information.
 
 All visual feedback is static by default. The implementation intentionally avoids flashing, pulsing, autoplay, and animation-only status cues.
 
