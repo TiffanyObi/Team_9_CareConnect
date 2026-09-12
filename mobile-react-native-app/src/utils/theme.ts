@@ -11,3 +11,6 @@ export const darkColors: AppColors = {
   border: '#647991', safety: '#D9E7FF', warning: '#F6E8BE', successSurface: '#D8F0DF',
 };
 export const formatTime = (date: Date): string => date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+export const formatCurrentDate = (date: Date): string => date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+export const formatDateTime = (date: Date): string => date.toLocaleString([], { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+export const isSameLocalDay = (left: Date, right: Date): boolean => left.getFullYear() === right.getFullYear() && left.getMonth() === right.getMonth() && left.getDate() === right.getDate();
