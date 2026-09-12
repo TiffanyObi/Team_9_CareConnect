@@ -1,15 +1,72 @@
 import React, { useState } from 'react';
-import { Alert, Modal, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AppText, Button, Card, Screen } from '../components/UI';
-import { appointments } from '../utils/data'; import { RootParams, TabParams } from '../navigation/RootNavigator'; import { useApp } from '../context/AppContext'; import { formatTime } from '../utils/theme';
-export function CareScreen({ navigation }: BottomTabScreenProps<TabParams, 'Care'>): React.JSX.Element {
- const [showAdd, setShowAdd] = useState(false); return <Screen><ScrollView contentContainerStyle={s.content}><AppText heading>Your appointments</AppText><AppText>Upcoming visits and questions to ask</AppText>{appointments.map(a => <Card key={a.id}><AppText style={s.title}>{a.title}</AppText><AppText>{a.dateAndTime}{'\n'}{a.location}</AppText><Button label="View appointment" secondary onPress={() => navigation.getParent()?.navigate('AppointmentDetail', { appointment: a })} /></Card>)}<Button label="Add appointment" onPress={() => setShowAdd(true)} /><Button label="Health log" secondary onPress={() => navigation.getParent()?.navigate('HealthLog')} /><Button label="Emergency assistance" danger onPress={() => navigation.getParent()?.navigate('Emergency')} /><SimpleModal visible={showAdd} title="Add appointment" onClose={() => setShowAdd(false)}><Input label="Appointment name" /><Input label="Date and time" /><Button label="Save appointment" disabled /></SimpleModal></ScrollView></Screen>;
+import { Linking } from 'react-native';
+import { AppText, Button, Card, Input, Notice, Screen, useAction } from '../components/UI';
+import { RootParams, TabParams } from '../navigation/RootNavigator';
+import { useApp } from '../context/AppContext';
+import { formatTime } from '../utils/theme';
+
+export function CareScreen({ navigation }: BottomTabScreenProps<TabParams, 'Care'>) {
+  const { data, addAppointment, busy } = useApp(); const action = useAction();
+  const [showAdd, setShowAdd] = useState(false); const [title, setTitle] = useState(''); const [date, setDate] = useState(''); const [location, setLocation] = useState('');
+  const save = async () => {
+    if (await action.run(() => addAppointment(title, date, location), 'Appointment saved on this device.')) {
+      setShowAdd(false); setTitle(''); setDate(''); setLocation('');
+    }
+  };
+  return <Screen><AppText heading>Your appointments</AppText><AppText>Sample visits and appointments saved on this device</AppText>
+    {data.appointments.map(appointment => <Card key={appointment.id}><AppText heading>{appointment.title}</AppText><AppText>{Number.isFinite(Date.parse(appointment.dateAndTime)) ? formatTime(appointment.dateAndTime) : appointment.dateAndTime}</AppText><AppText>{appointment.location}</AppText>
+      <Button label={'View ' + appointment.title} secondary onPress={() => navigation.getParent()?.navigate('AppointmentDetail', { appointment })} />
+    </Card>)}
+    {showAdd ? <Card><AppText heading>Add appointment</AppText>
+      <Input label="Appointment name" value={title} onChangeText={setTitle} maxLength={120} editable={!busy} />
+      <Input label="Local date and time (YYYY-MM-DD HH:mm)" value={date} onChangeText={setDate} placeholder="2026-10-15 14:30" editable={!busy} />
+      <Input label="Location" value={location} onChangeText={setLocation} maxLength={200} editable={!busy} />
+      <Button label="Save appointment" disabled={busy} onPress={() => { void save(); }} />
+      <Button label="Cancel appointment" secondary disabled={busy} onPress={() => { setShowAdd(false); action.clear(); }} />
+    </Card> : <Button label="Add appointment" onPress={() => { action.clear(); setShowAdd(true); }} />}
+    <Notice message={action.notice} error={action.error} />
+    <Button label="Health log" secondary onPress={() => navigation.getParent()?.navigate('HealthLog')} />
+    <Button label="Emergency assistance" danger onPress={() => navigation.getParent()?.navigate('Emergency')} />
+  </Screen>;
 }
-export function AppointmentDetailScreen({ route, navigation }: NativeStackScreenProps<RootParams, 'AppointmentDetail'>): React.JSX.Element { const { appointment } = route.params; return <Screen><ScrollView contentContainerStyle={s.content}><AppText heading>{appointment.title}</AppText><AppText>{appointment.dateAndTime} • {appointment.location}</AppText><Card><AppText style={s.title}>Before you go</AppText><AppText>Bring insurance card • Arrive 10 minutes early</AppText></Card><Card style={{ backgroundColor: '#EAF2FF' }}><AppText style={s.title}>Questions for the therapist</AppText><AppText>{'• Is my knee pain improving?\n• Which home exercises are safest?'}</AppText></Card><Button label="Check in" onPress={() => navigation.navigate('HealthLog')} /><Button label="Message caregiver" secondary onPress={() => navigation.navigate('Tabs', { screen: 'Messages' } as never)} /></ScrollView></Screen>; }
-export function HealthLogScreen(): React.JSX.Element { const { logs, addLog } = useApp(); const [symptom, setSymptom] = useState(''); const [notes, setNotes] = useState(''); const save = () => { if (!symptom.trim()) { Alert.alert('Choose a symptom to continue.'); return; } addLog(symptom, notes.trim()); setSymptom(''); setNotes(''); Alert.alert('Health log saved.'); }; return <Screen><ScrollView contentContainerStyle={s.content}><AppText heading>How are you feeling?</AppText><AppText>Record symptoms without animation or pressure</AppText><Input label="Symptom" value={symptom} onChangeText={setSymptom} placeholder="Knee pain, fatigue, headache…" /><Input label="Private notes (optional)" value={notes} onChangeText={setNotes} multiline placeholder="Add details about how you feel" /><Button label="Save today’s log" onPress={save} /><AppText style={s.section}>Recent health logs</AppText>{logs.length === 0 ? <AppText>No symptoms logged yet.</AppText> : logs.map(log => <Card key={log.id}><AppText style={s.title}>{log.symptom}</AppText><AppText>{log.notes || 'No note added'}{'\n'}{formatTime(log.recordedAt)}</AppText></Card>)}</ScrollView></Screen>; }
-export function EmergencyScreen(): React.JSX.Element { return <Screen><ScrollView contentContainerStyle={s.content}><AppText heading>Emergency assistance</AppText><AppText>Use only when you or someone else may be in danger.</AppText><Card style={{ backgroundColor: '#EAF2FF' }}><AppText style={s.title}>Your location</AppText><AppText>Ready to share only after confirmation.</AppText></Card><Button label="Call emergency services" danger onPress={() => Alert.alert('Emergency services called', 'Emergency services have been called.')} /><Button label="Alert caregiver" secondary disabled /><Card><AppText style={s.title}>What happens next</AppText><AppText>{'1. You confirm the action\n2. A static status stays visible\n3. Response acknowledgment is recorded'}</AppText></Card></ScrollView></Screen>; }
-function Input({ label, value = '', onChangeText, placeholder, multiline = false }: { label: string; value?: string; onChangeText?: (v: string) => void; placeholder?: string; multiline?: boolean }): React.JSX.Element { return <View style={s.inputWrap}><AppText style={s.label}>{label}</AppText><TextInput accessible accessibilityLabel={label} value={value} onChangeText={onChangeText} placeholder={placeholder || label} multiline={multiline} style={[s.input, multiline && { minHeight: 90, textAlignVertical: 'top' }]} /></View>; }
-function SimpleModal({ visible, title, onClose, children }: { visible: boolean; title: string; onClose: () => void; children: React.ReactNode }): React.JSX.Element { return <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}><View style={s.overlay}><Card><AppText heading>{title}</AppText>{children}<Button label="Cancel" secondary onPress={onClose} /></Card></View></Modal>; }
-const s = StyleSheet.create({ content: { padding: 20, gap: 12, maxWidth: 760, width: '100%', alignSelf: 'center' }, title: { fontWeight: '700', fontSize: 18 }, section: { fontWeight: '800', fontSize: 20, marginTop: 8 }, inputWrap: { gap: 5 }, label: { fontWeight: '700' }, input: { borderWidth: 1, borderColor: '#7D91A8', backgroundColor: '#fff', color: '#10233F', borderRadius: 10, minHeight: 50, padding: 12, fontSize: 16 }, overlay: { flex: 1, backgroundColor: '#0008', justifyContent: 'center', padding: 24 } });
+export function AppointmentDetailScreen({ route, navigation }: NativeStackScreenProps<RootParams, 'AppointmentDetail'>) {
+  const { appointment } = route.params;
+  return <Screen><AppText heading>{appointment.title}</AppText><AppText>{appointment.dateAndTime}</AppText><AppText>{appointment.location}</AppText>
+    <Card><AppText heading>Before you go</AppText><AppText>Review the time, location, and any instructions from your care team.</AppText></Card>
+    <Button label="Record a health note" onPress={() => navigation.navigate('HealthLog')} />
+    <Button label="Open messages" secondary onPress={() => navigation.navigate('Tabs', { screen: 'Messages' })} />
+  </Screen>;
+}
+export function HealthLogScreen() {
+  const { data, addLog, busy } = useApp(); const action = useAction();
+  const [symptom, setSymptom] = useState(''); const [notes, setNotes] = useState('');
+  const save = async () => {
+    if (await action.run(() => addLog(symptom, notes), 'Health log saved on this device.')) { setSymptom(''); setNotes(''); }
+  };
+  return <Screen><AppText heading>How are you feeling?</AppText><AppText>Use fictional health information for this demo.</AppText>
+    <Input label="Symptom" value={symptom} onChangeText={setSymptom} maxLength={120} editable={!busy} />
+    <Input label="Notes (optional)" value={notes} onChangeText={setNotes} maxLength={2000} multiline editable={!busy} />
+    <Button label="Save today’s log" disabled={busy} onPress={() => { void save(); }} /><Notice message={action.notice} error={action.error} />
+    <AppText heading>Recent health logs</AppText>
+    {data.logs.length === 0 ? <AppText>No symptoms logged yet.</AppText> : data.logs.map(log => <Card key={log.id}><AppText heading>{log.symptom}</AppText><AppText>{log.notes || 'No note added'}</AppText><AppText>{formatTime(log.recordedAt)}</AppText></Card>)}
+  </Screen>;
+}
+export function EmergencyScreen() {
+  const [confirm, setConfirm] = useState(false); const action = useAction();
+  const openPhone = () => action.run(async () => {
+    if (!await Linking.canOpenURL('tel:')) throw new Error('Phone dialing is unavailable here. Use a phone to contact your local emergency service.');
+    await Linking.openURL('tel:');
+    setConfirm(false);
+  }, 'Phone app requested. No call has been placed or confirmed by CareConnect.');
+  return <Screen><AppText heading>Emergency assistance</AppText>
+    <Card tone="warning"><AppText>This demo cannot dispatch help or track a response. If you need urgent help, use your phone to contact your local emergency service.</AppText></Card>
+    <Card><AppText>No location is collected or shared. No caregiver alert service is connected.</AppText></Card>
+    {confirm ? <Card tone="safety"><AppText>Open your phone app? You must enter the number and place the call yourself.</AppText>
+      <Button label="Confirm open phone" danger onPress={() => { void openPhone(); }} />
+      <Button label="Cancel" secondary onPress={() => setConfirm(false)} />
+    </Card> : <Button label="Open phone app" danger onPress={() => { action.clear(); setConfirm(true); }} />}
+    <Notice message={action.notice} error={action.error} />
+  </Screen>;
+}

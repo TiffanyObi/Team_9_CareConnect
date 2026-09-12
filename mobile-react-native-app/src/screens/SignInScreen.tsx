@@ -1,6 +1,26 @@
 import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import { useApp } from '../context/AppContext'; import { AppText, Button, Card, Screen } from '../components/UI'; import { colors } from '../utils/theme';
-export function SignInScreen(): React.JSX.Element { const { signIn } = useApp(); const [create, setCreate] = useState(false); const [name, setName] = useState(''); const [email, setEmail] = useState('olivia@example.com'); const [password, setPassword] = useState('password'); const submit = () => { if (!/^\S+@\S+\.\S+$/.test(email) || password.length < 1 || (create && !name.trim())) { Alert.alert('Check your details', 'Enter a valid email and password.'); return; } signIn(create ? name : undefined); }; return <Screen><ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled"><View style={styles.brand}><AppText style={{ color: colors.teal, fontSize: 22, fontWeight: '800' }}>CareConnect</AppText><Button label="Help" secondary onPress={() => Alert.alert('Help', 'Help is available from your care team.')} /></View><AppText heading>{create ? 'Create your account' : 'Sign in'}</AppText><AppText style={styles.lead}>{create ? 'Set up secure access, then personalize Safeview.' : 'Use your existing CareConnect account.'}</AppText>{create && <Input label="Full name" value={name} onChangeText={setName} />}<Input label="Email" value={email} onChangeText={setEmail} keyboardType="email-address" /><Input label={create ? 'Create password' : 'Password'} value={password} onChangeText={setPassword} secureTextEntry /><Card style={{ backgroundColor: create ? '#E8EDFF' : '#EAF7EE' }} label="Privacy and saved preferences"><AppText style={{ fontWeight: '700' }}>{create ? 'Privacy' : 'After sign in'}</AppText><AppText>{create ? 'Your accessibility preferences and health information are private.' : 'Your saved text size, motion, alert, privacy, and sharing settings load automatically.'}</AppText></Card><Button label={create ? 'Create account and continue' : 'Sign in'} onPress={submit} /><Button label={create ? 'I already have an account' : 'Create a new account'} secondary onPress={() => setCreate(!create)} /></ScrollView></Screen>; }
-function Input({ label, ...props }: { label: string; value: string; onChangeText: (value: string) => void; keyboardType?: 'email-address'; secureTextEntry?: boolean }): React.JSX.Element { return <View style={styles.inputWrap}><AppText style={styles.label}>{label}</AppText><TextInput accessible accessibilityLabel={label} style={styles.input} placeholder={label} placeholderTextColor="#60758e" {...props} /></View>; }
-const styles = StyleSheet.create({ content: { flexGrow: 1, maxWidth: 560, width: '100%', alignSelf: 'center', padding: 20, gap: 12 }, brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, lead: { marginBottom: 8 }, inputWrap: { gap: 6 }, label: { fontWeight: '700' }, input: { minHeight: 50, borderWidth: 1, borderColor: '#7D91A8', borderRadius: 10, paddingHorizontal: 12, fontSize: 16, color: '#10233F', backgroundColor: '#fff' } });
+import { useApp } from '../context/AppContext';
+import { AppText, Button, Card, Input, Notice, Screen, useAction } from '../components/UI';
+
+export function SignInScreen() {
+  const { signIn, register, busy } = useApp();
+  const [create, setCreate] = useState(false);
+  const [name, setName] = useState(''); const [email, setEmail] = useState(''); const [password, setPassword] = useState('');
+  const action = useAction();
+  const submit = () => action.run(async () => {
+    if (create) await register(name, email, password); else await signIn(email, password);
+    setPassword('');
+  }, '');
+  return <Screen>
+    <AppText heading>CareConnect</AppText>
+    <AppText heading>{create ? 'Create your account' : 'Sign in'}</AppText>
+    <Card tone="safety"><AppText>Coursework demo. Use fictional details only. Accounts and records stay on this device; no care team is connected.</AppText></Card>
+    {create && <Input label="Full name" value={name} onChangeText={setName} maxLength={100} editable={!busy} />}
+    <Input label="Email" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoCorrect={false} maxLength={254} editable={!busy} />
+    <Input label="Password" value={password} onChangeText={setPassword} secureTextEntry autoCapitalize="none" maxLength={128} editable={!busy} />
+    {create && <AppText>Use 8 to 128 characters. After setup, open Settings to choose your preferences.</AppText>}
+    <Notice message={action.notice} error={action.error} />
+    <Button label={busy ? 'Please wait…' : create ? 'Create account and continue' : 'Sign in'} disabled={busy} onPress={() => { void submit(); }} />
+    <Button label={create ? 'I already have an account' : 'Create a new account'} secondary disabled={busy} onPress={() => { setCreate(!create); setPassword(''); action.clear(); }} />
+  </Screen>;
+}

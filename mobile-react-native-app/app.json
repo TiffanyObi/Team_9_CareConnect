@@ -5,7 +5,14 @@
     "version": "1.0.0",
     "orientation": "default",
     "userInterfaceStyle": "automatic",
-    "android": { "package": "edu.umgc.team9.careconnect" },
-    "ios": { "bundleIdentifier": "edu.umgc.team9.careconnect" }
+    "android": {
+      "package": "edu.umgc.team9.careconnect"
+    },
+    "ios": {
+      "bundleIdentifier": "edu.umgc.team9.careconnect"
+    },
+    "plugins": [
+      "expo-sqlite"
+    ]
   }
 }

@@ -1,4 +1,36 @@
-import React from 'react'; import { ScrollView, StyleSheet } from 'react-native'; import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'; import { NativeStackScreenProps } from '@react-navigation/native-stack'; import { AppText, Button, Card, Screen } from '../components/UI'; import { useApp } from '../context/AppContext'; import { medications } from '../utils/data'; import { formatTime } from '../utils/theme'; import { RootParams, TabParams } from '../navigation/RootNavigator';
-export function MedicationsScreen({ navigation }: BottomTabScreenProps<TabParams, 'Medications'>): React.JSX.Element { const { takenMedicationIds } = useApp(); return <Screen><ScrollView contentContainerStyle={s.content}><AppText heading>Medications</AppText><AppText>Your current medication schedule</AppText>{medications.map(m => <Card key={m.id} label={`${m.name}, ${m.dosage}, ${m.schedule}`}><AppText style={s.title}>{m.name}</AppText><AppText>{m.dosage} • {m.schedule}</AppText><Button label="View details" secondary onPress={() => navigation.getParent()?.navigate('MedicationDetail', { medication: m })} /></Card>)}<AppText style={s.section}>Medication logs</AppText>{takenMedicationIds.length === 0 ? <AppText>No doses logged yet.</AppText> : takenMedicationIds.map(id => <Card key={id}><AppText>{medications.find(m => m.id === id)?.name} taken</AppText><AppText>{formatTime(new Date())}</AppText></Card>)}</ScrollView></Screen>; }
-export function MedicationDetailScreen({ route }: NativeStackScreenProps<RootParams, 'MedicationDetail'>): React.JSX.Element { const { medication } = route.params; const { takenMedicationIds, toggleTaken } = useApp(); const taken = takenMedicationIds.includes(medication.id); return <Screen><ScrollView contentContainerStyle={s.content}><AppText heading>{medication.name}</AppText><AppText>{medication.dosage} • {medication.schedule}</AppText><Card style={{ backgroundColor: '#FFF8E6' }}><AppText style={s.title}>Today’s dose</AppText><AppText>{taken ? 'Taken today • Logged' : 'Scheduled for 8:00 AM • Not logged'}</AppText></Card><Card><AppText style={s.title}>Instructions</AppText><AppText>{medication.instructions}</AppText></Card><Button label={taken ? 'Taken' : 'Mark as taken'} disabled={taken} onPress={() => toggleTaken(medication.id)} /><Card style={{ backgroundColor: '#EAF2FF' }}><AppText style={s.title}>Sharing preview</AppText><AppText>Caregiver sees: taken/missed status only.</AppText></Card></ScrollView></Screen>; }
-const s = StyleSheet.create({ content: { padding: 20, gap: 12, maxWidth: 760, width: '100%', alignSelf: 'center' }, title: { fontWeight: '700', fontSize: 18 }, section: { fontWeight: '800', fontSize: 20, marginTop: 8 } });
+import React from 'react';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AppText, Button, Card, Notice, Screen, useAction } from '../components/UI';
+import { useApp } from '../context/AppContext';
+import { medications } from '../utils/data';
+import { formatTime } from '../utils/theme';
+import { RootParams, TabParams } from '../navigation/RootNavigator';
+
+export function MedicationsScreen({ navigation }: BottomTabScreenProps<TabParams, 'Medications'>) {
+  const { data } = useApp();
+  return <Screen><AppText heading>Medications</AppText><AppText>Your sample medication schedule</AppText>
+    {medications.map(medication => <Card key={medication.id}><AppText heading>{medication.name}</AppText><AppText>{medication.dosage} • {medication.schedule}</AppText><Button label={'View ' + medication.name} secondary onPress={() => navigation.getParent()?.navigate('MedicationDetail', { medication })} /></Card>)}
+    <AppText heading>Medication logs</AppText>
+    {data.doses.length === 0 ? <AppText>No doses logged yet.</AppText> : data.doses.map(log => <Card key={log.id}>
+      <AppText>{medications.find(medication => medication.id === log.medicationId)?.name} • {log.scheduledTime} dose</AppText>
+      <AppText>Scheduled date: {log.date}</AppText><AppText>Recorded taken: {formatTime(log.takenAt)}</AppText>
+    </Card>)}
+  </Screen>;
+}
+export function MedicationDetailScreen({ route }: NativeStackScreenProps<RootParams, 'MedicationDetail'>) {
+  const { medication } = route.params;
+  const { data, markDose, busy, today } = useApp(); const action = useAction();
+  return <Screen><AppText heading>{medication.name}</AppText><AppText>{medication.dosage} • {medication.schedule}</AppText>
+    <Card><AppText heading>Instructions</AppText><AppText>{medication.instructions}</AppText></Card>
+    <AppText heading>Doses for {today}</AppText>
+    {medication.doses.map(time => {
+      const log = data.doses.find(dose => dose.medicationId === medication.id && dose.scheduledTime === time && dose.date === today);
+      return <Card key={time} tone="warning"><AppText>{time} scheduled dose</AppText><AppText>{log ? 'Recorded taken: ' + formatTime(log.takenAt) : 'Not logged'}</AppText>
+        <Button label={log ? time + ' dose taken' : 'Mark ' + time + ' dose as taken'} disabled={busy || !!log} onPress={() => { void action.run(() => markDose(medication.id, time), time + ' dose saved.'); }} />
+      </Card>;
+    })}
+    <Notice message={action.notice} error={action.error} />
+    <Card tone="safety"><AppText>These are fictional demo medications. Recording a dose does not send information to a caregiver.</AppText></Card>
+  </Screen>;
+}

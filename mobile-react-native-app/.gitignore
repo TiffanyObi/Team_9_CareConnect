@@ -17,3 +17,8 @@ ios/build/
 .env
 .env.*
 !.env.example
+
+# Test evidence and export output
+coverage/
+dist-ios/
+dist-android/

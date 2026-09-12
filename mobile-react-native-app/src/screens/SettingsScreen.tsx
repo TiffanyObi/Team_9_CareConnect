@@ -1,4 +1,39 @@
-import React, { useState } from 'react'; import { ScrollView, StyleSheet, Switch, View } from 'react-native'; import { AppText, Button, Card, Screen } from '../components/UI'; import { useApp } from '../context/AppContext';
-export function SettingsScreen(): React.JSX.Element { const { settings, updateSettings, resetSettings } = useApp(); const [saved, setSaved] = useState(false); const update = (c: Partial<typeof settings>) => { setSaved(false); updateSettings(c); }; return <Screen><ScrollView contentContainerStyle={s.content}><AppText heading>Accessibility settings</AppText><AppText>Changes preview immediately without animation.</AppText>{saved && <Card style={{ backgroundColor: '#EAF7EE' }} label="Accessibility settings saved"><AppText>✓ Accessibility settings saved. Your preferences will be used on this device.</AppText></Card>}<Card><AppText style={s.title}>Visual preferences</AppText><AppText>Text size: {Math.round(settings.textScale * 100)}%</AppText><View style={s.row}><Button label="Smaller text" secondary onPress={() => update({ textScale: Math.max(1, settings.textScale - .25) })} /><Button label="Larger text" secondary onPress={() => update({ textScale: Math.min(2, settings.textScale + .25) })} /></View><View style={s.row}><Button label="Light" secondary onPress={() => update({ theme: 'light' })} /><Button label="Dark" secondary onPress={() => update({ theme: 'dark' })} /><Button label="Device" secondary onPress={() => update({ theme: 'system' })} /></View></Card><Card><AppText style={s.title}>Safety and motion</AppText><Setting title="Reduced motion" subtitle="Recommended for seizure safety" value={settings.reducedMotion} onChange={v => update({ reducedMotion: v })} /><Setting title="Static visual alerts" subtitle="No flashing or pulsing" value={settings.staticAlerts} onChange={v => update({ staticAlerts: v })} /></Card><Card><AppText style={s.title}>Alerts and touch</AppText><Setting title="Haptic reminders" subtitle="Paired with readable text" value={settings.hapticReminders} onChange={v => update({ hapticReminders: v })} /><Setting title="Larger touch targets" subtitle="Minimum 48 × 48 logical pixels" value={settings.largeTouchTargets} onChange={v => update({ largeTouchTargets: v })} /></Card><Card style={{ backgroundColor: '#101A26' }}><AppText style={{ color: '#E8EEF7', fontWeight: '700' }}>Preview: Medication due</AppText><AppText style={{ color: '#AFC1D6' }}>Levetiracetam • 8:00 AM</AppText></Card><Button label="Save changes" onPress={() => setSaved(true)} /><Button label="Reset to recommended safe settings" secondary onPress={() => { resetSettings(); setSaved(false); }} /></ScrollView></Screen>; }
-function Setting({ title, subtitle, value, onChange }: { title: string; subtitle: string; value: boolean; onChange: (value: boolean) => void }): React.JSX.Element { return <View accessible accessibilityLabel={`${title}. ${subtitle}`} style={s.setting}><View style={{ flex: 1 }}><AppText style={{ fontWeight: '700' }}>{title}</AppText><AppText>{subtitle}</AppText></View><Switch accessibilityLabel={title} value={value} onValueChange={onChange} /></View>; }
-const s = StyleSheet.create({ content: { padding: 20, gap: 12, maxWidth: 760, width: '100%', alignSelf: 'center' }, title: { fontWeight: '800', fontSize: 20, marginBottom: 8 }, setting: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, gap: 12 }, row: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' } });
+import React from 'react';
+import { Switch, View } from 'react-native';
+import { AppText, Button, Card, Notice, Screen, useAction } from '../components/UI';
+import { useApp } from '../context/AppContext';
+import { Settings } from '../types/models';
+
+export function SettingsScreen() {
+  const { settings, updateSettings, resetSettings, saveSettings, busy, reducedMotion } = useApp(); const action = useAction();
+  const update = (change: Partial<Settings>) => { action.clear(); updateSettings(change); };
+  return <Screen><AppText heading>Accessibility settings</AppText>
+    <AppText>Preview changes, then save them for this account. No flashing or autoplay is used in any mode.</AppText>
+    <Card><AppText heading>Visual preferences</AppText><AppText>Text size: {Math.round(settings.textScale * 100)}%</AppText>
+      <Button label="Smaller text" secondary disabled={busy || settings.textScale <= 1} onPress={() => update({ textScale: Math.max(1, settings.textScale - 0.25) })} />
+      <Button label="Larger text" secondary disabled={busy || settings.textScale >= 2} onPress={() => update({ textScale: Math.min(2, settings.textScale + 0.25) })} />
+      <AppText>Theme: {settings.theme}</AppText>
+      <Button label="Light" secondary disabled={busy} onPress={() => update({ theme: 'light' })} />
+      <Button label="Dark" secondary disabled={busy} onPress={() => update({ theme: 'dark' })} />
+      <Button label="Device" secondary disabled={busy} onPress={() => update({ theme: 'system' })} />
+    </Card>
+    <Card><AppText heading>Motion and feedback</AppText>
+      <Setting title="Reduced motion" value={settings.reducedMotion} onChange={value => update({ reducedMotion: value })} />
+      <AppText>{reducedMotion ? 'Screen transitions are off. Your phone’s motion preference is also respected.' : 'Standard screen transitions are enabled.'}</AppText>
+      <AppText>All alerts remain static. Flashing alerts cannot be enabled.</AppText>
+      <Setting title="Haptic feedback on successful saves" value={settings.hapticReminders} onChange={value => update({ hapticReminders: value })} />
+      <AppText>Optional touch feedback; no scheduled reminders are sent.</AppText>
+      <Setting title="Larger touch targets" value={settings.largeTouchTargets} onChange={value => update({ largeTouchTargets: value })} />
+      <AppText>Buttons are at least 48 × 48 logical pixels in either mode.</AppText>
+    </Card>
+    <Card tone="warning"><AppText heading>Preview</AppText><AppText>Medication status will stay visible as plain text.</AppText></Card>
+    <Notice message={action.notice} error={action.error} />
+    <Button label={busy ? 'Saving…' : 'Save changes'} disabled={busy} onPress={() => { void action.run(saveSettings, 'Settings saved for this account.'); }} />
+    <Button label="Reset to recommended settings" secondary disabled={busy} onPress={() => { resetSettings(); action.clear(); }} />
+    <AppText>Reset changes the preview. Choose Save changes to keep it.</AppText>
+  </Screen>;
+}
+function Setting({ title, value, onChange }: { title: string; value: boolean; onChange(value: boolean): void }) {
+  const { busy } = useApp();
+  return <View style={{ gap: 8 }}><AppText>{title}</AppText><Switch accessibilityLabel={title} value={value} onValueChange={onChange} disabled={busy} /></View>;
+}
