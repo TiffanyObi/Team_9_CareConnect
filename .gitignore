@@ -28,3 +28,10 @@ replay_pid*
 .env.*
 !.env.example
 .DS_Store
+
+# Expo / React Native generated output
+mobile-react-native-app/node_modules/
+mobile-react-native-app/.expo/
+mobile-react-native-app/.yarn/install-state.gz
+mobile-react-native-app/dist-android/
+mobile-react-native-app/dist-ios/
