@@ -2,6 +2,7 @@
   "name": "careconnect-react-native-app",
   "private": true,
   "version": "1.0.0",
+  "packageManager": "npm@10.9.2",
   "main": "node_modules/expo/AppEntry.js",
   "engines": {
     "node": ">=22.13.0"
