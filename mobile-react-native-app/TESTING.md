@@ -24,7 +24,7 @@ for tests without coverage. Review a changed snapshot before using
 
 ## Verified results, September 13, 2026
 
-- Four suites passed: 24 tests and one snapshot passed.
+- Five suites passed: 30 tests and one snapshot passed.
 - Three TODO entries track known app gaps; they are not executed tests or passes.
 - Statements: 95.93%; branches: 89.34%; functions: 95.76%; lines: 100%.
 - Type and lint checks passed.
@@ -70,3 +70,8 @@ this guide, the coverage ignore rule, and package files should change. Do not
 resolve a conflict by replacing a teammate's app file with an older copy.
 Fetch main and rerun checks after any upstream change. This branch has not
 been pushed or merged.
+
+## Flutter test alignment
+
+See [FLUTTER_TEST_PARITY.md](FLUTTER_TEST_PARITY.md) for the source checklist,
+ported behavior, gaps, and the actual Flutter baseline result.
