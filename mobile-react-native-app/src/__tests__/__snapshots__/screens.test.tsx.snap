@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shared components have a stable accessibility snapshot 1`] = `
+<View
+  accessible={false}
+  style={
+    [
+      {
+        "borderRadius": 14,
+        "borderWidth": 1,
+        "gap": 4,
+        "padding": 16,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#A9B9CA",
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    accessibilityRole="header"
+    maxFontSizeMultiplier={2}
+    style={
+      [
+        {
+          "color": "#10233F",
+          "fontSize": 28,
+          "lineHeight": 42,
+        },
+        {
+          "fontWeight": "800",
+        },
+        undefined,
+      ]
+    }
+  >
+    Saved record
+  </Text>
+  <View
+    accessibilityLabel="Open record"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderRadius": 12,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "marginVertical": 4,
+          "paddingHorizontal": 16,
+        },
+        {
+          "backgroundColor": "#2F6FED",
+          "borderColor": "#2F6FED",
+          "minHeight": 52,
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={2}
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontSize": 16,
+          "fontWeight": "700",
+          "lineHeight": 24,
+        }
+      }
+    >
+      Open record
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="Unavailable"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": true,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderRadius": 12,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "marginVertical": 4,
+          "paddingHorizontal": 16,
+        },
+        {
+          "backgroundColor": "#082B5F",
+          "borderColor": "#082B5F",
+          "minHeight": 52,
+          "opacity": 0.42,
+        },
+      ]
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={2}
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontSize": 16,
+          "fontWeight": "700",
+          "lineHeight": 24,
+        }
+      }
+    >
+      Unavailable
+    </Text>
+  </View>
+</View>
+`;
