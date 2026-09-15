@@ -15,6 +15,7 @@ npm run typecheck
 npm run security
 npx expo start
 ```
+From the Expo terminal, press i for the iOS Simulator or a for an Android emulator. You can also run npm run ios or npm run android directly.
 
 The sign-in form validates credentials against the local account database. The Olivia demonstration credentials are prefilled so the app can be explored immediately. Creating an account saves it locally and opens the required first-time accessibility setup; signing in to an existing account opens Today with the device's saved accessibility preferences.
 
