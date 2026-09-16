@@ -15,12 +15,21 @@ npm run typecheck
 npm run security
 npx expo start
 ```
+From the Expo terminal, press i for the iOS Simulator or a for an Android emulator. You can also run npm run ios or npm run android directly.
 
 The sign-in form validates credentials against the local account database. The Olivia demonstration credentials are prefilled so the app can be explored immediately. Creating an account saves it locally and opens the required first-time accessibility setup; signing in to an existing account opens Today with the device's saved accessibility preferences.
 
 ## Mobile builds
 
-Configure an Expo account and EAS project, then run `npx eas build --platform android` or `npx eas build --platform ios`. The app configuration supplies Android and iOS bundle identifiers.
+An Expo account is not required for a local Android build. With Android Studio, the Android SDK, and JDK 17 installed, generate the native project and release APK with:
+
+```sh
+npx expo prebuild --platform android
+cd android
+JAVA_HOME=$(/usr/libexec/java_home -v 17) NODE_ENV=production ./gradlew :app:assembleRelease
+```
+
+The APK is written to `android/app/build/outputs/apk/release/app-release.apk`. The same artifact can optionally be produced with EAS Build by signing in to Expo and running `npx eas-cli build --platform android --profile submission`; the `submission` profile explicitly requests an APK rather than the default Android App Bundle. The app configuration supplies Android and iOS bundle identifiers.
 
 ## Security notes
 
