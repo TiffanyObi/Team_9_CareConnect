@@ -32,6 +32,10 @@ exports[`shared components have a stable accessibility snapshot 1`] = `
           "fontWeight": "800",
         },
         undefined,
+        {
+          "fontSize": 28,
+          "lineHeight": 42,
+        },
       ]
     }
   >

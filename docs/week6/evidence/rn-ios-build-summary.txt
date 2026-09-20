@@ -1,0 +1,7 @@
+Xcode Release simulator build
+Workspace: CareConnect.xcworkspace
+Scheme: CareConnect
+Device: iPhone 17 / iOS 26.5
+BUILD SUCCEEDED
+Full log: rn-ios-build-final.txt in the local delivery folder.
+SHA256 of full log: 108b75cbd86c156a5a78732b323be2fcc753a83e90d796782d9967fe20e35649

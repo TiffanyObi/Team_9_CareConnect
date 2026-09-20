@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:careconnect_flutter/app/theme/app_colors.dart';
 import 'package:careconnect_flutter/core/widgets/app_button.dart';
 import 'package:careconnect_flutter/core/widgets/app_card.dart';
@@ -12,7 +14,7 @@ class MedicationDetailScreen extends StatefulWidget {
     super.key,
   });
   final Medication medication;
-  final ValueChanged<DateTime>? onMarkedTaken;
+  final FutureOr<void> Function(DateTime)? onMarkedTaken;
 
   @override
   State<MedicationDetailScreen> createState() => _MedicationDetailScreenState();
@@ -21,13 +23,28 @@ class MedicationDetailScreen extends StatefulWidget {
 class _MedicationDetailScreenState extends State<MedicationDetailScreen> {
   DateTime? _takenAt;
 
-  void _markTaken() {
+  bool _saving = false;
+  Future<void> _markTaken() async {
+    if (_saving) return;
+    setState(() => _saving = true);
     final time = DateTime.now();
-    setState(() => _takenAt = time);
-    widget.onMarkedTaken?.call(time);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Medication marked as taken.')),
-    );
+    try {
+      await widget.onMarkedTaken?.call(time);
+      if (!mounted) return;
+      setState(() => _takenAt = time);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Medication marked as taken.')),
+      );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Medication not saved. Please try again.'),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 
   @override
@@ -85,8 +102,12 @@ class _MedicationDetailScreenState extends State<MedicationDetailScreen> {
           ),
           const SizedBox(height: 12),
           AppButton(
-            label: _takenAt == null ? 'Mark as taken' : 'Taken',
-            onPressed: _takenAt == null ? _markTaken : null,
+            label: _saving
+                ? 'Saving…'
+                : _takenAt == null
+                ? 'Mark as taken'
+                : 'Taken',
+            onPressed: _takenAt == null && !_saving ? _markTaken : null,
           ),
           const SizedBox(height: 12),
           const AppCard(

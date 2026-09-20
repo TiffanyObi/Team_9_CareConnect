@@ -1,0 +1,10 @@
+Command: ['dart', 'format', 'lib', 'test', 'integration_test']
+Start: 2026-09-20T12:22:30.095527-04:00
+Formatted lib/core/database/app_database.dart
+Formatted lib/features/care/emergency_assistance_screen.dart
+Formatted lib/features/care/health_log_screen.dart
+Formatted lib/features/settings/accessibility_settings_screen.dart
+Formatted test/save_failure_test.dart
+Formatted test/widget_test.dart
+Formatted integration_test/week6_test.dart
+Formatted 52 files (7 changed) in 0.38 seconds.

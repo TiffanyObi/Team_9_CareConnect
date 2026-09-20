@@ -1,0 +1,14 @@
+00:00 +0: loading /Users/terenceboyce/tmp/week6-terence-testing/mobile-flutter-app/test/visual_evidence_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: captures 01-today.png visual evidence
+00:06 +1: captures 02-accessibility-settings.png visual evidence
+00:09 +2: captures 03-medications.png visual evidence
+00:09 +3: captures 04-medication-details.png visual evidence
+00:10 +4: captures 05-appointments.png visual evidence
+00:10 +5: captures 06-appointment-details.png visual evidence
+00:10 +6: captures 07-messages.png visual evidence
+00:10 +7: captures 08-message-details.png visual evidence
+00:11 +8: captures 09-health-log.png visual evidence
+00:12 +9: captures 10-emergency-assistance.png visual evidence
+00:12 +10: (tearDownAll)
+00:12 +10: All tests passed!

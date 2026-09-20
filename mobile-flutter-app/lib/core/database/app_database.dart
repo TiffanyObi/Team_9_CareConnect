@@ -2,9 +2,12 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
-  AppDatabase({Future<Database> Function()? openDatabase})
-    : _openDatabaseOverride = openDatabase;
+  AppDatabase({
+    Future<Database> Function()? openDatabase,
+    this.databaseName = 'careconnect_safeview.db',
+  }) : _openDatabaseOverride = openDatabase;
 
+  final String databaseName;
   final Future<Database> Function()? _openDatabaseOverride;
   Database? _database;
 
@@ -12,18 +15,16 @@ class AppDatabase {
       _database ??= await (_openDatabaseOverride?.call() ?? _open());
 
   Future<Database> _open() async {
-    final databasePath = path.join(
-      await getDatabasesPath(),
-      'careconnect_safeview.db',
-    );
+    final databasePath = path.join(await getDatabasesPath(), databaseName);
     return openDatabase(
       databasePath,
-      version: 2,
+      version: 3,
       onCreate: (database, _) async {
         await _createUsersTable(database);
         await database.execute('''
           CREATE TABLE medication_logs(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
             medication_name TEXT NOT NULL,
             taken_at TEXT NOT NULL
           )
@@ -31,6 +32,7 @@ class AppDatabase {
         await database.execute('''
           CREATE TABLE health_logs(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
             symptom TEXT NOT NULL,
             notes TEXT NOT NULL,
             recorded_at TEXT NOT NULL
@@ -39,6 +41,16 @@ class AppDatabase {
       },
       onUpgrade: (database, oldVersion, _) async {
         if (oldVersion < 2) await _createUsersTable(database);
+        if (oldVersion < 3) {
+          // Old rows have no known owner. Retain them, but never assign them
+          // to whichever account next signs in.
+          await database.execute(
+            'ALTER TABLE medication_logs ADD COLUMN user_id INTEGER',
+          );
+          await database.execute(
+            'ALTER TABLE health_logs ADD COLUMN user_id INTEGER',
+          );
+        }
       },
     );
   }

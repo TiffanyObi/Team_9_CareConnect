@@ -38,3 +38,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Images produced when a golden comparison fails
+/test/failures/

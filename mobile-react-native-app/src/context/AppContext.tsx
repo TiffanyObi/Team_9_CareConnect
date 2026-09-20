@@ -18,7 +18,7 @@ type AppState = {
   isReady: boolean; isBusy: boolean;
   signIn: (email: string, password: string) => Promise<string | null>;
   signUp: (name: string, email: string, password: string) => Promise<string | null>;
-  completeOnboarding: () => Promise<void>; signOut: () => void;
+  saveSettings: () => Promise<void>; completeOnboarding: () => Promise<void>; signOut: () => void;
   markMedicationTaken: (medication: Medication) => Promise<void>;
   addLog: (symptom: string, notes: string) => Promise<void>;
   updateSettings: (change: Partial<Settings>) => void; resetSettings: () => void;
@@ -64,16 +64,20 @@ export function AppProvider({ children, repositories }: AppProviderProps): React
     try { const result = await services.auth.register(name, email, password); if (result === 'emailAlreadyExists') return 'An account already exists for this email.'; const created = await services.auth.authenticate(email, password); if (!created) return 'Your account was created, but sign in failed. Please sign in again.'; await services.settings.save(created.id, safeSettings); setSettings(safeSettings); setMedicationLogs([]); setLogs([]); setAccount(created); setSessionStage('accessibilitySetup'); return null; }
     catch { return 'Account creation is unavailable right now. Please try again.'; } finally { setBusy(false); }
   }, [services]);
-  const updateSettings = useCallback((change: Partial<Settings>) => { setSettings(current => { const updated = { ...current, ...change }; if (account) void services.settings.save(account.id, updated); return updated; }); }, [account, services]);
-  const resetSettings = useCallback(() => { setSettings(safeSettings); if (account) void services.settings.save(account.id, safeSettings); }, [account, services]);
+  const updateSettings = useCallback((change: Partial<Settings>) => { setSettings(current => ({ ...current, ...change })); }, []);
+  const resetSettings = useCallback(() => { setSettings(safeSettings); }, []);
+  const saveSettings = useCallback(async () => {
+    if (!account) throw new Error('Sign in before saving settings.');
+    await services.settings.save(account.id, settings);
+  }, [account, services, settings]);
   const markMedicationTaken = useCallback(async (medication: Medication) => { if (!account) throw new Error('A user must be signed in to log medication.'); const saved = await services.medicationLogs.addLog(account.id, medication.id, medication.name, new Date()); setMedicationLogs(current => [saved, ...current]); }, [account, services]);
   const addLog = useCallback(async (symptom: string, notes: string) => { if (!account) throw new Error('A user must be signed in to add a health log.'); const saved = await services.healthLogs.addLog(account.id, symptom, notes, new Date()); setLogs(current => [saved, ...current]); }, [account, services]);
   const value = useMemo<AppState>(() => ({
     account, userName: account?.fullName.split(/\s+/)[0] || 'Care recipient', sessionStage, settings, medicationLogs,
     logs, isReady, isBusy,
-    signIn, signUp, completeOnboarding: async () => { if (!account) throw new Error('A user must be signed in to save settings.'); await services.settings.save(account.id, settings); setSessionStage('signedIn'); },
+    signIn, signUp, saveSettings, completeOnboarding: async () => { if (!account) throw new Error('A user must be signed in to save settings.'); await services.settings.save(account.id, settings); setSessionStage('signedIn'); },
     signOut: () => { setAccount(null); setSettings(safeSettings); setMedicationLogs([]); setLogs([]); setSessionStage('signedOut'); }, markMedicationTaken, addLog, updateSettings, resetSettings,
-  }), [account, sessionStage, settings, medicationLogs, logs, isReady, isBusy, signIn, signUp, services, markMedicationTaken, addLog, updateSettings, resetSettings]);
+  }), [account, sessionStage, settings, medicationLogs, logs, isReady, isBusy, signIn, signUp, services, markMedicationTaken, addLog, updateSettings, resetSettings, saveSettings]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

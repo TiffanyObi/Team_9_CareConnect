@@ -221,29 +221,35 @@ void main() {
     expect(send.onPressed, isNull);
   });
 
-  testWidgets('Care emergency action opens assistance and confirms call', (
-    tester,
-  ) async {
-    await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
-    await tester.pumpAndSettle();
+  testWidgets(
+    'Care emergency action opens assistance and clearly states no call was placed',
+    (tester) async {
+      await tester.pumpWidget(CareConnectApp(store: MemorySettingsStore()));
+      await tester.pumpAndSettle();
 
-    Visibility emergencyVisibility() => tester.widget<Visibility>(
-      find.ancestor(
-        of: find.text('Emergency'),
-        matching: find.byType(Visibility),
-      ),
-    );
-    expect(emergencyVisibility().visible, isFalse);
-    await tester.tap(find.byIcon(Icons.calendar_month_outlined));
-    await tester.pumpAndSettle();
-    expect(emergencyVisibility().visible, isTrue);
-    await tester.tap(find.text('Emergency'));
-    await tester.pumpAndSettle();
-    expect(find.text('Call emergency services'), findsOneWidget);
+      Visibility emergencyVisibility() => tester.widget<Visibility>(
+        find.ancestor(
+          of: find.text('Emergency'),
+          matching: find.byType(Visibility),
+        ),
+      );
+      expect(emergencyVisibility().visible, isFalse);
+      await tester.tap(find.byIcon(Icons.calendar_month_outlined));
+      await tester.pumpAndSettle();
+      expect(emergencyVisibility().visible, isTrue);
+      await tester.tap(find.text('Emergency'));
+      await tester.pumpAndSettle();
+      expect(find.text('Call emergency services'), findsOneWidget);
 
-    await tester.tap(find.text('Call emergency services'));
-    await tester.pumpAndSettle();
-    expect(find.text('Emergency services called'), findsOneWidget);
-    expect(find.text('Emergency services have been called.'), findsOneWidget);
-  });
+      await tester.tap(find.text('Call emergency services'));
+      await tester.pumpAndSettle();
+      expect(find.text('Demo only — no call placed'), findsOneWidget);
+      expect(
+        find.text(
+          'This prototype cannot call emergency services. Use your phone to call your local emergency number.',
+        ),
+        findsOneWidget,
+      );
+    },
+  );
 }

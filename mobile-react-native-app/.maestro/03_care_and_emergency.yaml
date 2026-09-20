@@ -7,17 +7,29 @@ name: React Native - care and emergency assistance
     optional: true
 - extendedWaitUntil:
     visible: "Sign in"
-    timeout: 15000
+    timeout: 90000
 - tapOn:
     text: "Sign in"
     index: 1
 - extendedWaitUntil:
     visible: "Good morning, Olivia"
-    timeout: 15000
+    timeout: 90000
 - tapOn: "Care tab"
 - assertVisible: "Your appointments"
+- scrollUntilVisible:
+    element:
+      text: "Emergency assistance"
+    direction: DOWN
+    centerElement: true
 - tapOn: "Emergency assistance"
 - assertVisible: "Use only when you or someone else may be in danger."
+- scrollUntilVisible:
+    element:
+      text: "Call emergency services"
+    direction: DOWN
+    centerElement: true
 - tapOn: "Call emergency services"
-- assertVisible: "Emergency services called"
+- assertVisible: "Demo only.*no call placed"
 - tapOn: "OK"
+
+- takeScreenshot: 03_care_and_emergency

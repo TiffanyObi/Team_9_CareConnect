@@ -47,20 +47,38 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
     super.dispose();
   }
 
-  void _save() {
+  bool _saving = false;
+  Future<void> _save() async {
+    if (_saving) return;
     if (_symptom == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Choose a symptom to continue.')),
       );
       return;
     }
-    _controller.add(symptom: _symptom!, notes: _notesController.text.trim());
-    setState(() {
-      _symptom = null;
-      _notesController.clear();
-    });
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Health log saved.')));
+    setState(() => _saving = true);
+    try {
+      await _controller.add(
+        symptom: _symptom!,
+        notes: _notesController.text.trim(),
+      );
+      if (!mounted) return;
+      setState(() {
+        _symptom = null;
+        _notesController.clear();
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Health log saved.')));
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Health log not saved. Please try again.'),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 
   @override
@@ -97,14 +115,23 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
           controller: _notesController,
           minLines: 3,
           maxLines: 5,
-          decoration: const InputDecoration(
-            labelText: 'Private notes (optional)',
+          decoration: InputDecoration(
+            labelText: MediaQuery.textScalerOf(context).scale(1) > 1.5
+                ? 'Private notes'
+                : 'Private notes (optional)',
+            helperText: MediaQuery.textScalerOf(context).scale(1) > 1.5
+                ? 'Optional'
+                : null,
+            hintMaxLines: 3,
             hintText: 'Add details about how you feel',
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 12),
-        AppButton(label: 'Save today’s log', onPressed: _save),
+        AppButton(
+          label: _saving ? 'Saving…' : 'Save today’s log',
+          onPressed: _saving ? null : _save,
+        ),
         const SizedBox(height: 24),
         Text(
           'Recent health logs',

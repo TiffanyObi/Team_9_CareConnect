@@ -32,9 +32,10 @@ test('settings updates persist current preferences and reset the displayed save 
   const setup = await signed(<SettingsScreen />);
   fireEvent.press(screen.getByText('Dark'));
   fireEvent.press(screen.getByText('Larger text'));
-  await waitFor(() => expect(setup.repositories.settings.save).toHaveBeenCalledWith(1, expect.objectContaining({ theme: 'dark', textScale: 1.25 })));
+  expect(setup.repositories.settings.save).not.toHaveBeenCalled();
   fireEvent.press(screen.getByText('Save changes'));
-  expect(screen.getByText(/✓ Accessibility settings saved/)).toBeTruthy();
+  expect(await screen.findByText(/✓ Accessibility settings saved/)).toBeTruthy();
+  expect(setup.repositories.settings.save).toHaveBeenCalledWith(1, expect.objectContaining({ theme: 'dark', textScale: 1.25 }));
   fireEvent.press(screen.getByText('Light'));
   expect(screen.queryByText(/✓ Accessibility settings saved/)).toBeNull();
 });
@@ -118,9 +119,29 @@ test('emergency screen exposes the current placeholder and disabled caregiver ac
   expect(screen.getByRole('button', { name: 'Alert caregiver' })).toBeDisabled();
   expect(screen.getByRole('button', { name: 'Call emergency services' })).toBeTruthy();
 });
-test.todo('Emergency action must not claim a call was placed without placing one');
-test.todo('Settings save confirmation must wait for successful persistence and handle failure');
-test.todo('Reduced motion preference must control navigation transitions');
+test('emergency demo says no call was placed', async () => {
+  await signed(<EmergencyScreen />);
+  fireEvent.press(screen.getByRole('button', { name: 'Call emergency services' }));
+  expect(Alert.alert).toHaveBeenCalledWith('Demo only — no call placed', expect.stringContaining('cannot call'));
+});
+test('settings confirmation waits for storage and failed writes can be retried', async () => {
+  const setup = await signed(<SettingsScreen />);
+  let finish!: () => void;
+  setup.repositories.settings.save.mockImplementationOnce(() => new Promise<void>(resolve => { finish = resolve; }));
+  fireEvent.press(screen.getByText('Save changes'));
+  expect(screen.queryByText(/✓ Accessibility settings saved/)).toBeNull();
+  expect(screen.getByRole('button', { name: 'Saving…' })).toBeDisabled();
+  await act(async () => finish());
+  expect(await screen.findByText(/✓ Accessibility settings saved/)).toBeTruthy();
+  fireEvent.press(screen.getByText('Dark'));
+  setup.repositories.settings.save.mockRejectedValueOnce(new Error('disk full'));
+  fireEvent.press(screen.getByText('Save changes'));
+  await waitFor(() => expect(Alert.alert).toHaveBeenCalledWith('Settings not saved', expect.any(String)));
+  expect(screen.queryByText(/✓ Accessibility settings saved/)).toBeNull();
+  fireEvent.press(screen.getByText('Save changes'));
+  expect(await screen.findByText(/✓ Accessibility settings saved/)).toBeTruthy();
+});
+
 test('today asks before logout and exposes the medication route', async () => {
   const navigation = nav(); await signed(<TodayScreen {...({ navigation } as unknown as React.ComponentProps<typeof TodayScreen>)} />);
   fireEvent.press(screen.getByText('Log medication'));

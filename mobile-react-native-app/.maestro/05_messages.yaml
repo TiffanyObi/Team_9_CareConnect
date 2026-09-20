@@ -1,0 +1,45 @@
+appId: ${APP_ID}
+name: React Native - message detail and cancel
+---
+- launchApp
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 90000
+- tapOn:
+    text: "Sign in"
+    index: 1
+- extendedWaitUntil:
+    visible: "Good morning, Olivia"
+    timeout: 90000
+- tapOn: "Messages tab"
+- tapOn:
+    text: "Open message"
+    index: 0
+- assertVisible: "Hope your appointment went smoothly today.*"
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          id: "BackButton"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- scrollUntilVisible:
+    element:
+      text: "New message"
+    direction: DOWN
+    centerElement: true
+- tapOn: "New message"
+- assertVisible: "Send"
+- tapOn: "Cancel"
+- assertNotVisible: "Send"
+- scrollUntilVisible:
+    element:
+      text: "Care team messages"
+    direction: UP
+    centerElement: true
+- assertVisible: "Care team messages"
+- takeScreenshot: 05_messages

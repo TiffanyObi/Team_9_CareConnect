@@ -1,0 +1,8 @@
+Waiting for flows to complete...
+[Passed] React Native - health log validation and save (45s)
+[Passed] React Native - accessibility settings and logout confirmation (47s)
+[Passed] React Native - message detail and cancel (33s)
+[Passed] React Native - care and emergency assistance (39s)
+[Passed] React Native - sign in and log medication (37s)
+
+5/5 Flows Passed in 3m 20s

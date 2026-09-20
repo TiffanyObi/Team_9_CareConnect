@@ -1,0 +1,11 @@
+Command: ['flutter', 'test', 'integration_test/week6_test.dart', '-d', '7113377D-6F87-40C0-A6F0-FEE0ED52C6B8', '--reporter', 'expanded']
+Start: 2026-09-20T12:25:19.666458-04:00
+00:00 +0: loading /Users/terenceboyce/tmp/week6-terence-testing/mobile-flutter-app/integration_test/week6_test.dart
+Running Xcode build...
+Xcode build done.                                           24.3s
+00:00 +0: native SQLite keeps both log types per account after reopen
+00:00 +1: version 2 migration retains unowned rows without exposing them
+00:00 +2: sign in and medication flow use native storage
+00:03 +3: large-text settings save and message cancel remain reachable
+00:06 +4: (tearDownAll)
+00:07 +4: All tests passed!

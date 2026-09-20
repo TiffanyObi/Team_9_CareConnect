@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class EmergencyAssistanceScreen extends StatelessWidget {
   const EmergencyAssistanceScreen({super.key});
 
-  Future<void> _showCalledAlert(BuildContext context) => showDialog<void>(
+  Future<void> _showDemoAlert(BuildContext context) => showDialog<void>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Emergency services called'),
-      content: const Text('Emergency services have been called.'),
+      title: const Text('Demo only — no call placed'),
+      content: const Text(
+        'This prototype cannot call emergency services. Use your phone to call your local emergency number.',
+      ),
       actions: [
         FilledButton(
           onPressed: () => Navigator.of(context).pop(),
@@ -52,7 +54,7 @@ class EmergencyAssistanceScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Ready to share only after confirmation.',
+                  'This prototype does not share your location.',
                   style: TextStyle(color: AppColors.lightTextSecondary),
                 ),
               ],
@@ -68,7 +70,7 @@ class EmergencyAssistanceScreen extends StatelessWidget {
                 foregroundColor: Colors.white,
                 minimumSize: const Size.fromHeight(52),
               ),
-              onPressed: () => _showCalledAlert(context),
+              onPressed: () => _showDemoAlert(context),
               child: const Text('Call emergency services'),
             ),
           ),
@@ -88,9 +90,8 @@ class EmergencyAssistanceScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const Text(
-                  '1. You confirm the action\n'
-                  '2. A static status stays visible\n'
-                  '3. Response acknowledgment is recorded',
+                  'This demo shows an alert only. It does not place a call, '
+                  'share your location, or record a response.',
                 ),
               ],
             ),
