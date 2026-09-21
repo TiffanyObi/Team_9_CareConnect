@@ -117,6 +117,9 @@ flutter analyze
 flutter test
 ```
 
+Week 6 integration and installed-app E2E testing for both mobile frameworks is
+documented in [`docs/week6/INTEGRATION_E2E_TESTING.md`](docs/week6/INTEGRATION_E2E_TESTING.md).
+
 ## Current Limitations and Known Issues
 
 - The web, desktop, and React Native folders remain environment-verification starters; the Flutter app contains the current Week 4 functional workflow.

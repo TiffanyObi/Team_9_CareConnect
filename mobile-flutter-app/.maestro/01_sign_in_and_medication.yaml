@@ -1,0 +1,22 @@
+appId: ${APP_ID}
+name: Flutter - sign in and log medication
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Sign in"
+- tapOn: "Email"
+- inputText: "omartinez@careconnect.com"
+- tapOn: "Password"
+- inputText: "password"
+- tapOn:
+    text: "Sign in"
+    index: 1
+- extendedWaitUntil:
+    visible: "Good morning, Olivia"
+    timeout: 15000
+- tapOn: "Log medication"
+- assertVisible: "Medications"
+- tapOn: ".*Levetiracetam.*"
+- assertVisible: "Medication details"
+- tapOn: "Mark as taken"
+- assertVisible: "Taken"
