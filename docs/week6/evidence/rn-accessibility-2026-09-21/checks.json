@@ -1,6 +1,7 @@
 {
-  "date": "2026-09-21 22:04:52.934186-04:00",
-  "baseCommit": "6ce8864760915463c704744eff2283924d7577e6",
+  "date": "2026-09-21 22:07:52.580425-04:00",
+  "baseCommit": "b7f10cc966b9152c519d7891526a867556c6239f",
+  "testedCommit": "ed5f33121d3b61ab8640041ecdba245edb4c1dbf",
   "branch": "feature/rn-accessibility-semantics",
   "results": [
     {

@@ -2,14 +2,14 @@
 
 September 21, 2026 (ET). Owner: Terence Boyce.
 
-Scope: the React Native props audit, semantic tests, and rendered color checks from the team checklist. These are branch results based on main `6ce8864760915463c704744eff2283924d7577e6`. They are not final-main device results or a full conformance report.
+Scope: the React Native props audit, semantic tests, and rendered color checks from the team checklist. These are branch results based on main `b7f10cc966b9152c519d7891526a867556c6239f`. They are not final-main device results or a full conformance report.
 
 ## Result
 
 - Props audit and fixes: complete for the app-owned controls listed below. Native reader behavior remains to be checked.
 - Semantic tests: complete for names, roles, states, form labels, alert requests, save announcements, dialog background hiding, and tab controls.
 - Contrast: 446 rendered-style observations across both themes, including 16 inactive-control observations marked exempt. All 430 non-exempt observations pass their thresholds. The lowest ratio is 4.548:1. Native focus indicators, switch graphics, alert windows, and Back controls still need device checks.
-- Full React Native suite: **44 tests passed in 8 suites**, one snapshot passed, no failed tests. TypeScript and ESLint passed. See the saved logs and coverage summary for exact results.
+- Full React Native suite: **48 tests passed in 9 suites**, one snapshot passed, no failed tests. TypeScript and ESLint passed. See the saved logs and coverage summary for exact results.
 
 ## Control audit
 
@@ -49,7 +49,7 @@ The test resolves styles from RNTL host nodes and their ancestor backgrounds. It
 
 Text uses the stricter 4.5:1 normal-text threshold, even for headings. Input borders use 3:1 against the input fill. Inactive controls are listed but exempt; their raw color ratios do not include disabled opacity and are not pass claims. Decorative card borders are not treated as required control boundaries. The selected-tab icon fill is checked. This is resolved-style evidence, not native screenshot pixel sampling.
 
-**Still open:** native switch thumb/track, system alert/error colors, native Back controls, and actual visible keyboard focus indicators. The unused `focus` color token is not proof of a visible focus indicator. Another branch, `feature/keyboard-guidelines-touch-targets`, works on keyboard/target behavior and shares some of these source files. Review overlaps when merging, then rerun the checks on the resulting main commit.
+**Still open:** native switch thumb/track, system alert/error colors, native Back controls, and actual visible keyboard focus indicators. The unused `focus` color token is not proof of a visible focus indicator. PR #18 (`feature/keyboard-guidelines-touch-targets`) merged while this audit was in progress. This branch was rebased onto main `b7f10cc`; all target-size constants, focusable controls, switch sizing, tab sizing, and incoming tests were retained. The full React Native checks were rerun after resolving the shared-file conflicts. Rerun device checks on the final submission commit.
 
 VoiceOver/TalkBack speech, dialog containment, focus restoration, keyboard order, zoom/reflow, and touch targets are not certified by this suite. Use a final build on each target platform to check those items. Keep the VPAT partial until the remaining evidence is recorded.
 
@@ -64,4 +64,4 @@ npm run lint
 CONTRAST_REPORT="$PWD/../docs/week6/evidence/rn-accessibility-2026-09-21/rendered-contrast.json" npm run test:coverage -- --json --outputFile="$PWD/../docs/week6/evidence/rn-accessibility-2026-09-21/jest-results.json"
 ```
 
-The [checks manifest](evidence/rn-accessibility-2026-09-21/checks.json) records the base commit, run time, and exit codes. The [source manifest](evidence/rn-accessibility-2026-09-21/source-sha256.json) identifies the tested source and configuration. The evidence is from this branch's working tree before its documentation commit; it must not be relabeled as a main-branch run.
+The [checks manifest](evidence/rn-accessibility-2026-09-21/checks.json) records the base commit, run time, and exit codes. The [source manifest](evidence/rn-accessibility-2026-09-21/source-sha256.json) identifies the tested source and configuration. The checks manifest names the tested source commit. The later evidence-only commit does not change app or test source. These results must not be relabeled as a main-branch run.
