@@ -32,6 +32,16 @@ flutter test
 flutter run
 ```
 
+Run the device-level integration suite with a running emulator, simulator, or
+physical device:
+
+```bash
+flutter test integration_test/app_workflows_test.dart -d <device-id>
+```
+
+The cross-framework Maestro E2E workflows and evidence commands are documented
+in [`../docs/week6/INTEGRATION_E2E_TESTING.md`](../docs/week6/INTEGRATION_E2E_TESTING.md).
+
 For complete prerequisites and troubleshooting, see the repository's root `README.md` and `docs/DEVELOPER_SETUP.md`. Run the Week 4 gate with `./tool/verify_week4.sh`.
 
 The September 8, 2026 gate passed with 41 tests, no analyzer issues, and 718/780 covered lines (92.05%). The responsive suite exercises all ten evidence screens at 100% and 200% text scale on phone and tablet surfaces. Generate the local HTML report with `genhtml coverage/lcov.info --output-directory coverage/html --legend`.

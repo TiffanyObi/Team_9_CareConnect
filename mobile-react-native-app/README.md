@@ -19,6 +19,13 @@ From the Expo terminal, press i for the iOS Simulator or a for an Android emulat
 
 The sign-in form validates credentials against the local account database. The Olivia demonstration credentials are prefilled so the app can be explored immediately. Creating an account saves it locally and opens the required first-time accessibility setup; signing in to an existing account opens Today with the device's saved accessibility preferences.
 
+## End-to-end tests
+
+The `.maestro/` flows exercise sign-in, medication logging, accessibility
+settings, logout confirmation, care navigation, and emergency feedback against
+an installed native build. Setup, execution, and evidence commands are in
+[`../docs/week6/INTEGRATION_E2E_TESTING.md`](../docs/week6/INTEGRATION_E2E_TESTING.md).
+
 ## Mobile builds
 
 An Expo account is not required for a local Android build. With Android Studio, the Android SDK, and JDK 17 installed, generate the native project and release APK with:

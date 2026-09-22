@@ -7,9 +7,9 @@ import { colors, darkColors } from '../utils/theme';
 export type CardTone = 'default' | 'info' | 'warning' | 'success';
 export function useColors() { const { settings } = useApp(); const deviceTheme = useColorScheme(); const useDark = settings.theme === 'dark' || (settings.theme === 'system' && deviceTheme === 'dark'); return useDark ? darkColors : colors; }
 export function Screen({ children }: { children: React.ReactNode }): React.JSX.Element { const c = useColors(); return <SafeAreaView edges={['top', 'left', 'right']} style={[styles.screen, { backgroundColor: c.background }]}>{children}</SafeAreaView>; }
-export function Card({ children, style, label, tone = 'default' }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; label?: string; tone?: CardTone }): React.JSX.Element {
+export function Card({ children, style, tone = 'default' }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; label?: string; tone?: CardTone }): React.JSX.Element {
   const c = useColors(); const backgroundColor = { default: c.surface, info: c.safety, warning: c.warning, success: c.successSurface }[tone];
-  return <View accessible={Boolean(label)} accessibilityLabel={label} style={[styles.card, { backgroundColor, borderColor: c.border }, style]}>{children}</View>;
+  return <View style={[styles.card, { backgroundColor, borderColor: c.border }, style]}>{children}</View>;
 }
 export function AppText({ children, style, heading = false, secondary = false }: { children: React.ReactNode; style?: StyleProp<TextStyle>; heading?: boolean; secondary?: boolean }): React.JSX.Element {
   const { settings } = useApp(); const c = useColors(); const size = heading ? 28 : 16;

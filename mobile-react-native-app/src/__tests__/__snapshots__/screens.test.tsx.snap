@@ -2,7 +2,6 @@
 
 exports[`shared components have a stable accessibility snapshot 1`] = `
 <View
-  accessible={false}
   style={
     [
       {

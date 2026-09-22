@@ -1,0 +1,33 @@
+appId: ${APP_ID}
+name: React Native - accessibility settings and logout confirmation
+---
+- launchApp
+- tapOn:
+    text: "Open"
+    optional: true
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 15000
+- tapOn:
+    text: "Sign in"
+    index: 1
+- extendedWaitUntil:
+    visible: "Good morning, Olivia"
+    timeout: 15000
+- tapOn: "Settings tab"
+- assertVisible: "Accessibility settings"
+- scrollUntilVisible:
+    element:
+      text: "Save changes"
+    direction: DOWN
+- tapOn: "Save changes"
+- scrollUntilVisible:
+    element:
+      text: ".*Accessibility settings saved.*"
+    direction: UP
+- assertVisible: ".*Accessibility settings saved.*"
+- tapOn: "Today tab"
+- tapOn: "Log out"
+- assertVisible: "Log out?"
+- tapOn: "Cancel"
+- assertVisible: "Good morning, Olivia"

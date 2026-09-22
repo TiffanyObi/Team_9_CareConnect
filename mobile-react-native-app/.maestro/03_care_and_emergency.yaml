@@ -1,0 +1,23 @@
+appId: ${APP_ID}
+name: React Native - care and emergency assistance
+---
+- launchApp
+- tapOn:
+    text: "Open"
+    optional: true
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 15000
+- tapOn:
+    text: "Sign in"
+    index: 1
+- extendedWaitUntil:
+    visible: "Good morning, Olivia"
+    timeout: 15000
+- tapOn: "Care tab"
+- assertVisible: "Your appointments"
+- tapOn: "Emergency assistance"
+- assertVisible: "Use only when you or someone else may be in danger."
+- tapOn: "Call emergency services"
+- assertVisible: "Emergency services called"
+- tapOn: "OK"
