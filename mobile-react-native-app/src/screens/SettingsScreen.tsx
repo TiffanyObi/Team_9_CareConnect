@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Switch, View } from 'react-native';
-import { AppText, Button, Card, minimumTouchTarget, Screen } from '../components/UI';
+import { AppText, Button, Card, minimumTouchTarget, Screen, StatusMessage } from '../components/UI';
 import { useApp } from '../context/AppContext';
 
 export function SettingsScreen({ onboarding = false }: { onboarding?: boolean }): React.JSX.Element {
@@ -17,7 +17,7 @@ export function SettingsScreen({ onboarding = false }: { onboarding?: boolean })
   return <Screen><ScrollView contentContainerStyle={s.content}>
     <AppText heading>{onboarding ? 'Make Safeview comfortable' : 'Accessibility settings'}</AppText>
     <AppText secondary>{onboarding ? 'Choose a safe starting environment. You can change it later.' : 'Changes preview immediately without animation.'}</AppText>
-    {saved && <Card tone="success" label="Accessibility settings saved"><AppText style={s.darkText}>✓ Accessibility settings saved. Your preferences will be used on this device.</AppText></Card>}
+    {saved && <Card tone="success" label="Accessibility settings saved"><StatusMessage style={s.darkText} message="✓ Accessibility settings saved. Your preferences will be used on this device." /></Card>}
     <Card>
       <AppText style={s.title}>Visual preferences</AppText>
       <AppText>Text size: {Math.round(settings.textScale * 100)}%</AppText>
@@ -46,7 +46,7 @@ export function SettingsScreen({ onboarding = false }: { onboarding?: boolean })
 }
 
 function Setting({ title, subtitle, value, onChange }: { title: string; subtitle: string; value: boolean; onChange: (value: boolean) => void }): React.JSX.Element {
-  return <View style={s.setting}><View style={s.settingText}><AppText style={s.settingTitle}>{title}</AppText><AppText secondary>{subtitle}</AppText></View><Switch accessibilityLabel={title} style={{ minWidth: minimumTouchTarget, minHeight: minimumTouchTarget }} value={value} onValueChange={onChange} /></View>;
+  return <View style={s.setting}><View style={s.settingText}><AppText style={s.settingTitle}>{title}</AppText><AppText secondary>{subtitle}</AppText></View><Switch style={{ minWidth: minimumTouchTarget, minHeight: minimumTouchTarget }} accessibilityRole="switch" accessibilityState={{ checked: value }} accessibilityHint={subtitle} accessibilityLabel={title} value={value} onValueChange={onChange} /></View>;
 }
 
 const s = StyleSheet.create({

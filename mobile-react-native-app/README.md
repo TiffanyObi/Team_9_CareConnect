@@ -46,4 +46,8 @@ This prototype uses on-device persistence rather than a remote clinical backend.
 
 See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md) and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for current results, fixes, and known limits. Automated checks do not replace VoiceOver or TalkBack review.
 
+### React Native semantic and contrast evidence (September 21, 2026)
+
+See the [accessibility audit](../docs/week6/RN_ACCESSIBILITY_AUDIT.md) for control coverage, fixes, test commands, contrast ratios, and the native checks still needed. Automated semantics and color checks do not replace VoiceOver or TalkBack testing.
+
 Keyboard focusability, Flutter guideline scope, and cross-framework minimum touch-target checks are documented in [Keyboard, guideline, and touch-target verification](../docs/week6/KEYBOARD_GUIDELINES_TOUCH_TARGETS.md).

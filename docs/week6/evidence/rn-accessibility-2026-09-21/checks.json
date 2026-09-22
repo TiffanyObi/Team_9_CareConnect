@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-21 22:07:52.580425-04:00",
+  "baseCommit": "b7f10cc966b9152c519d7891526a867556c6239f",
+  "testedCommit": "ed5f33121d3b61ab8640041ecdba245edb4c1dbf",
+  "branch": "feature/rn-accessibility-semantics",
+  "results": [
+    {
+      "check": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "check": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "check": "jest",
+      "command": [
+        "npm",
+        "run",
+        "test:coverage",
+        "--",
+        "--json",
+        "--outputFile=/Users/terenceboyce/tmp/week6-rn-accessibility/docs/week6/evidence/rn-accessibility-2026-09-21/jest-results.json"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

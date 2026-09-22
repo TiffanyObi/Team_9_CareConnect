@@ -12,7 +12,7 @@ exports[`shared components have a stable accessibility snapshot 1`] = `
       },
       {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "#A9B9CA",
+        "borderColor": "#71839A",
       },
       undefined,
     ]
@@ -89,6 +89,11 @@ exports[`shared components have a stable accessibility snapshot 1`] = `
           "minHeight": 52,
           "minWidth": 44,
           "opacity": 1,
+          "transform": [
+            {
+              "scale": 1,
+            },
+          ],
         },
       ]
     }
@@ -155,6 +160,11 @@ exports[`shared components have a stable accessibility snapshot 1`] = `
           "minHeight": 52,
           "minWidth": 44,
           "opacity": 0.42,
+          "transform": [
+            {
+              "scale": 1,
+            },
+          ],
         },
       ]
     }
