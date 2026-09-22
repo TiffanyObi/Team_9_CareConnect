@@ -1,5 +1,7 @@
 # Terence's Week 6 testing handoff
 
+> Historical record from September 20. PRs #15 and #16 are now merged. Use [the combined guide](INTEGRATION_E2E_TESTING.md) and [plan mapping](TEST_PLAN_MAPPING.md) for September 21 status. The results and dated open items below are preserved as run history.
+
 September 20, 2026 (Eastern Time).
 
 Branch: `feature/terence-week6-testing`. Based on Tiffany's `feature/integration-e2e-testing` at `9ee78072d61450758beb74a2613dbc496278ceff`. Main was `88ec2a7e6887225bbc3c6c4cf97b61f3b45b3c3d` when work began. No merge into main is part of this work.

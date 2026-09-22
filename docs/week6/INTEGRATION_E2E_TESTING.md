@@ -1,42 +1,60 @@
-# Week 6 integration and E2E checks
+# Week 6 integration and E2E testing
 
-Updated September 20, 2026 (Eastern Time).
+Updated September 21, 2026 (ET). Reviewed main: `2cab927`.
 
-Start from this branch in a separate clone. Use fake accounts on a simulator or test device. These flows add local demo logs. They do not send messages or place emergency calls.
+Tiffany's PR #15 and Terence's PR #16 are merged. This guide covers both sets of tests. Use fake accounts on a simulator or test device: these flows change local demo data. Emergency actions do not place calls or share location.
 
-## Flutter
+## Before running
+
+Use a clean checkout and record `git rev-parse HEAD`, device ID, OS, and tool versions with each run. Run `flutter devices` for Flutter targets. Install the app before using Maestro; widget/Jest renders are not installed apps.
+
+Two issues remain in the reviewed main commit:
+
+- `mobile-flutter-app/pubspec.yaml` repeats `integration_test` under `dev_dependencies`. Flutter rejects it with “Duplicate mapping key.” Fix the manifest before running Flutter commands below.
+- Flutter `.maestro/03_care_and_emergency.yaml` expects `Emergency services called`. The app now shows `Demo only — no call placed`. Update that assertion and rerun the flow.
+
+This documentation update does not fix these source issues or run new app tests. Save fresh results after they are resolved. A previous branch pass is not a pass for the combined build.
+
+## Flutter suites and builds
+
+From `mobile-flutter-app`, after resolving the blockers:
 
 ```sh
-cd mobile-flutter-app
 flutter pub get
 flutter analyze
 flutter test --coverage
 flutter devices
+flutter test integration_test/app_workflows_test.dart -d <device-id> --reporter expanded
 flutter test integration_test/week6_test.dart -d <device-id> --reporter expanded
-```
-
-The four integration cases check native SQLite account scope and reopen, version 2 database migration, sign-in through medication logging, and 200% dark-theme settings with message cancel. The database cases use new `week6_*.db` files. They leave the normal app database alone. The UI cases use a test auth store; they do not test production password hashing. Unit and widget coverage is in `coverage/lcov.info`; device integration coverage is not merged into it.
-
-The default app entry point requires sign-in. The seeded local account is `omartinez@careconnect.com` with password `password`. Do not use that password for a real account.
-
-```sh
 flutter build apk --debug --target-platform android-arm64
+# On macOS with Xcode:
 flutter build ios --simulator --debug
 ```
 
-A simulator `.app` is not an IPA. The ARM64 debug APK is for testing, not store release.
+| Suite | Scope |
+| --- | --- |
+| `test/` | Unit/widget tests, guideline checks, responsive layouts and golden comparisons |
+| `integration_test/app_workflows_test.dart` | Tiffany's two workflows: new-account onboarding; returning-user medication and logout. Uses in-memory repositories. |
+| `integration_test/week6_test.dart` | Terence's four cases: native SQLite account scope/reopen; v2 migration; medication workflow; large-text settings and message cancel. |
 
-## React Native
+The native database cases use separate `week6_*.db` files. UI cases use a test auth store; they do not establish production password-hashing correctness. Widget coverage is `coverage/lcov.info`; device integration results are separate. A simulator `.app` is not an IPA. The ARM64 debug APK is a test build.
+
+## React Native suites and builds
+
+From `mobile-react-native-app`:
 
 ```sh
-cd mobile-react-native-app
 npm ci
 npm run typecheck
 npm run lint
 npm run test:coverage
+# Choose the target platform:
+npx expo run:android
+# Or on macOS with Xcode and CocoaPods:
+npx expo run:ios
 ```
 
-Use a native build whose Expo modules match the package lock. Expo Go failed to load ExpoAsset in the initial local check, so the recorded run used a native iOS Release build. To build locally on a Mac with Xcode and CocoaPods:
+Use a native build with modules matching the package lock. The saved September 20 run used an iOS Release build because Expo Go failed to load ExpoAsset. For that build path:
 
 ```sh
 npx expo prebuild --platform ios --no-install
@@ -50,130 +68,49 @@ cd ..
 xcrun simctl install <device-id> build-ios/Build/Products/Release-iphonesimulator/CareConnect.app
 ```
 
-Prebuild makes native project files and may change local launch scripts. Keep generated build files out of your test commit. For Android, use the existing app README build steps.
+Prebuild can change native files and launch scripts. Keep generated build files separate from test-source commits. If a CocoaPods script fails on a path with spaces, use a clean checkout without spaces. The team's Android instructions call for JDK 17.
 
-Install [Maestro CLI](https://docs.maestro.dev/maestro-cli/how-to-install-maestro-cli.md), then run these commands from `mobile-react-native-app`. Replace the device ID and evidence folder with your own paths:
+## Maestro workflows
+
+Install Maestro using its [official instructions](https://docs.maestro.dev/getting-started/installing-maestro). Run from the app folder. Use `maestro test --help` to confirm artifact flags for the installed CLI.
+
+| Flow | Flutter | React Native |
+| --- | --- | --- |
+| `01_sign_in_and_medication.yaml` | Sign-in and dose | Sign-in and dose |
+| `02_accessibility_and_logout.yaml` | Settings save and logout cancel | Settings save and logout cancel |
+| `03_care_and_emergency.yaml` | Care and emergency demo; assertion needs repair | Care and emergency demo |
+| `04_health_log.yaml` | Not in Flutter Maestro set | Validation and save |
+| `05_messages.yaml` | Not in Flutter Maestro set | Detail and cancel |
+
+Flutter app IDs are `edu.umgc.team9.careconnect_flutter` on Android and `edu.umgc.team9.careconnectFlutter` on iOS. RN uses `edu.umgc.team9.careconnect` on both. Use an absolute evidence folder outside the checkout.
 
 ```sh
-maestro --udid <device-id> test -e APP_ID=edu.umgc.team9.careconnect \
-  --format JUNIT --output <evidence-folder>/rn-maestro.xml \
+maestro --udid <device-id> test -e APP_ID=<platform-app-id> \
+  --format JUNIT --output <evidence-folder>/maestro-results.xml \
   --test-output-dir <evidence-folder>/maestro .maestro
 ```
 
-The recorded iOS run uses the demo account's saved dark theme and 200% app text size. Flows scroll controls clear of the tab bar; message Back uses the native iOS button and Android Back on Android. For a repeat run, set those preferences and save them first if you need the same large-text check.
+The seeded fictional account is `omartinez@careconnect.com`, password `password`. Flutter flows enter it explicitly; RN fields are prefilled. Flutter flows clear state at launch; RN logs/preferences may persist. To repeat Terence's large-text RN run, save dark theme and 200% app text first. App text scaling does not establish system text-scaling support.
 
-The five flows cover sign-in and a dose, settings and logout cancel, the emergency demo, health-log validation/save, and message view/cancel. Tiffany added flows 1–3 in commit `9ee7807`; Terence's branch builds on that commit, updates the emergency assertion, and adds flows 4–5. Do not claim those changes as Tiffany's work.
+Tiffany supplied the first three RN flows at `9ee7807` and the later Flutter flows at `939b1cf`. Terence updated RN flows 1–3 and added 4–5 at `ae51f39`. Both Flutter integration suites remain in the repo.
 
-## What these checks cannot prove
+## Saved results and their limits
 
-Maestro labels and Flutter/Jest assertions do not prove VoiceOver or TalkBack speech. Check speech, reading order, focus, error announcements, modal focus, and keyboard navigation with real assistive technology. Save each device, OS, app commit, result, and evidence file. Tiffany's VPAT remains pending until her file is pushed and reviewed.
+| Evidence | Saved result | Scope |
+| --- | --- | --- |
+| [Flutter suite log](evidence/flutter-tests.txt) | 48 passed; 84.47% line coverage | September 20, Terence's tested source |
+| [Flutter device log](evidence/integration-ios-integration.txt) | 4 passed | iPhone 17, iOS 26.5 |
+| [RN suite log](evidence/rn-tests.txt) | 35 tests, 6 suites, 1 snapshot; 100% line coverage | September 20, Terence's tested source |
+| [RN Maestro XML](evidence/rn-maestro-verified.xml) | 5 flows, 0 failures | iPhone 17, iOS 26.5; dark/200% app text |
 
-Do not call the assignment complete based on line coverage. The rubric also needs the VPAT, both screen-reader demos, an APK or IPA, approved-plan E2E evidence, and the 10–15 minute build/test/document review video.
+See [evidence notes](evidence/README.md) for source hashes. The saved manifest covers 96 files; main `2cab927` differs in Flutter's `pubspec.yaml` and `pubspec.lock`, and adds Tiffany's later tests. There is no saved full run for that combined commit here.
 
-References: [Flutter integration testing](https://docs.flutter.dev/cookbook/testing/integration/introduction), [React Native accessibility](https://reactnative.dev/docs/accessibility), [native stack options](https://reactnavigation.org/docs/native-stack-navigator/).
+Tiffany's original guide reports two Flutter integration workflows and three Maestro flows per app on iOS 26.4 and Android 17/API 37. Treat that as a historical report. Her separately reviewed SharePoint XML/summary files supply additional E2E evidence; retain their own device/date/build limits rather than combining them into one run.
 
-# Week 6 integration and E2E testing
+## Plan mapping and manual evidence
 
-This test layer exercises meaningful CareConnect care-recipient workflows in
-both mobile implementations. Flutter uses its framework-supported
-`integration_test` runner, while Maestro drives the installed Flutter and React
-Native applications as a user would. Detox was not added because Maestro can
-exercise both technology stacks with the same readable workflow format and
-does not require a second React Native-specific native runner.
+Use [TEST_PLAN_MAPPING.md](TEST_PLAN_MAPPING.md) and the row-level CSV beside it. A passing flow or line-coverage percentage is not the percentage of approved plan cases passed.
 
-## Covered workflows
+The updated VPAT draft and Zack's partial Flutter iOS review were placed in the team's shared Week 6 folder. They are separate from these repository test logs. Do not describe them as absent merely because they are not committed here, or as final conformance proof.
 
-| Workflow | Flutter integration | Flutter Maestro | React Native Maestro |
-| --- | --- | --- | --- |
-| New-account accessibility onboarding | Yes | — | — |
-| Existing-user sign-in | Yes | Yes | Yes |
-| Today-to-medication navigation | Yes | Yes | Yes |
-| Medication logging and visible status | Yes | Yes | Yes |
-| Accessibility settings save feedback | — | Yes | Yes |
-| Logout confirmation and cancellation | Yes | Yes | Yes |
-| Care and emergency navigation | — | Yes | Yes |
-| Emergency action feedback | — | Yes | Yes |
-
-All accounts and health information used by these tests are fictional. Flutter
-flows reset application state at launch. React Native sessions are in memory,
-so relaunching returns to sign-in; persisted logs and preferences may remain,
-and the assertions deliberately remain valid whether prior records exist.
-
-## Flutter integration tests
-
-Start an Android emulator or iOS Simulator, then run from
-`mobile-flutter-app/`:
-
-```sh
-flutter pub get
-flutter test integration_test/app_workflows_test.dart -d <device-id>
-```
-
-Use `flutter devices` to find the device ID. These tests inject in-memory
-repositories so account and clinical-log assertions are deterministic while
-still exercising the complete Provider, GoRouter, form, navigation, and screen
-widget integration.
-
-## Maestro E2E tests
-
-Install Maestro by following its official installation instructions and make
-sure one emulator/simulator is running. Maestro must drive an installed native
-build; it cannot drive a Jest render or Flutter widget-test process.
-
-Flutter, from `mobile-flutter-app/`:
-
-```sh
-flutter run -d <device-id>
-maestro test -e APP_ID=edu.umgc.team9.careconnect_flutter .maestro # Android
-maestro test -e APP_ID=edu.umgc.team9.careconnectFlutter .maestro  # iOS
-```
-
-React Native, from `mobile-react-native-app/`:
-
-```sh
-npm install
-npx expo run:android
-# Or on macOS: npx expo run:ios
-maestro test -e APP_ID=edu.umgc.team9.careconnect .maestro
-```
-
-The React Native flow uses the seeded Olivia account, whose sign-in fields are
-prefilled. The Flutter flow enters the same fictional credentials explicitly.
-
-If the repository path contains spaces and an Expo iOS CocoaPods script fails
-with a truncated path, build from a temporary checkout whose path has no
-spaces. This affects native build tooling, not the Maestro flow definitions.
-Use JDK 17 for local React Native Android release builds; newer JDKs may fail
-during the native CMake configuration used by Expo and React Native.
-
-For an evidence package, run each suite with JUnit and debug artifacts:
-
-```sh
-maestro test -e APP_ID=<platform-app-id> .maestro \
-  --format junit --output maestro-results.xml \
-  --debug-output maestro-artifacts
-```
-
-Capture the terminal summary and retain `maestro-results.xml` with the course
-submission evidence. Do not commit generated videos, screenshots, native build
-outputs, or device databases unless the team explicitly chooses to do so.
-
-## Local verification record
-
-On September 20, 2026, both Flutter integration workflows and all three Maestro
-flows for each mobile implementation passed on an iPhone 17 simulator running
-iOS 26.4. The same Flutter integration suite and all six Maestro flows passed on
-an Android 17 API 37 emulator. Testing used Maestro CLI 2.10.0. The React Native
-E2E run identified an accessible-container issue that hid buttons nested inside
-cards from UI automation and screen readers; the shared card was corrected to
-expose its child text and controls individually. Flutter analysis, Flutter
-unit/widget tests, React Native ESLint, TypeScript checking, and Jest were rerun
-after the changes.
-
-## Scope boundary
-
-These automated tests verify UI workflows and visible/accessible labels. They
-do not replace the separate manual TalkBack and VoiceOver sessions required by
-the assignment. Record assistive-technology device, OS version, reading order,
-focus behavior, findings, and corrections in the team's accessibility test
-evidence.
+Complete missing VoiceOver/TalkBack, keyboard, focus, and spoken error/status checks. Record app/build, device/OS, reader/settings, steps, expected/actual result, exact speech, tester/date, and evidence filename. Reconcile Zack's conflicting screen results. The final submission also needs the approved-plan result mapping, APK or IPA, reader videos, and the 10–15 minute checkout/build/test/document review video. Preserve the September 20 [handoff](TERENCE_TESTING_HANDOFF.md) as historical evidence; its pending-status wording is not a current inventory.
