@@ -59,3 +59,5 @@ Run the repeatable security check with `./tool/security_audit.sh`. It performs s
 ## Week 6 verification
 
 See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md) and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for current results, fixes, and known limits. Automated checks do not replace VoiceOver or TalkBack review.
+
+Keyboard traversal, expanded Flutter guideline coverage, and cross-framework touch-target checks are documented in [Keyboard, guideline, and touch-target verification](../docs/week6/KEYBOARD_GUIDELINES_TOUCH_TARGETS.md).

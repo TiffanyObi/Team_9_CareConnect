@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Switch, View } from 'react-native';
-import { AppText, Button, Card, Screen } from '../components/UI';
+import { AppText, Button, Card, minimumTouchTarget, Screen } from '../components/UI';
 import { useApp } from '../context/AppContext';
 
 export function SettingsScreen({ onboarding = false }: { onboarding?: boolean }): React.JSX.Element {
@@ -46,7 +46,7 @@ export function SettingsScreen({ onboarding = false }: { onboarding?: boolean })
 }
 
 function Setting({ title, subtitle, value, onChange }: { title: string; subtitle: string; value: boolean; onChange: (value: boolean) => void }): React.JSX.Element {
-  return <View style={s.setting}><View style={s.settingText}><AppText style={s.settingTitle}>{title}</AppText><AppText secondary>{subtitle}</AppText></View><Switch accessibilityLabel={title} value={value} onValueChange={onChange} /></View>;
+  return <View style={s.setting}><View style={s.settingText}><AppText style={s.settingTitle}>{title}</AppText><AppText secondary>{subtitle}</AppText></View><Switch accessibilityLabel={title} style={{ minWidth: minimumTouchTarget, minHeight: minimumTouchTarget }} value={value} onValueChange={onChange} /></View>;
 }
 
 const s = StyleSheet.create({

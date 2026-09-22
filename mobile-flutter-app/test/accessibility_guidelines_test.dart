@@ -114,6 +114,121 @@ void main() {
       semantics.dispose();
     }
   });
+
+  testWidgets('authentication modes and validation meet guidelines', (
+    tester,
+  ) async {
+    configurePhoneView(tester);
+    final semantics = tester.ensureSemantics();
+    try {
+      await tester.pumpWidget(
+        CareConnectApp(
+          store: _MemorySettingsStore(),
+          fontFamily: 'Roboto',
+          startAuthenticated: false,
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await expectAutomatedGuidelines(tester);
+      await tester.tap(find.text('Sign in').last);
+      await tester.pumpAndSettle();
+      await expectAutomatedGuidelines(tester);
+
+      await tester.tap(find.text('Create a new account'));
+      await tester.pumpAndSettle();
+      await expectAutomatedGuidelines(tester);
+    } finally {
+      semantics.dispose();
+    }
+  });
+
+  testWidgets('first-time accessibility onboarding meets guidelines', (
+    tester,
+  ) async {
+    configurePhoneView(tester);
+    final semantics = tester.ensureSemantics();
+    try {
+      await tester.pumpWidget(
+        CareConnectApp(
+          store: _MemorySettingsStore(),
+          fontFamily: 'Roboto',
+          startAuthenticated: false,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Create a new account'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(EditableText).at(0), 'Test Patient');
+      await tester.enterText(
+        find.byType(EditableText).at(1),
+        'accessibility@example.com',
+      );
+      await tester.enterText(find.byType(EditableText).at(2), 'password1');
+      await tester.enterText(find.byType(EditableText).at(3), 'password1');
+      await tester.tap(find.text('Create account and continue'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Make Safeview comfortable'), findsOneWidget);
+      await expectAutomatedGuidelines(tester);
+    } finally {
+      semantics.dispose();
+    }
+  });
+
+  testWidgets('emergency and dialog states meet guidelines', (tester) async {
+    configurePhoneView(tester);
+    final semantics = tester.ensureSemantics();
+    try {
+      await tester.pumpWidget(
+        CareConnectApp(store: _MemorySettingsStore(), fontFamily: 'Roboto'),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.calendar_month_outlined));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Emergency'));
+      await tester.pumpAndSettle();
+      await expectAutomatedGuidelines(tester);
+
+      await tester.tap(find.text('Call emergency services'));
+      await tester.pumpAndSettle();
+      await expectAutomatedGuidelines(tester);
+      await tester.tap(find.text('OK'));
+      await tester.pumpAndSettle();
+    } finally {
+      semantics.dispose();
+    }
+  });
+
+  testWidgets('message composer and logout dialogs meet guidelines', (
+    tester,
+  ) async {
+    configurePhoneView(tester);
+    final semantics = tester.ensureSemantics();
+    try {
+      await tester.pumpWidget(
+        CareConnectApp(store: _MemorySettingsStore(), fontFamily: 'Roboto'),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.message_outlined));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('New message'));
+      await tester.pumpAndSettle();
+      await expectAutomatedGuidelines(tester);
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.home_outlined));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Log out'));
+      await tester.pumpAndSettle();
+      await expectAutomatedGuidelines(tester);
+    } finally {
+      semantics.dispose();
+    }
+  });
 }
 
 Future<void> _loadFont(String family, String path) async {
