@@ -1,13 +1,14 @@
 # Approved test plan to Week 6 evidence
 
-Updated September 21, 2026 (ET). Repository reviewed: main `2cab927`.
+Updated September 21, 2026 (ET). Current execution branch: `feature/week6-final-testing-evidence`, based on main `96a5859`.
 
-## Approved source
+The original-to-current mapping remains below. The new [final execution ledger](FINAL_TEST_PLAN_EXECUTION.md) records current results, the strict 38.46% calculation, and the 73.08% current-equivalent calculation that requires explicit scope approval.
 
-Terence confirmed on September 21 that `Assignment3_CareConnect_Test_Plan.docx`, version 1.0, August 31, 2026, is the submitted and approved plan. Approval status here is based on his confirmation; no instructor approval record was independently reviewed.
+## Submitted source
 
-Source: course output `CODEX_TEMPLATE2/assignment3_submission/Assignment3_CareConnect_Test_Plan.docx`.
-SHA-256: `232f93a78349dcc7dd7862460ee7926f5db8dcebad9656ee86db9e604d647425`.
+The team-provided `CareConnect_Test_Plan.docx`, version 1.0, dated August 31, 2026, was reviewed on September 21. It contains the same 26 detailed case IDs used by this mapping: 11 HP, 3 SP, 6 ACC, 3 RES, and 3 CODE cases. Its source-file SHA-256 is `66e22b0392ef6f9714f64de76fb65cebf8bb9a6b5f3d542bb0c1cccf4ce141ee`.
+
+The document's summary reports 19/20, but its detailed tables contain 26 IDs. This ledger preserves all 26 detailed IDs rather than silently adopting the inconsistent summary denominator. The document establishes the submitted baseline; it does not itself approve the revised current-app expectations.
 
 The [mapping CSV](TEST_PLAN_MAPPING.csv) contains all 26 unique case IDs and their original expected results: 11 HP, 3 SP, 6 ACC, 3 RES, and 3 CODE cases. Each row gives the related Week 6 evidence, its limits, and the next check. Repository evidence paths start at the repo root. SharePoint references name the external files and are not claimed as repository files.
 
@@ -19,17 +20,17 @@ The [mapping CSV](TEST_PLAN_MAPPING.csv) contains all 26 unique case IDs and the
 - **No matching result:** no reviewed result establishes the original expectation.
 - **Saved check passed:** a directly related historical check passed. This is not a final-build result or necessarily an E2E case.
 
-These labels describe the mapping, not VPAT conformance levels. The final-build result is `Not established` for every row because no complete approved-case run for the merged build was supplied. This means evidence is missing, not that all cases failed.
+These labels describe the historical mapping, not VPAT conformance levels. Current dispositions are maintained in the final execution ledger rather than overwriting the original mapping CSV.
 
 ## Coverage calculation
 
-**Do not claim that the approved-plan 60% threshold is met yet.** The mapping is complete, but the case-level result set is not.
+**Do not claim that the approved-plan 60% threshold is met without approving the revised expectations.** The current-equivalent ledger establishes 19 of 26 passes, or 73.08%, but the strict unchanged expectations establish only 10 of 26, or 38.46%.
 
-The original plan's summary says 19/20, while its detailed tables contain 26 cases. That summary describes an older prototype and is not the Week 6 denominator. Preserve all 26 IDs until the team/instructor approves any scope changes or E2E subset. If all 26 are the agreed denominator, at least 16 distinct cases must have qualifying passes to meet 60% (16/26 = 61.54%). If a different subset is approved, record the decision and compute against that set. Do not silently drop blocked or changed cases.
+The original plan's summary says 19/20, while its detailed tables contain 26 cases. Preserve all 26 IDs until the instructor approves any scope changes or E2E subset. If all 26 are the agreed denominator, at least 16 distinct cases must have qualifying passes to meet 60% (16/26 = 61.54%). If a different subset is approved, record the decision and compute against that set. Do not silently drop blocked or changed cases.
 
 Count each approved case once. A case passes only when the required steps and expected result are covered for the agreed app/platform scope, with an identifiable build and evidence. Partial tests, source-only checks and a flow that touches a screen are not full-case E2E passes. Keep Flutter and RN results separate before deciding any combined claim.
 
-The saved RN XML proves 5 successful flows out of 5 in that run. It does not prove 5 approved-plan cases. Likewise, 48 Flutter tests, 35 RN tests, 84.47% Flutter line coverage and 100% RN line coverage measure different things.
+The saved RN XML proves 5 successful flows out of 5 in that historical run. It does not prove 5 approved-plan cases. The current branch separately passes 54 Flutter tests with 84.68% line coverage and 48 React Native tests with 99.47% line coverage. Those remain different measurements from approved-case completion.
 
 ## Saved E2E result index
 
@@ -49,12 +50,12 @@ Tiffany's tests and historical report remain described in the [combined guide](I
 
 Zack's shared report supplies limited Flutter iOS focus evidence for ACC-006. His tracker and detailed notes conflict for several screens. Missing RN/device/Android scope must remain open. Do not duplicate completed screen checks without a scope or build reason.
 
-## Finish the case results
+## Finish the approval record
 
-1. Resolve the Flutter duplicate dependency and old emergency assertion noted in the combined guide.
-2. Confirm how each changed prototype case applies to the current apps. Preserve the original ID and record any approved change beside it.
-3. Run the relevant cases on a named final build. For each app/platform save device/OS, reader settings when relevant, exact steps, expected/actual result, tester/date and artifact filename.
-4. Record Pass, Fail, Blocked or Not Run in a per-app execution ledger. Link the exact test/result entry and screenshot or recording. Review partial evidence before promoting a case to Pass.
-5. Calculate the approved-case fraction only after the denominator and qualifying passes are established. Keep line coverage, test-run success and manual conformance as separate measures.
+1. Review the nine revised expectations named in the final execution ledger.
+2. Record the approver, approval date, original expectation, replacement expectation, and reason for each accepted revision.
+3. After the branch is committed, rerun the final commands and associate the logs with that commit SHA.
+4. Complete the remaining VoiceOver, TalkBack, and native React Native checks without converting partial evidence into passes.
+5. Keep line coverage, test-run success, Maestro flow success, manual accessibility evidence, and approved-case completion as separate measurements.
 
-No app tests were run to create this mapping. The original source plan and September 20 logs are unchanged.
+The original mapping CSV and September 20 logs remain unchanged for traceability. Current execution results are recorded in the final execution ledger.

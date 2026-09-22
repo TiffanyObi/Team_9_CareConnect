@@ -1,6 +1,6 @@
 # Week 6 integration and E2E testing
 
-Updated September 21, 2026 (ET). Reviewed main: `2cab927`.
+Updated September 21, 2026 (ET). Current execution branch: `feature/week6-final-testing-evidence`, based on main `96a5859`.
 
 Tiffany's PR #15 and Terence's PR #16 are merged. This guide covers both sets of tests. Use fake accounts on a simulator or test device: these flows change local demo data. Emergency actions do not place calls or share location.
 
@@ -8,16 +8,13 @@ Tiffany's PR #15 and Terence's PR #16 are merged. This guide covers both sets of
 
 Use a clean checkout and record `git rev-parse HEAD`, device ID, OS, and tool versions with each run. Run `flutter devices` for Flutter targets. Install the app before using Maestro; widget/Jest renders are not installed apps.
 
-Two issues remain in the reviewed main commit:
+The former duplicate Flutter dependency is resolved. The Flutter emergency Maestro assertion now expects the current truthful message, `Demo only — no call placed`. After rebuilding and reinstalling the current Flutter app, all three Android Maestro flows passed on Pixel 10, Android 17 API 37.
 
-- `mobile-flutter-app/pubspec.yaml` repeats `integration_test` under `dev_dependencies`. Flutter rejects it with “Duplicate mapping key.” Fix the manifest before running Flutter commands below.
-- Flutter `.maestro/03_care_and_emergency.yaml` expects `Emergency services called`. The app now shows `Demo only — no call placed`. Update that assertion and rerun the flow.
-
-This documentation update does not fix these source issues or run new app tests. Save fresh results after they are resolved. A previous branch pass is not a pass for the combined build.
+The full Flutter automated suite now passes 54 of 54 tests with 84.68% line coverage. React Native passes 48 of 48 Jest tests with 99.47% line coverage; TypeScript and ESLint pass. See [the final approved-plan execution ledger](FINAL_TEST_PLAN_EXECUTION.md) for the separate approved-case calculations and their scope-approval requirement.
 
 ## Flutter suites and builds
 
-From `mobile-flutter-app`, after resolving the blockers:
+From `mobile-flutter-app`:
 
 ```sh
 flutter pub get
@@ -33,7 +30,7 @@ flutter build ios --simulator --debug
 
 | Suite | Scope |
 | --- | --- |
-| `test/` | Unit/widget tests, guideline checks, responsive layouts and golden comparisons |
+| `test/` | Unit/widget tests, guideline checks, responsive layouts, keyboard checks, and ten golden comparisons |
 | `integration_test/app_workflows_test.dart` | Tiffany's two workflows: new-account onboarding; returning-user medication and logout. Uses in-memory repositories. |
 | `integration_test/week6_test.dart` | Terence's four cases: native SQLite account scope/reopen; v2 migration; medication workflow; large-text settings and message cancel. |
 
@@ -78,7 +75,7 @@ Install Maestro using its [official instructions](https://docs.maestro.dev/getti
 | --- | --- | --- |
 | `01_sign_in_and_medication.yaml` | Sign-in and dose | Sign-in and dose |
 | `02_accessibility_and_logout.yaml` | Settings save and logout cancel | Settings save and logout cancel |
-| `03_care_and_emergency.yaml` | Care and emergency demo; assertion needs repair | Care and emergency demo |
+| `03_care_and_emergency.yaml` | Care and emergency demo; current assertion passes | Care and emergency demo |
 | `04_health_log.yaml` | Not in Flutter Maestro set | Validation and save |
 | `05_messages.yaml` | Not in Flutter Maestro set | Detail and cancel |
 
@@ -96,6 +93,8 @@ Tiffany supplied the first three RN flows at `9ee7807` and the later Flutter flo
 
 ## Saved results and their limits
 
+The repository evidence below preserves historical September 20 runs. Current branch verification performed September 21–22 adds a passing 54-test Flutter run, 84.68% Flutter line coverage, a passing 48-test React Native run, 99.47% React Native line coverage, and a 3-of-3 Flutter Android Maestro run. Associate final submission copies with the commit produced from this branch.
+
 | Evidence | Saved result | Scope |
 | --- | --- | --- |
 | [Flutter suite log](evidence/flutter-tests.txt) | 48 passed; 84.47% line coverage | September 20, Terence's tested source |
@@ -103,7 +102,7 @@ Tiffany supplied the first three RN flows at `9ee7807` and the later Flutter flo
 | [RN suite log](evidence/rn-tests.txt) | 35 tests, 6 suites, 1 snapshot; 100% line coverage | September 20, Terence's tested source |
 | [RN Maestro XML](evidence/rn-maestro-verified.xml) | 5 flows, 0 failures | iPhone 17, iOS 26.5; dark/200% app text |
 
-See [evidence notes](evidence/README.md) for source hashes. The saved manifest covers 96 files; main `2cab927` differs in Flutter's `pubspec.yaml` and `pubspec.lock`, and adds Tiffany's later tests. There is no saved full run for that combined commit here.
+See [evidence notes](evidence/README.md) for historical source hashes. Do not relabel those older logs as current-branch output.
 
 Tiffany's original guide reports two Flutter integration workflows and three Maestro flows per app on iOS 26.4 and Android 17/API 37. Treat that as a historical report. Her separately reviewed SharePoint XML/summary files supply additional E2E evidence; retain their own device/date/build limits rather than combining them into one run.
 

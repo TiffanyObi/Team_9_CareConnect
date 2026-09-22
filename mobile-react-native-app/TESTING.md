@@ -1,77 +1,70 @@
 # React Native testing
 
-This branch, `feature/assignment5-tests-only`, starts from main commit
-`5d288311917167d7caf624fb6c80f08cf6686e6a`. It adds tests, a snapshot, test tools,
-and this guide. It does not change app source or runtime package versions.
-The prior improvements branch and saved work were not merged or applied.
+This guide describes the current CareConnect React Native checks on the Week 6 main-derived source.
 
-## Run the checks
+## Automated checks
 
-From the repository root:
+From `mobile-react-native-app`:
 
 ```sh
-cd mobile-react-native-app
 npm ci
 npm run typecheck
 npm run lint
-npm run test:coverage
+npm run test:coverage -- --runInBand
 ```
 
-Open `coverage/index.html` in a browser (on macOS, `open coverage/index.html`).
-Coverage files are generated locally and ignored by Git. Run `npm test -- --runInBand`
-for tests without coverage. Review a changed snapshot before using
-`npm test -- --runInBand --updateSnapshot`.
+Current verified result on September 21, 2026:
 
-## Verified results, September 13, 2026
+- 9 suites passed.
+- 48 tests passed with no failures or TODO tests.
+- One reviewed snapshot passed.
+- Lines: 99.47%.
+- Statements: 95.21%.
+- Functions: 95.96%.
+- Branches: 89.11%.
+- TypeScript and ESLint passed.
 
-- Five suites passed: 30 tests and one snapshot passed.
-- Three TODO entries track known app gaps; they are not executed tests or passes.
-- Statements: 95.93%; branches: 89.34%; functions: 95.76%; lines: 100%.
-- Type and lint checks passed.
+Open `coverage/index.html` for the local HTML report. A high line percentage does not replace native screen-reader, focus, reflow, or E2E testing.
 
-Coverage includes App.tsx and all runtime TypeScript source. Test files and
-model types are excluded. Many screen functions fit on one source line, so
-100% line coverage does not mean every path works. Branch coverage is a better
-check of the paths covered here. Global gates are 75% statements, lines and
-functions, and 65% branches.
+## Test scope
 
-## What the tests check
+The Jest and React Native Testing Library suites cover:
 
-- Sign-in errors, duplicate signup, onboarding, and logout confirmation.
-- Health and medication log validation, failed saves, and successful saves.
-- Settings controls, text-size bounds, reset, and persistence calls.
-- Screen routes, plus real navigator travel from sign-in to medication detail.
-- Account-scoped storage queries, record mapping, and corrupt settings data.
-- Database setup and migration calls, password hashing, and password comparison.
-- Disabled appointment/message actions and a shared UI accessibility snapshot.
+- Authentication errors, account creation, first-use accessibility setup, and logout confirmation.
+- Medication and health-log success, validation, failure, and account isolation.
+- Settings preview, persistence success and failure, reduced-motion behavior, and user-scoped preferences.
+- Navigation between tabs and detail screens.
+- Accessible names, roles, states, hints, live regions, modal background hiding, and focus requests.
+- Minimum control dimensions and focusability.
+- Rendered text, placeholder, field-boundary, selected-tab, and pressed-state contrast in light and dark themes.
+- Database setup, repositories, password hashing, and corrupt-settings recovery.
 
-SQLite and native storage APIs are mocked. These tests check database calls,
-not a real device database. Screen tests inject fake repositories. Password
-hash tests use the real hash code. Native navigation uses the Jest environment.
-Device scrolling, screen-reader use, motion, actual disk persistence, and
-Android/iOS builds still need separate checks.
+Native SQLite and storage APIs are mocked in Jest. Native device integration and Maestro checks remain separate.
 
-## Known app gaps left unchanged
+## Maestro E2E
 
-1. Settings shows saved status without waiting for a successful save. Storage
-   failures need a visible error and retry path.
-2. Reduced motion is stored but is not connected to navigation transitions.
-3. Emergency assistance displays a claim that services were called without
-   placing a call. This screen must not be relied on to summon help.
+Five flows are stored in `.maestro/`:
 
-These are recorded as TODO tests, not accepted behavior. New appointment and
-message sending are also disabled placeholders. App fixes belong in a separate
-reviewed change. High coverage alone does not establish full rubric compliance.
+1. Sign in and medication logging.
+2. Accessibility settings and logout confirmation.
+3. Care and emergency demo behavior.
+4. Health-log validation and saving.
+5. Message detail and draft cancellation.
 
-## Before merging
+Use the repository [Week 6 integration and E2E guide](../docs/week6/INTEGRATION_E2E_TESTING.md) for native build, device, and JUnit commands. Historical five-flow iOS results and three-flow Android/iOS results exist, but a new React Native Android build on this host stopped during Gradle CMake configuration for Expo Modules Core and React Native Screens. Do not label an older installed application as a final-branch native run.
 
-Review the diff against the latest main. Only test files, test configuration,
-this guide, the coverage ignore rule, and package files should change. Do not
-resolve a conflict by replacing a teammate's app file with an older copy.
-Fetch main and rerun checks after any upstream change. This branch has not
-been pushed or merged.
+## Manual accessibility checks
 
-## Flutter test alignment
+Automated tests verify application requests and rendered properties, not the speech or focus behavior produced by VoiceOver and TalkBack. The final build still requires:
 
-See [FLUTTER_TEST_PARITY.md](FLUTTER_TEST_PARITY.md) for the source checklist,
-ported behavior, gaps, and the actual Flutter baseline result.
+- VoiceOver and TalkBack names, roles, values, states, reading order, errors, and status announcements.
+- Modal focus containment and restoration.
+- Visible external-keyboard focus in light and dark themes.
+- Native 200% text, rotation, reflow, and target-size checks.
+- Native switches, system alerts, and stack Back controls.
+
+Record the build commit, device, OS, reader settings, tester, date, expected and actual results, exact speech, and evidence filename.
+
+## Approved-plan percentage
+
+Line coverage, Jest success, and Maestro flow success are separate from approved-plan case completion. See the [final execution ledger](../docs/week6/FINAL_TEST_PLAN_EXECUTION.md) before reporting a 60% approved-case percentage.

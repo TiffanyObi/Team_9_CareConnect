@@ -44,7 +44,7 @@ This prototype uses on-device persistence rather than a remote clinical backend.
 
 ## Week 6 verification
 
-See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md) and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for current results, fixes, and known limits. Automated checks do not replace VoiceOver or TalkBack review.
+On September 21, 2026, TypeScript and ESLint passed, and all 48 Jest tests passed in nine suites. Coverage was 99.47% lines, 95.21% statements, 95.96% functions, and 89.11% branches. See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md), [final execution ledger](../docs/week6/FINAL_TEST_PLAN_EXECUTION.md), and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for commands, historical native evidence, and known limits. Automated checks do not replace VoiceOver or TalkBack review.
 
 ### React Native semantic and contrast evidence (September 21, 2026)
 

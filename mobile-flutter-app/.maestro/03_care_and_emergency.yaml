@@ -19,5 +19,5 @@ name: Flutter - care and emergency assistance
 - tapOn: "Emergency assistance"
 - assertVisible: "Emergency assistance"
 - tapOn: "Call emergency services"
-- assertVisible: "Emergency services called"
+- assertVisible: "Demo only — no call placed"
 - tapOn: "OK"
