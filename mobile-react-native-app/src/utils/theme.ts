@@ -1,7 +1,7 @@
 export const colors = {
   background: '#F5F8FC', surface: '#FFFFFF', text: '#10233F', secondaryText: '#40536D',
   primary: '#082B5F', teal: '#0B7F79', accent: '#2F6FED', success: '#19733C',
-  emergency: '#8D153A', border: '#A9B9CA', safety: '#EAF2FF', warning: '#FFF8E6',
+  emergency: '#8D153A', border: '#71839A', safety: '#EAF2FF', warning: '#FFF8E6',
   onPrimary: '#FFFFFF', onAccent: '#FFFFFF', successSurface: '#EAF7EE', focus: '#F4C95D',
 };
 export type AppColors = typeof colors;

@@ -9,7 +9,14 @@ test('real navigator goes from sign-in to tabs and medication detail', async () 
   const { repositories } = fixtures();
   render(<AppProvider repositories={repositories}><NavigationContainer><RootNavigator /></NavigationContainer></AppProvider>);
   fireEvent.press(await screen.findByRole('button', { name: 'Sign in' }));
-  fireEvent.press(await screen.findByLabelText('Medications tab'));
+  const medicationsTab = await screen.findByLabelText('Medications tab');
+  expect(screen.getByRole('button', { name: 'Medications tab', selected: false })).toBeTruthy();
+  for (const tab of ['Today', 'Medications', 'Care', 'Messages', 'Settings']) {
+    expect(screen.getByRole('button', { name: `${tab} tab` })).toBeTruthy();
+  }
+  expect(medicationsTab.props.accessibilityState.selected).toBe(false);
+  fireEvent.press(medicationsTab);
+  expect(screen.getByLabelText('Medications tab').props.accessibilityState.selected).toBe(true);
   fireEvent.press((await screen.findAllByText('View details', { includeHiddenElements: true }))[0]);
   expect(await screen.findByText('Mark as taken')).toBeTruthy();
   const app = render(<App />);
