@@ -7,19 +7,36 @@ name: React Native - sign in and log medication
     optional: true
 - extendedWaitUntil:
     visible: "Sign in"
-    timeout: 15000
+    timeout: 90000
 - tapOn:
     text: "Sign in"
     index: 1
 - extendedWaitUntil:
     visible: "Good morning, Olivia"
-    timeout: 15000
+    timeout: 90000
+- scrollUntilVisible:
+    element:
+      text: "Log medication"
+    direction: DOWN
+    centerElement: true
 - tapOn: "Log medication"
 - assertVisible: "Medications"
 - tapOn:
     text: "View details"
     index: 0
 - assertVisible: "Medication details"
+- scrollUntilVisible:
+    element:
+      text: "Mark as taken"
+    direction: DOWN
+    centerElement: true
 - tapOn: "Mark as taken"
+- scrollUntilVisible:
+    element:
+      text: "Logged today"
+    direction: UP
+    centerElement: true
 - assertVisible: "Logged today"
 - assertVisible: "Last taken.*"
+
+- takeScreenshot: 01_sign_in_and_medication

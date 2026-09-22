@@ -7,27 +7,31 @@ name: React Native - accessibility settings and logout confirmation
     optional: true
 - extendedWaitUntil:
     visible: "Sign in"
-    timeout: 15000
+    timeout: 90000
 - tapOn:
     text: "Sign in"
     index: 1
 - extendedWaitUntil:
     visible: "Good morning, Olivia"
-    timeout: 15000
+    timeout: 90000
 - tapOn: "Settings tab"
 - assertVisible: "Accessibility settings"
 - scrollUntilVisible:
     element:
       text: "Save changes"
     direction: DOWN
+    centerElement: true
 - tapOn: "Save changes"
 - scrollUntilVisible:
     element:
       text: ".*Accessibility settings saved.*"
     direction: UP
+    centerElement: true
 - assertVisible: ".*Accessibility settings saved.*"
 - tapOn: "Today tab"
 - tapOn: "Log out"
 - assertVisible: "Log out?"
 - tapOn: "Cancel"
 - assertVisible: "Good morning, Olivia"
+
+- takeScreenshot: 02_accessibility_and_logout

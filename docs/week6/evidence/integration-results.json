@@ -1,0 +1,16 @@
+[
+  {
+    "name": "ios-integration",
+    "command": [
+      "flutter",
+      "test",
+      "integration_test/week6_test.dart",
+      "-d",
+      "7113377D-6F87-40C0-A6F0-FEE0ED52C6B8",
+      "--reporter",
+      "expanded"
+    ],
+    "started": "2026-09-20T12:25:19.666458-04:00",
+    "exit_code": 0
+  }
+]

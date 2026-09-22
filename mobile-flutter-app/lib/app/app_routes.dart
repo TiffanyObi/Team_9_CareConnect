@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:careconnect_flutter/features/care/appointment.dart';
 import 'package:careconnect_flutter/features/medications/medication.dart';
 import 'package:careconnect_flutter/features/messages/message.dart';
@@ -26,7 +28,7 @@ class MedicationRouteArguments {
   });
 
   final Medication medication;
-  final void Function(DateTime)? onMarkedTaken;
+  final FutureOr<void> Function(DateTime)? onMarkedTaken;
 }
 
 class AppointmentRouteArguments {

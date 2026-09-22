@@ -1,0 +1,4 @@
+Command: ['flutter', 'analyze', '--no-pub']
+Start: 2026-09-20T12:22:31.137223-04:00
+Analyzing mobile-flutter-app...
+No issues found! (ran in 10.3s)

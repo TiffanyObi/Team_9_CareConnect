@@ -1,0 +1,5 @@
+Command: ['npm', 'run', 'typecheck']
+Start: 2026-09-20T12:25:05.608108-04:00
+
+> careconnect-react-native-app@1.0.0 typecheck
+> tsc --noEmit

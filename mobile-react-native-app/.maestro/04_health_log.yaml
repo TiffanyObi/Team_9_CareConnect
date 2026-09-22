@@ -1,0 +1,38 @@
+appId: ${APP_ID}
+name: React Native - health log validation and save
+---
+- launchApp
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 90000
+- tapOn:
+    text: "Sign in"
+    index: 1
+- extendedWaitUntil:
+    visible: "Good morning, Olivia"
+    timeout: 90000
+- tapOn: "Care tab"
+- scrollUntilVisible:
+    element:
+      text: "Health log"
+    direction: DOWN
+    centerElement: true
+- tapOn: "Health log"
+- tapOn: "Save today’s log"
+- assertVisible: "Choose a symptom to continue."
+- tapOn: "OK"
+- tapOn:
+    text: "Symptom"
+    index: 1
+- inputText: "Week 6 test fatigue"
+- hideKeyboard
+- tapOn: "Save today’s log"
+- assertVisible: "Health log saved."
+- tapOn: "OK"
+- scrollUntilVisible:
+    element:
+      text: "Week 6 test fatigue"
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Week 6 test fatigue"
+- takeScreenshot: 04_health_log

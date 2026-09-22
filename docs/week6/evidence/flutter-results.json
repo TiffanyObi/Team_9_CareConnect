@@ -1,0 +1,37 @@
+[
+  {
+    "name": "format",
+    "command": [
+      "dart",
+      "format",
+      "lib",
+      "test",
+      "integration_test"
+    ],
+    "started": "2026-09-20T12:22:30.095527-04:00",
+    "exit_code": 0
+  },
+  {
+    "name": "analyze",
+    "command": [
+      "flutter",
+      "analyze",
+      "--no-pub"
+    ],
+    "started": "2026-09-20T12:22:31.137223-04:00",
+    "exit_code": 0
+  },
+  {
+    "name": "tests",
+    "command": [
+      "flutter",
+      "test",
+      "--coverage",
+      "--no-pub",
+      "--reporter",
+      "expanded"
+    ],
+    "started": "2026-09-20T12:22:44.896962-04:00",
+    "exit_code": 0
+  }
+]

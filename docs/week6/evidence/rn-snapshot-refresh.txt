@@ -1,0 +1,26 @@
+PASS src/__tests__/screens.test.tsx (6.177 s)
+  ✓ settings updates persist current preferences and reset the displayed save notice (472 ms)
+  ✓ settings controls honor bounds, reset and switch values (301 ms)
+  ✓ health logs validate input, retain it on failure and clear only after success (389 ms)
+  ✓ medication save errors do not create records; success shows the real log (419 ms)
+  ✓ lists show saved logs and route to medication details (287 ms)
+  ✓ care routes and appointment placeholder do not claim to save (419 ms)
+  ✓ appointment details route to health logs and messages (310 ms)
+  ✓ message list opens details but cannot send a message (288 ms)
+  ✓ message detail displays the supplied body (267 ms)
+  ✓ emergency screen exposes the current placeholder and disabled caregiver action (285 ms)
+  ✓ emergency demo says no call was placed (296 ms)
+  ✓ settings confirmation waits for storage and failed writes can be retried (430 ms)
+  ✓ today asks before logout and exposes the medication route (304 ms)
+  ✓ shared components have a stable accessibility snapshot (337 ms)
+  ✓ sign-in errors and account creation flow reach onboarding then logout (304 ms)
+
+ › 1 snapshot updated.
+Snapshot Summary
+ › 1 snapshot updated from 1 test suite.
+
+Test Suites: 1 passed, 1 total
+Tests:       15 passed, 15 total
+Snapshots:   1 updated, 1 total
+Time:        6.408 s, estimated 12 s
+Ran all test suites matching /src\/__tests__\/screens.test.tsx/i.

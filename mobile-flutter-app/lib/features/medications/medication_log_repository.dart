@@ -3,8 +3,8 @@ import 'package:careconnect_flutter/core/database/app_database.dart';
 import 'medication_log.dart';
 
 abstract interface class MedicationLogRepository {
-  Future<List<MedicationLog>> loadLogs();
-  Future<MedicationLog> addLog(MedicationLog log);
+  Future<List<MedicationLog>> loadLogs({int userId = 0});
+  Future<MedicationLog> addLog(MedicationLog log, {int userId = 0});
 }
 
 class SqliteMedicationLogRepository implements MedicationLogRepository {
@@ -13,20 +13,22 @@ class SqliteMedicationLogRepository implements MedicationLogRepository {
   final AppDatabase database;
 
   @override
-  Future<List<MedicationLog>> loadLogs() async {
+  Future<List<MedicationLog>> loadLogs({int userId = 0}) async {
     final rows = await (await database.instance).query(
       'medication_logs',
+      where: 'user_id = ?',
+      whereArgs: [userId],
       orderBy: 'taken_at DESC',
     );
     return rows.map(MedicationLog.fromMap).toList();
   }
 
   @override
-  Future<MedicationLog> addLog(MedicationLog log) async {
-    final id = await (await database.instance).insert(
-      'medication_logs',
-      log.toMap(),
-    );
+  Future<MedicationLog> addLog(MedicationLog log, {int userId = 0}) async {
+    final id = await (await database.instance).insert('medication_logs', {
+      ...log.toMap(),
+      'user_id': userId,
+    });
     return MedicationLog(
       id: id,
       medicationName: log.medicationName,
@@ -36,19 +38,21 @@ class SqliteMedicationLogRepository implements MedicationLogRepository {
 }
 
 class MemoryMedicationLogRepository implements MedicationLogRepository {
-  final List<MedicationLog> _logs = [];
+  final Map<int, List<MedicationLog>> _byUser = {};
+  int _nextId = 1;
 
   @override
-  Future<List<MedicationLog>> loadLogs() async => List.unmodifiable(_logs);
+  Future<List<MedicationLog>> loadLogs({int userId = 0}) async =>
+      List.unmodifiable(_byUser[userId] ?? []);
 
   @override
-  Future<MedicationLog> addLog(MedicationLog log) async {
+  Future<MedicationLog> addLog(MedicationLog log, {int userId = 0}) async {
     final saved = MedicationLog(
-      id: _logs.length + 1,
+      id: _nextId++,
       medicationName: log.medicationName,
       takenAt: log.takenAt,
     );
-    _logs.insert(0, saved);
+    (_byUser[userId] ??= []).insert(0, saved);
     return saved;
   }
 }

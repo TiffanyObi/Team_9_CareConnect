@@ -3,8 +3,8 @@ import 'package:careconnect_flutter/core/database/app_database.dart';
 import 'health_log.dart';
 
 abstract interface class HealthLogRepository {
-  Future<List<HealthLog>> loadLogs();
-  Future<HealthLog> addLog(HealthLog log);
+  Future<List<HealthLog>> loadLogs({int userId = 0});
+  Future<HealthLog> addLog(HealthLog log, {int userId = 0});
 }
 
 class SqliteHealthLogRepository implements HealthLogRepository {
@@ -12,20 +12,22 @@ class SqliteHealthLogRepository implements HealthLogRepository {
   final AppDatabase database;
 
   @override
-  Future<List<HealthLog>> loadLogs() async {
+  Future<List<HealthLog>> loadLogs({int userId = 0}) async {
     final rows = await (await database.instance).query(
       'health_logs',
+      where: 'user_id = ?',
+      whereArgs: [userId],
       orderBy: 'recorded_at DESC',
     );
     return rows.map(HealthLog.fromMap).toList();
   }
 
   @override
-  Future<HealthLog> addLog(HealthLog log) async {
-    final id = await (await database.instance).insert(
-      'health_logs',
-      log.toMap(),
-    );
+  Future<HealthLog> addLog(HealthLog log, {int userId = 0}) async {
+    final id = await (await database.instance).insert('health_logs', {
+      ...log.toMap(),
+      'user_id': userId,
+    });
     return HealthLog(
       id: id,
       symptom: log.symptom,
@@ -36,20 +38,22 @@ class SqliteHealthLogRepository implements HealthLogRepository {
 }
 
 class MemoryHealthLogRepository implements HealthLogRepository {
-  final List<HealthLog> _logs = [];
+  final Map<int, List<HealthLog>> _byUser = {};
+  int _nextId = 1;
 
   @override
-  Future<List<HealthLog>> loadLogs() async => List.unmodifiable(_logs);
+  Future<List<HealthLog>> loadLogs({int userId = 0}) async =>
+      List.unmodifiable(_byUser[userId] ?? []);
 
   @override
-  Future<HealthLog> addLog(HealthLog log) async {
+  Future<HealthLog> addLog(HealthLog log, {int userId = 0}) async {
     final saved = HealthLog(
-      id: _logs.length + 1,
+      id: _nextId++,
       symptom: log.symptom,
       notes: log.notes,
       recordedAt: log.recordedAt,
     );
-    _logs.insert(0, saved);
+    (_byUser[userId] ??= []).insert(0, saved);
     return saved;
   }
 }

@@ -1,0 +1,19 @@
+Command: ['npm', 'run', 'test:coverage', '--', '--json', '--outputFile=/Users/terenceboyce/tmp/week6-branch-evidence/rn-jest.json']
+Start: 2026-09-20T12:25:09.053610-04:00
+
+> careconnect-react-native-app@1.0.0 test:coverage
+> jest --coverage --runInBand --json --outputFile=/Users/terenceboyce/tmp/week6-branch-evidence/rn-jest.json
+
+PASS src/__tests__/screens.test.tsx
+PASS src/__tests__/database.test.ts
+PASS src/__tests__/navigation.test.tsx
+PASS src/__tests__/accessibility-regression.test.tsx
+PASS src/__tests__/flutter-parity.test.tsx
+PASS src/__tests__/repositories.test.ts
+
+Test Suites: 6 passed, 6 total
+Tests:       35 passed, 35 total
+Snapshots:   1 passed, 1 total
+Time:        7.431 s, estimated 14 s
+Ran all test suites.
+Test results written to: ../../week6-branch-evidence/rn-jest.json

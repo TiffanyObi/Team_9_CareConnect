@@ -1,0 +1,5 @@
+Command: ['npm', 'run', 'lint']
+Start: 2026-09-20T12:25:06.794485-04:00
+
+> careconnect-react-native-app@1.0.0 lint
+> eslint . --ext .js,.jsx,.ts,.tsx

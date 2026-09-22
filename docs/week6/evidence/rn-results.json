@@ -1,0 +1,35 @@
+[
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "started": "2026-09-20T12:25:05.608108-04:00",
+    "exit_code": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "started": "2026-09-20T12:25:06.794485-04:00",
+    "exit_code": 0
+  },
+  {
+    "name": "tests",
+    "command": [
+      "npm",
+      "run",
+      "test:coverage",
+      "--",
+      "--json",
+      "--outputFile=/Users/terenceboyce/tmp/week6-branch-evidence/rn-jest.json"
+    ],
+    "started": "2026-09-20T12:25:09.053610-04:00",
+    "exit_code": 0
+  }
+]

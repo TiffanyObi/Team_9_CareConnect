@@ -41,3 +41,7 @@ The APK is written to `android/app/build/outputs/apk/release/app-release.apk`. T
 ## Security notes
 
 This prototype uses on-device persistence rather than a remote clinical backend. Passwords are salted and hashed locally, and no device location, contacts, or notification permissions are requested. The current npm audit reports moderate transitive advisories in React Navigation and Expo tooling; npm offers no non-breaking complete fix for the current Expo version. Before production use, move authentication and protected health information to an approved server over TLS, store session tokens with `expo-secure-store`, validate all backend inputs, and configure platform privacy disclosures.
+
+## Week 6 verification
+
+See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md) and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for current results, fixes, and known limits. Automated checks do not replace VoiceOver or TalkBack review.

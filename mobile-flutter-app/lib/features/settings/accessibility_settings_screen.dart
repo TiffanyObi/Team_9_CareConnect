@@ -79,6 +79,7 @@ class _AccessibilitySettingsScreenState
                       Expanded(
                         child: Text(
                           'Accessibility settings saved. Your preferences will be used on this device.',
+                          style: TextStyle(color: AppColors.lightText),
                         ),
                       ),
                     ],
@@ -111,27 +112,47 @@ class _AccessibilitySettingsScreenState
                     onChanged: (value) =>
                         _update(settings.copyWith(textScale: value)),
                   ),
-                  SegmentedButton<AppThemePreference>(
-                    showSelectedIcon: false,
-                    segments: const [
-                      ButtonSegment(
-                        value: AppThemePreference.light,
-                        label: Text('Light'),
+                  if (MediaQuery.textScalerOf(context).scale(1) > 1.5)
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final preference in AppThemePreference.values)
+                          ChoiceChip(
+                            label: Text(switch (preference) {
+                              AppThemePreference.light => 'Light',
+                              AppThemePreference.dark => 'Dark',
+                              AppThemePreference.system => 'Device',
+                            }),
+                            selected: settings.themePreference == preference,
+                            onSelected: (_) => _update(
+                              settings.copyWith(themePreference: preference),
+                            ),
+                          ),
+                      ],
+                    )
+                  else
+                    SegmentedButton<AppThemePreference>(
+                      showSelectedIcon: false,
+                      segments: const [
+                        ButtonSegment(
+                          value: AppThemePreference.light,
+                          label: Text('Light'),
+                        ),
+                        ButtonSegment(
+                          value: AppThemePreference.dark,
+                          label: Text('Dark'),
+                        ),
+                        ButtonSegment(
+                          value: AppThemePreference.system,
+                          label: Text('Device'),
+                        ),
+                      ],
+                      selected: {settings.themePreference},
+                      onSelectionChanged: (value) => _update(
+                        settings.copyWith(themePreference: value.single),
                       ),
-                      ButtonSegment(
-                        value: AppThemePreference.dark,
-                        label: Text('Dark'),
-                      ),
-                      ButtonSegment(
-                        value: AppThemePreference.system,
-                        label: Text('Device'),
-                      ),
-                    ],
-                    selected: {settings.themePreference},
-                    onSelectionChanged: (value) => _update(
-                      settings.copyWith(themePreference: value.single),
                     ),
-                  ),
                 ],
               ),
             ),

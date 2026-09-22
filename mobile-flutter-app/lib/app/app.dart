@@ -73,16 +73,31 @@ class _CareConnectAppState extends State<CareConnectApp> {
               ? MemoryHealthLogRepository()
               : SqliteHealthLogRepository(database)),
     )..load();
+    if (!widget.startAuthenticated) {
+      _medicationController.setUser(null);
+      _healthLogController.setUser(null);
+    }
+    _authController.addListener(_syncAccount);
     _router = createAppRouter(
       startAuthenticated: widget.startAuthenticated,
       authController: _authController,
     );
   }
 
+  int? _activeUserId;
+  void _syncAccount() {
+    final userId = _authController.account?.id;
+    if (userId == _activeUserId) return;
+    _activeUserId = userId;
+    _medicationController.setUser(userId);
+    _healthLogController.setUser(userId);
+  }
+
   @override
   void dispose() {
     _router.dispose();
     _controller.dispose();
+    _authController.removeListener(_syncAccount);
     _authController.dispose();
     _medicationController.dispose();
     _healthLogController.dispose();

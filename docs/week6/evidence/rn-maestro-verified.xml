@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="iPhone 17 - iOS 26.5 - 7113377D-6F87-40C0-A6F0-FEE0ED52C6B8" tests="5" failures="0" time="199.908" timestamp="2026-09-20T12:40:17">
+    <testcase id="React Native - health log validation and save" name="React Native - health log validation and save" classname="React Native - health log validation and save" file="mobile-react-native-app/.maestro/04_health_log.yaml" time="44.539" timestamp="2026-09-20T12:40:17" status="SUCCESS"/>
+    <testcase id="React Native - accessibility settings and logout confirmation" name="React Native - accessibility settings and logout confirmation" classname="React Native - accessibility settings and logout confirmation" file="mobile-react-native-app/.maestro/02_accessibility_and_logout.yaml" time="47.277" timestamp="2026-09-20T12:41:02" status="SUCCESS"/>
+    <testcase id="React Native - message detail and cancel" name="React Native - message detail and cancel" classname="React Native - message detail and cancel" file="mobile-react-native-app/.maestro/05_messages.yaml" time="32.595" timestamp="2026-09-20T12:41:49" status="SUCCESS"/>
+    <testcase id="React Native - care and emergency assistance" name="React Native - care and emergency assistance" classname="React Native - care and emergency assistance" file="mobile-react-native-app/.maestro/03_care_and_emergency.yaml" time="38.648" timestamp="2026-09-20T12:42:22" status="SUCCESS"/>
+    <testcase id="React Native - sign in and log medication" name="React Native - sign in and log medication" classname="React Native - sign in and log medication" file="mobile-react-native-app/.maestro/01_sign_in_and_medication.yaml" time="36.831" timestamp="2026-09-20T12:43:00" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Switch, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { AppText, Button, Card, Screen } from '../components/UI';
 import { useApp } from '../context/AppContext';
 
 export function SettingsScreen({ onboarding = false }: { onboarding?: boolean }): React.JSX.Element {
-  const { settings, updateSettings, resetSettings, completeOnboarding } = useApp();
+  const { settings, updateSettings, resetSettings, saveSettings, completeOnboarding } = useApp();
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
   const update = (change: Partial<typeof settings>) => { setSaved(false); updateSettings(change); };
-  const save = () => { if (onboarding) completeOnboarding(); else setSaved(true); };
+  const save = async () => {
+    setSaving(true); setSaved(false);
+    try { if (onboarding) await completeOnboarding(); else { await saveSettings(); setSaved(true); } }
+    catch { Alert.alert('Settings not saved', 'Please try again. Your changes are still shown.'); }
+    finally { setSaving(false); }
+  };
   return <Screen><ScrollView contentContainerStyle={s.content}>
     <AppText heading>{onboarding ? 'Make Safeview comfortable' : 'Accessibility settings'}</AppText>
     <AppText secondary>{onboarding ? 'Choose a safe starting environment. You can change it later.' : 'Changes preview immediately without animation.'}</AppText>
@@ -34,13 +40,13 @@ export function SettingsScreen({ onboarding = false }: { onboarding?: boolean })
       <Setting title="Larger touch targets" subtitle="Minimum 48 × 48 logical pixels" value={settings.largeTouchTargets} onChange={value => update({ largeTouchTargets: value })} />
     </Card>
     <Card style={s.preview}><AppText style={s.previewTitle}>Preview: Medication due</AppText><AppText style={s.previewText}>Levetiracetam • 8:00 AM</AppText></Card>
-    <Button label={onboarding ? 'Save my preferences' : 'Save changes'} onPress={save} />
+    <Button label={saving ? 'Saving…' : onboarding ? 'Save my preferences' : 'Save changes'} disabled={saving} onPress={() => { void save(); }} />
     <Button label="Reset to recommended safe settings" secondary onPress={() => { resetSettings(); setSaved(false); }} />
   </ScrollView></Screen>;
 }
 
 function Setting({ title, subtitle, value, onChange }: { title: string; subtitle: string; value: boolean; onChange: (value: boolean) => void }): React.JSX.Element {
-  return <View accessible accessibilityLabel={`${title}. ${subtitle}`} style={s.setting}><View style={s.settingText}><AppText style={s.settingTitle}>{title}</AppText><AppText secondary>{subtitle}</AppText></View><Switch accessibilityLabel={title} value={value} onValueChange={onChange} /></View>;
+  return <View style={s.setting}><View style={s.settingText}><AppText style={s.settingTitle}>{title}</AppText><AppText secondary>{subtitle}</AppText></View><Switch accessibilityLabel={title} value={value} onValueChange={onChange} /></View>;
 }
 
 const s = StyleSheet.create({
