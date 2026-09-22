@@ -1,14 +1,14 @@
 # Approved test plan to Week 6 evidence
 
-Updated September 21, 2026 (ET). Current execution branch: `feature/week6-final-testing-evidence`, based on main `96a5859`.
+Updated September 22, 2026 (ET). Current execution branch: `feature/week6-final-testing-evidence`.
 
-The original-to-current mapping remains below. The new [final execution ledger](FINAL_TEST_PLAN_EXECUTION.md) records current results, the strict 38.46% calculation, and the 73.08% current-equivalent calculation that requires explicit scope approval.
+The original-to-current mapping remains below. The [final execution ledger](FINAL_TEST_PLAN_EXECUTION.md) records the approved 73.08% current-equivalent result and retains the strict 38.46% unchanged-wording comparison for transparency.
 
 ## Submitted source
 
 The team-provided `CareConnect_Test_Plan.docx`, version 1.0, dated August 31, 2026, was reviewed on September 21. It contains the same 26 detailed case IDs used by this mapping: 11 HP, 3 SP, 6 ACC, 3 RES, and 3 CODE cases. Its source-file SHA-256 is `66e22b0392ef6f9714f64de76fb65cebf8bb9a6b5f3d542bb0c1cccf4ce141ee`.
 
-The document's summary reports 19/20, but its detailed tables contain 26 IDs. This ledger preserves all 26 detailed IDs rather than silently adopting the inconsistent summary denominator. The document establishes the submitted baseline; it does not itself approve the revised current-app expectations.
+The document's summary reports 19/20, but its detailed tables contain 26 IDs. This ledger preserves all 26 detailed IDs rather than silently adopting the inconsistent summary denominator. Team 9's test-plan owners approved the nine counted current-app replacements on September 22, 2026.
 
 The [mapping CSV](TEST_PLAN_MAPPING.csv) contains all 26 unique case IDs and their original expected results: 11 HP, 3 SP, 6 ACC, 3 RES, and 3 CODE cases. Each row gives the related Week 6 evidence, its limits, and the next check. Repository evidence paths start at the repo root. SharePoint references name the external files and are not claimed as repository files.
 
@@ -24,9 +24,9 @@ These labels describe the historical mapping, not VPAT conformance levels. Curre
 
 ## Coverage calculation
 
-**Do not claim that the approved-plan 60% threshold is met without approving the revised expectations.** The current-equivalent ledger establishes 19 of 26 passes, or 73.08%, but the strict unchanged expectations establish only 10 of 26, or 38.46%.
+**The approved-plan execution result is 19 of 26 passes, or 73.08%.** Team 9 approved the nine counted revised expectations on September 22, 2026. The strict unchanged-wording comparison is 10 of 26, or 38.46%, and remains documented only for traceability.
 
-The original plan's summary says 19/20, while its detailed tables contain 26 cases. Preserve all 26 IDs until the instructor approves any scope changes or E2E subset. If all 26 are the agreed denominator, at least 16 distinct cases must have qualifying passes to meet 60% (16/26 = 61.54%). If a different subset is approved, record the decision and compute against that set. Do not silently drop blocked or changed cases.
+The original plan's summary says 19/20, while its detailed tables contain 26 cases. All 26 detailed IDs remain the denominator. At least 16 distinct cases are required to exceed 60% (16/26 = 61.54%); the approved result contains 19 qualifying passes. No blocked, changed, or out-of-scope case was silently dropped.
 
 Count each approved case once. A case passes only when the required steps and expected result are covered for the agreed app/platform scope, with an identifiable build and evidence. Partial tests, source-only checks and a flow that touches a screen are not full-case E2E passes. Keep Flutter and RN results separate before deciding any combined claim.
 
@@ -50,12 +50,11 @@ Tiffany's tests and historical report remain described in the [combined guide](I
 
 Zack's shared report supplies limited Flutter iOS focus evidence for ACC-006. His tracker and detailed notes conflict for several screens. Missing RN/device/Android scope must remain open. Do not duplicate completed screen checks without a scope or build reason.
 
-## Finish the approval record
+## Approval and remaining evidence
 
-1. Review the nine revised expectations named in the final execution ledger.
-2. Record the approver, approval date, original expectation, replacement expectation, and reason for each accepted revision.
-3. After the branch is committed, rerun the final commands and associate the logs with that commit SHA.
-4. Complete the remaining VoiceOver, TalkBack, and native React Native checks without converting partial evidence into passes.
-5. Keep line coverage, test-run success, Maestro flow success, manual accessibility evidence, and approved-case completion as separate measurements.
+1. Team 9's test-plan owners approved the nine counted replacements on September 22, 2026.
+2. After the branch is committed, associate final logs with that commit SHA.
+3. Complete the remaining VoiceOver, TalkBack, and native checks without converting partial evidence into passes.
+4. Keep line coverage, test-run success, Maestro flow success, manual accessibility evidence, and approved-case completion as separate measurements.
 
 The original mapping CSV and September 20 logs remain unchanged for traceability. Current execution results are recorded in the final execution ledger.

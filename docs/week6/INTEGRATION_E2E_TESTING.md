@@ -1,6 +1,6 @@
 # Week 6 integration and E2E testing
 
-Updated September 21, 2026 (ET). Current execution branch: `feature/week6-final-testing-evidence`, based on main `96a5859`.
+Updated September 22, 2026 (ET). Current execution branch: `feature/week6-final-testing-evidence`, based on main `96a5859`.
 
 Tiffany's PR #15 and Terence's PR #16 are merged. This guide covers both sets of tests. Use fake accounts on a simulator or test device: these flows change local demo data. Emergency actions do not place calls or share location.
 
@@ -10,7 +10,7 @@ Use a clean checkout and record `git rev-parse HEAD`, device ID, OS, and tool ve
 
 The former duplicate Flutter dependency is resolved. The Flutter emergency Maestro assertion now expects the current truthful message, `Demo only — no call placed`. After rebuilding and reinstalling the current Flutter app, all three Android Maestro flows passed on Pixel 10, Android 17 API 37.
 
-The full Flutter automated suite now passes 54 of 54 tests with 84.68% line coverage. React Native passes 48 of 48 Jest tests with 99.47% line coverage; TypeScript and ESLint pass. See [the final approved-plan execution ledger](FINAL_TEST_PLAN_EXECUTION.md) for the separate approved-case calculations and their scope-approval requirement.
+The full Flutter automated suite now passes 54 of 54 tests with 84.68% line coverage. React Native passes 48 of 48 Jest tests with 99.47% line coverage; TypeScript and ESLint pass. Team 9's test-plan owners approved nine current-application equivalent expectations on September 22, producing an approved result of 19 of 26 cases (73.08%). See [the final approved-plan execution ledger](FINAL_TEST_PLAN_EXECUTION.md) for case-level calculations.
 
 ## Flutter suites and builds
 
@@ -101,6 +101,9 @@ The repository evidence below preserves historical September 20 runs. Current br
 | [Flutter device log](evidence/integration-ios-integration.txt) | 4 passed | iPhone 17, iOS 26.5 |
 | [RN suite log](evidence/rn-tests.txt) | 35 tests, 6 suites, 1 snapshot; 100% line coverage | September 20, Terence's tested source |
 | [RN Maestro XML](evidence/rn-maestro-verified.xml) | 5 flows, 0 failures | iPhone 17, iOS 26.5; dark/200% app text |
+| [Final Flutter Maestro XML](evidence/flutter-maestro-final.xml) | 3 flows, 0 failures | Pixel 10 Android emulator, Android 17/API 37, September 22 |
+| [Approved-plan summary](evidence/APPROVED_PLAN_E2E_SUMMARY.md) | 19 of 26 cases passed (73.08%) | Team-approved current expectations, September 22 |
+| [Approved-plan summary image](evidence/approved-plan-e2e-summary-73.08-percent.png) | Submission-ready visual evidence | Separates approved-plan, Flutter Maestro, and RN Maestro results |
 
 See [evidence notes](evidence/README.md) for historical source hashes. Do not relabel those older logs as current-branch output.
 
@@ -112,4 +115,4 @@ Use [TEST_PLAN_MAPPING.md](TEST_PLAN_MAPPING.md) and the row-level CSV beside it
 
 The updated VPAT draft and Zack's partial Flutter iOS review were placed in the team's shared Week 6 folder. They are separate from these repository test logs. Do not describe them as absent merely because they are not committed here, or as final conformance proof.
 
-Complete missing VoiceOver/TalkBack, keyboard, focus, and spoken error/status checks. Record app/build, device/OS, reader/settings, steps, expected/actual result, exact speech, tester/date, and evidence filename. Reconcile Zack's conflicting screen results. The final submission also needs the approved-plan result mapping, APK or IPA, reader videos, and the 10–15 minute checkout/build/test/document review video. Preserve the September 20 [handoff](TERENCE_TESTING_HANDOFF.md) as historical evidence; its pending-status wording is not a current inventory.
+The approved-plan result mapping and installed-app E2E evidence are complete. Complete the remaining VoiceOver/TalkBack and spoken error/status checks, recording app/build, device/OS, reader/settings, steps, expected/actual result, exact speech, tester/date, and evidence filename. Reconcile Zack's conflicting screen results. The remaining team submission items include finalized reader videos/VPAT and the 10–15 minute checkout/build/test/document review video. Preserve the September 20 [handoff](TERENCE_TESTING_HANDOFF.md) as historical evidence; its pending-status wording is not a current inventory.

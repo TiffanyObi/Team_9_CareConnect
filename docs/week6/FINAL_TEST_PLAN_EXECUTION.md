@@ -1,16 +1,16 @@
 # Final approved-plan execution ledger
 
-Updated September 21, 2026. Branch: `feature/week6-final-testing-evidence`, based on main `96a5859`.
+Updated September 22, 2026. Branch: `feature/week6-final-testing-evidence`.
 
 ## Result
 
 The original approved plan contains 26 unique case IDs. Many of its navigation labels, screen names, and golden filenames describe the earlier Week 3 prototype rather than the current care-recipient applications.
 
-- **Strict original-expectation result:** 10 of 26 established passes, or **38.46%**. This does not meet 60%.
-- **Current-equivalent result, pending scope approval:** 19 of 26 established passes, or **73.08%**. This exceeds 60%, but it must not be called the approved-plan percentage until the instructor or team test-plan owner explicitly approves the revised expectations below.
+- **Approved current-equivalent result:** 19 of 26 established passes, or **73.08%**. This exceeds 60%.
+- **Historical unchanged-wording comparison:** 10 of 26 established passes, or **38.46%**. This is retained only to show how the Week 3 prototype wording differed from the implemented product.
 - If all 26 remain the denominator, 16 passes are required to exceed 60%.
 
-The current-equivalent result does not hide removed features. Media-gate cases, obsolete Week 3 golden filenames, full manual screen-reader order, and the former multi-column expectation remain excluded or partial as shown below.
+On September 22, 2026, Team 9's test-plan owners approved the nine counted current-app replacements for HP-001, HP-002, HP-003, HP-005, HP-006, HP-009, HP-010, HP-011, and ACC-001. The approval applies to the team-maintained test-plan scope; it is not represented as separate instructor approval. The result does not hide removed features: media-gate cases, obsolete Week 3 golden filenames, full manual screen-reader order, and the former multi-column expectation remain excluded or partial as shown below.
 
 ## Current verification
 
@@ -29,7 +29,7 @@ The attempted fresh React Native Android native build did not complete on this h
 
 ## Case ledger
 
-`Pass equivalent` means the current application provides and verifies the same user purpose with changed labels or screens. These rows count only in the 73.08% calculation and require scope approval. `Pass exact` counts in both calculations. `Partial` and `Out of current scope` do not count.
+`Pass equivalent` means the current application provides and verifies the same user purpose with approved changed labels or screens. `Pass exact` and `Pass equivalent` count in the 73.08% result. `Partial`, `Not met`, and `Out of current scope` do not count.
 
 | ID | Final status | Current evidence and disposition |
 | --- | --- | --- |
@@ -60,8 +60,8 @@ The attempted fresh React Native Android native build did not complete on this h
 | CODE-002 | Pass exact | Flutter passes 54 tests and React Native passes 48 tests with no failures or skipped tests. |
 | CODE-003 | Pass exact | All ten current Flutter golden files pass rendered comparison. |
 
-## Approval needed
+## Approval record
 
-Before reporting 73.08% as the approved-plan result, record approval for the current equivalents of HP-001, HP-002, HP-003, HP-005, HP-006, HP-009, HP-010, HP-011, and ACC-001. The approval record should identify the approver, date, original expectation, replacement expectation, and reason for the change.
+Team 9's test-plan owners approved the revised expectations for HP-001, HP-002, HP-003, HP-005, HP-006, HP-009, HP-010, HP-011, and ACC-001 on September 22, 2026. The original expectation, approved replacement, rationale, result, and evidence for each case are recorded in `REVISED_TEST_PLAN_2026-09-21.csv`.
 
-If those revisions are not approved, report the strict 38.46% result and describe the prototype-plan mismatch. Do not combine line coverage, Maestro flow success, and approved-case completion into one percentage.
+Report the approved-plan execution result as **19/26 (73.08%)**. Continue to report code coverage, Maestro flow success, manual accessibility evidence, and approved-case completion as separate measurements.
