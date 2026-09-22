@@ -139,15 +139,18 @@ class _CareConnectAppState extends State<CareConnectApp> {
               final media = MediaQuery.of(context);
               final platformScale = media.textScaler.scale(1);
               final requestedScale = settings.textScale.clamp(1.0, 2.0);
-              return MediaQuery(
-                data: media.copyWith(
-                  textScaler: TextScaler.linear(
-                    (platformScale * requestedScale).clamp(1.0, 2.0),
+              return FocusTraversalGroup(
+                policy: ReadingOrderTraversalPolicy(),
+                child: MediaQuery(
+                  data: media.copyWith(
+                    textScaler: TextScaler.linear(
+                      (platformScale * requestedScale).clamp(1.0, 2.0),
+                    ),
+                    disableAnimations:
+                        media.disableAnimations || settings.reducedMotion,
                   ),
-                  disableAnimations:
-                      media.disableAnimations || settings.reducedMotion,
+                  child: child!,
                 ),
-                child: child!,
               );
             },
             routerConfig: _router,

@@ -87,6 +87,7 @@ exports[`shared components have a stable accessibility snapshot 1`] = `
           "backgroundColor": "#2F6FED",
           "borderColor": "#2F6FED",
           "minHeight": 52,
+          "minWidth": 44,
           "opacity": 1,
         },
       ]
@@ -128,7 +129,7 @@ exports[`shared components have a stable accessibility snapshot 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={true}
+    focusable={false}
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -152,6 +153,7 @@ exports[`shared components have a stable accessibility snapshot 1`] = `
           "backgroundColor": "#082B5F",
           "borderColor": "#082B5F",
           "minHeight": 52,
+          "minWidth": 44,
           "opacity": 0.42,
         },
       ]
