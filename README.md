@@ -2,7 +2,7 @@
 
 Team 9 UI Design Implementation for a CareConnect Recipient with Photosensitive Epilepsy.
 
-This repository provides one shared starting point for the CareConnect recipient experience across web, desktop, and mobile platforms. The Flutter folder contains the functional Week 4 mobile workflow. The web, desktop, and React Native folders remain small environment-verification starters.
+This repository contains Flutter and React Native implementations of the CareConnect Safeview care-recipient experience, plus web and desktop starters. Both mobile applications include authentication, accessibility preferences, medication logging, care and appointment workflows, messaging, emergency-demo feedback, local prototype persistence, and automated tests.
 
 ## Team Members
 
@@ -20,8 +20,8 @@ Team 9's assigned focus is **photosensitive epilepsy**. The starter screens ther
 | --- | --- | --- |
 | `web-react-app/` | React + Vite | Browser-based CareConnect starter |
 | `desktop-electron-app/` | Electron | Desktop CareConnect starter |
-| `mobile-react-native-app/` | React Native + Expo | Cross-platform mobile starter |
-| `mobile-flutter-app/` | Flutter | Flutter mobile starter for Android and iOS |
+| `mobile-react-native-app/` | React Native + Expo | Functional cross-platform mobile application |
+| `mobile-flutter-app/` | Flutter | Functional Flutter application for Android and iOS |
 | `design-samples/careconnect-calm-flutter/` | Flutter | Five runnable CareConnect interface samples focused on photosensitive-epilepsy safety |
 | `docs/` | Markdown | Developer setup and troubleshooting documentation |
 
@@ -120,14 +120,23 @@ flutter test
 Week 6 integration and installed-app E2E testing for both mobile frameworks is
 documented in [`docs/week6/INTEGRATION_E2E_TESTING.md`](docs/week6/INTEGRATION_E2E_TESTING.md).
 
+## Week 6 mobile testing
+
+The current main-derived verification branch records:
+
+- Flutter: analyzer clean, 54 of 54 automated tests passing, 84.68% line coverage, ten passing golden comparisons, and 3 of 3 Android Maestro flows passing.
+- React Native: TypeScript and ESLint clean, 48 of 48 Jest tests passing in nine suites, 99.47% line coverage, and 89.11% branch coverage.
+
+See the [Week 6 integration/E2E guide](docs/week6/INTEGRATION_E2E_TESTING.md), [approved-plan mapping](docs/week6/TEST_PLAN_MAPPING.md), and [final execution ledger](docs/week6/FINAL_TEST_PLAN_EXECUTION.md). Automated checks do not replace the required manual VoiceOver and TalkBack testing.
+
 ## Current Limitations and Known Issues
 
-- The web, desktop, and React Native folders remain environment-verification starters; the Flutter app contains the current Week 4 functional workflow.
-- Each application is installed and run independently; there is no shared API or backend yet.
+- The web and desktop folders remain environment-verification starters; the Flutter and React Native applications contain the current mobile workflows.
+- Each application is installed and run independently. The mobile apps use local prototype persistence rather than a shared production backend.
 - iOS builds require macOS and Xcode.
 - Android builds require a configured Android SDK and accepted SDK licenses.
 - Expo and Flutter simulator startup can take longer on the first run while tools download or compile platform components.
-- As of August 17, 2026, `npm audit` reports 18 transitive advisories in Expo/Metro tooling (`image-size` and `uuid`). The non-breaking fix cannot resolve them, and the forced fix proposes a breaking Expo SDK downgrade, so it was not applied. Expo Doctor still passes all 21 checks and the iOS JavaScript bundle completes successfully. Recheck the advisories before production use.
+- React Native native builds remain environment-dependent. A September 21 Android build attempt on this host stopped during Gradle CMake configuration for Expo Modules Core and React Native Screens; this does not invalidate the passing Jest, TypeScript, or ESLint checks.
 - The Flutter Android debug build succeeds but may warn that the installed Android Studio and command-line tools understand different SDK XML versions. Align those tools if the warning becomes a build error.
 - No flashing or animated content is included, but future features still require accessibility review and testing.
 

@@ -44,7 +44,7 @@ in [`../docs/week6/INTEGRATION_E2E_TESTING.md`](../docs/week6/INTEGRATION_E2E_TE
 
 For complete prerequisites and troubleshooting, see the repository's root `README.md` and `docs/DEVELOPER_SETUP.md`. Run the Week 4 gate with `./tool/verify_week4.sh`.
 
-The September 8, 2026 gate passed with 41 tests, no analyzer issues, and 718/780 covered lines (92.05%). The responsive suite exercises all ten evidence screens at 100% and 200% text scale on phone and tablet surfaces. Generate the local HTML report with `genhtml coverage/lcov.info --output-directory coverage/html --legend`.
+The September 21–22, 2026 Week 6 verification passed with no analyzer issues, 54 of 54 automated tests, and 945/1,116 covered lines (84.68%). The responsive suite exercises the core evidence screens at 100% and 200% text scale on phone and tablet surfaces, and all ten reviewed golden comparisons pass. Generate the local HTML report with `genhtml coverage/lcov.info --output-directory coverage/html --legend`.
 
 Run the repeatable security check with `./tool/security_audit.sh`. It performs static analysis, queries OSV for resolved hosted Pub packages, scans tracked files for common credential patterns, and checks Android and iOS transport exceptions.
 
@@ -58,6 +58,6 @@ Run the repeatable security check with `./tool/security_audit.sh`. It performs s
 
 ## Week 6 verification
 
-See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md) and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for current results, fixes, and known limits. Automated checks do not replace VoiceOver or TalkBack review.
+See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md), [final execution ledger](../docs/week6/FINAL_TEST_PLAN_EXECUTION.md), and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for results, fixes, and known limits. The current Android build passed all three Flutter Maestro flows on Pixel 10 / Android 17 API 37. Automated checks do not replace VoiceOver or TalkBack review.
 
 Keyboard traversal, expanded Flutter guideline coverage, and cross-framework touch-target checks are documented in [Keyboard, guideline, and touch-target verification](../docs/week6/KEYBOARD_GUIDELINES_TOUCH_TARGETS.md).

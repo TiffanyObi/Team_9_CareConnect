@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="Pixel_10" tests="3" failures="0" time="81.58" timestamp="2026-09-22T16:42:58">
+    <testcase id="Flutter - accessibility settings and logout confirmation" name="Flutter - accessibility settings and logout confirmation" classname="Flutter - accessibility settings and logout confirmation" file=".maestro/02_accessibility_and_logout.yaml" time="31.14" timestamp="2026-09-22T16:42:58" status="SUCCESS"/>
+    <testcase id="Flutter - care and emergency assistance" name="Flutter - care and emergency assistance" classname="Flutter - care and emergency assistance" file=".maestro/03_care_and_emergency.yaml" time="25.565" timestamp="2026-09-22T16:43:29" status="SUCCESS"/>
+    <testcase id="Flutter - sign in and log medication" name="Flutter - sign in and log medication" classname="Flutter - sign in and log medication" file=".maestro/01_sign_in_and_medication.yaml" time="24.854" timestamp="2026-09-22T16:43:55" status="SUCCESS"/>
+  </testsuite>
+</testsuites>
