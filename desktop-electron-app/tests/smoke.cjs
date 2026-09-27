@@ -1,0 +1,43 @@
+const evidence=require('node:fs').mkdtempSync(require('node:path').join(require('node:os').tmpdir(),'careconnect-desktop-evidence-'));
+const os=require('node:os');
+const {_electron:electron}=require('@playwright/test');
+const assert=require('node:assert/strict');
+const path=require('node:path');
+const fs=require('node:fs');
+(async()=>{fs.mkdirSync(path.join(evidence,'screenshots'),{recursive:true});console.log('Evidence: '+evidence);
+ const user=fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()),'careconnect-a7-test-'));
+ const app=await electron.launch({args:[path.join(__dirname,'..'),`--user-data-dir=${user}`]});
+ const actualProfile=await app.evaluate(({app})=>app.getPath('userData'));assert.equal(actualProfile,user);
+ const page=await app.firstWindow(); const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const results=[];const sizes=[];const ok=name=>{results.push({name,status:'Pass'});console.log('PASS '+name);};
+ try{
+ await page.getByRole('button',{name:'Open sample workspace',exact:true}).click();
+ await page.getByRole('heading',{name:'Good morning, Olivia'}).waitFor();ok('H01 Dashboard loads');
+ const menu=await app.evaluate(({Menu})=>Menu.getApplicationMenu().items.map(i=>i.label));assert(menu.some(x=>x.includes('File')));ok('H02 Native menu exists');
+ await page.getByRole('button',{name:/Appointments/}).first().click();
+ await page.getByRole('heading',{name:'Appointments',exact:true}).waitFor();
+ await page.getByRole('searchbox').fill('nothing matches');await page.getByText('No visits found.',{exact:false}).waitFor();ok('S01 Empty search');
+ await page.getByRole('button',{name:'Clear search'}).click();
+ const note=page.getByRole('textbox',{name:'Note for this visit'});await note.fill('Bring demo questions');await page.getByRole('button',{name:'Save note',exact:true}).last().click();await page.reload();await page.getByRole('button',{name:/Appointments/}).first().click();assert.equal(await note.inputValue(),'Bring demo questions');ok('H03 Note persists after reload');
+ await page.getByRole('button',{name:'New appointment',exact:true}).click();await page.getByRole('button',{name:'Add appointment',exact:true}).click();await page.getByRole('alert').getByText('Enter a title, date, time, and location.').waitFor();ok('S02 Required fields');
+ await page.getByLabel('Visit title',{exact:true}).fill('Test visit');await page.getByLabel('Date',{exact:true}).fill('2020-01-01');await page.getByLabel('Time',{exact:true}).fill('10:00');await page.getByLabel('Location',{exact:true}).fill('Demo room');await page.getByRole('button',{name:'Add appointment',exact:true}).click();await page.getByText('Choose a future date and time.').waitFor();ok('S03 Past date rejected');
+ await page.getByLabel('Date',{exact:true}).fill('2099-10-01');await page.getByRole('button',{name:'Add appointment',exact:true}).click();await page.getByRole('heading',{name:'Test visit',exact:true}).waitFor();ok('H04 Add future demo appointment');
+ await page.getByRole('button',{name:'New appointment',exact:true}).click();await page.getByLabel('Visit title',{exact:true}).fill('Duplicate');await page.getByLabel('Date',{exact:true}).fill('2099-10-01');await page.getByLabel('Time',{exact:true}).fill('10:00');await page.getByLabel('Location',{exact:true}).fill('Demo');await page.getByRole('button',{name:'Add appointment',exact:true}).click();await page.getByText('That time already has an appointment. Choose another time.').waitFor();ok('S04 Duplicate time rejected');await page.keyboard.press('Escape');
+ const settings=page.getByRole('button',{name:'Settings',exact:true});await settings.click();await page.getByRole('checkbox',{name:'High contrast',exact:true}).check();await page.getByRole('button',{name:'Save settings'}).click();assert(await page.locator('.high-contrast').count());ok('H05 Contrast setting');
+ await settings.click();await page.keyboard.press('Tab');assert(await page.evaluate(()=>document.activeElement.closest('dialog')!==null));await page.keyboard.press('Escape');assert(await settings.evaluate(el=>el===document.activeElement));ok('H06 Dialog focus and Escape return');
+ await page.evaluate(()=>{window.originalSetItem=Storage.prototype.setItem;Storage.prototype.setItem=function(){throw new DOMException('Full','QuotaExceededError');};});await note.fill('Not yet saved');await page.getByRole('button',{name:'Save note',exact:true}).last().click();await page.getByRole('alert').waitFor();assert.equal(await note.inputValue(),'Not yet saved');ok('S05 Save failure preserves note');
+ await page.evaluate(()=>{Storage.prototype.setItem=window.originalSetItem;});await page.getByRole('button',{name:'Save note',exact:true}).last().click();await page.evaluate(()=>{localStorage.clear();});await page.reload();
+ for(const width of [1024,1440,1920]){
+  await app.evaluate(({BrowserWindow},w)=>BrowserWindow.getAllWindows()[0].setContentSize(w,900),width);
+  await page.getByRole('heading',{name:'Good morning, Olivia'}).waitFor();
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));sizes.push(await page.evaluate(()=>({width:innerWidth,height:innerHeight})));
+  await page.locator('h1').focus();await page.screenshot({path:path.join(evidence,'screenshots',`dashboard-${width}.png`),fullPage:true});
+  await page.getByRole('button',{name:/Appointments/}).first().click();
+  await page.locator('h1').focus();await page.screenshot({path:path.join(evidence,'screenshots',`appointments-${width}.png`),fullPage:true});
+  await page.getByRole('button',{name:/Dashboard/}).first().click();
+ }ok('H07 Three desktop widths');
+ await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].webContents.setZoomFactor(2));await page.waitForTimeout(300);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));ok('H08 200 percent zoom reflow');await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].webContents.setZoomFactor(1));
+ await settings.click();await page.screenshot({path:path.join(evidence,'screenshots','settings.png')});await page.keyboard.press('Escape');
+ assert.deepEqual(errors,[]);ok('H09 No renderer errors');
+ }finally{fs.writeFileSync(path.join(evidence,'test-results.json'),JSON.stringify({date:new Date().toISOString(),platform:process.platform,sizes,results,errors},null,2));await app.close();}
+})().catch(e=>{console.error(e);process.exit(1)});
