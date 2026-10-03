@@ -2,6 +2,7 @@ node_modules/
 dist/
 out/
 build/
+release/
 
 *.log
 npm-debug.log*

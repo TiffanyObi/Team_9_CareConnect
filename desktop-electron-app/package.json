@@ -2,26 +2,76 @@
   "name": "careconnect-electron-app",
   "private": true,
   "version": "1.0.0",
-  "description": "CareConnect Electron starter application for Team 9",
-  "main": "main.js",
+  "description": "CareConnect Safeview Electron desktop application for Team 9",
+  "author": "Team 9",
+  "productName": "CareConnect Safeview",
+  "main": "src/main/main.js",
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
     "postinstall": "install-electron",
     "start": "npm run build && electron .",
-    "build": "esbuild renderer.jsx --bundle --minify --outfile=dist/renderer.js",
+    "build": "node scripts/build.mjs",
+    "package:mac:universal": "npm run build && npx --yes electron-builder@26.15.3 --mac dmg --universal",
+    "package:mac:dir": "npm run build && npx --yes electron-builder@26.15.3 --mac dir --universal",
+    "lint": "eslint .",
+    "security:audit": "npm audit --audit-level=high",
     "test": "npm run build && node tests/smoke.cjs",
     "test:auth": "npm run build && node tests/auth.cjs",
-    "test:clipboard": "npm run build && node tests/clipboard.cjs"
+    "test:clipboard": "npm run build && node tests/clipboard.cjs",
+    "test:window-state": "node --test tests/window-state.test.cjs",
+    "test:all": "npm run test:window-state && npm test && npm run test:auth && npm run test:clipboard"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.63.0",
-    "electron": "43.4.0",
-    "esbuild": "^0.28.2"
+    "electron": "^43.7.7",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.12.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0"
   },
   "dependencies": {
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
+  },
+  "build": {
+    "appId": "com.team9.careconnect.safeview",
+    "productName": "CareConnect Safeview",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "src/main/**/*",
+      "src/shared/**/*",
+      "src/renderer/styles.css",
+      "index.html",
+      "package.json"
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.medical",
+      "icon": "resources/icon.png",
+      "identity": null,
+      "artifactName": "CareConnect-Safeview-${version}-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "CareConnect Safeview ${version}",
+      "contents": [
+        {
+          "x": 150,
+          "y": 185
+        },
+        {
+          "x": 440,
+          "y": 185,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   }
 }
