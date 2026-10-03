@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-03T18:11:05.156Z",
+  "platform": "darwin",
+  "results": [
+    {
+      "name": "HP-01 Page identity and real Electron launch",
+      "status": "Pass"
+    },
+    {
+      "name": "HP-03/04/05 Native navigation and find IPC",
+      "status": "Pass"
+    },
+    {
+      "name": "SP-02 Required visit field errors and summary focus",
+      "status": "Pass"
+    },
+    {
+      "name": "HP-08/SP-07 Settings cancel and save survive reopening/reload",
+      "status": "Pass"
+    },
+    {
+      "name": "HP-10 Help menu action and Escape",
+      "status": "Pass"
+    },
+    {
+      "name": "HP-10 Native menus present",
+      "status": "Pass",
+      "detail": [
+        "CareConnect Safeview",
+        "&File",
+        "&Edit",
+        "&View",
+        "&Window",
+        "&Help"
+      ]
+    },
+    {
+      "name": "Secure renderer isolation",
+      "status": "Pass"
+    },
+    {
+      "name": "IPC payload and spoofed sender/frame rejection",
+      "status": "Pass",
+      "detail": "Main handler invoked directly for spoofed events; valid IPC tested in clipboard suite"
+    },
+    {
+      "name": "HP-11/SP-06 400% workspace reflow and focus outlines",
+      "status": "Pass",
+      "detail": {
+        "targetCount": 15,
+        "focusedCount": 15
+      }
+    },
+    {
+      "name": "SP-08 Reduced-motion emulation has no CSS animation/transition",
+      "status": "Pass",
+      "detail": "Emulation; no OS safety certification"
+    },
+    {
+      "name": "HP-20/SP-11 400% auth reflow, keyboard focus, and linked errors",
+      "status": "Pass",
+      "detail": "Screen reader still requires manual check"
+    },
+    {
+      "name": "SP-04 Keep editing prevents real window close",
+      "status": "Pass",
+      "detail": "Native dialog choice stubbed; real beforeunload/window event"
+    },
+    {
+      "name": "Window bounds persist after close and relaunch",
+      "status": "Pass",
+      "detail": {
+        "x": 50,
+        "y": 70,
+        "width": 1000,
+        "height": 750
+      }
+    },
+    {
+      "name": "SP-04 Discard close does not save note",
+      "status": "Pass"
+    },
+    {
+      "name": "Window maximized state restores on relaunch",
+      "status": "Pass"
+    },
+    {
+      "name": "HP-14 Clean close without edit prompt",
+      "status": "Pass"
+    },
+    {
+      "name": "No uncaught renderer errors",
+      "status": "Pass"
+    }
+  ],
+  "errors": []
+}

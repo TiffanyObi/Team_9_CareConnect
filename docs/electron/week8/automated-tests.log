@@ -1,0 +1,193 @@
+
+> careconnect-electron-app@1.0.0 test:all
+> npm test -- --coverage && npm run test:window-state && npm run test:smoke && npm run test:auth && npm run test:clipboard && npm run test:integration
+
+
+> careconnect-electron-app@1.0.0 test
+> jest --coverage
+
+-------------------|---------|----------|---------|---------|--------------------------------------------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+-------------------|---------|----------|---------|---------|--------------------------------------------------------
+All files          |   95.14 |    90.56 |   92.66 |   96.34 |
+ main              |   99.23 |    95.58 |     100 |     100 |
+  main.js          |   98.38 |    89.65 |     100 |     100 | 76,110-115
+  menu.js          |     100 |      100 |     100 |     100 |
+  window-state.js  |     100 |      100 |     100 |     100 |
+ preload           |     100 |      100 |     100 |     100 |
+  preload.js       |     100 |      100 |     100 |     100 |
+ renderer          |   91.96 |    85.22 |    86.3 |   92.92 |
+  App.jsx          |    91.9 |    85.22 |   86.11 |   92.85 | 39,122,231-232,289-290,410,432,536,546-594,629,731-735
+  main.jsx         |     100 |      100 |     100 |     100 |
+ renderer/auth     |    96.5 |    95.27 |   97.05 |   98.51 |
+  DemoSession.jsx  |    96.5 |    95.27 |   97.05 |   98.51 | 29,384
+ shared            |     100 |      100 |     100 |     100 |
+  ipc-channels.cjs |     100 |      100 |     100 |     100 |
+-------------------|---------|----------|---------|---------|--------------------------------------------------------
+
+Test Suites: 6 passed, 6 total
+Tests:       29 passed, 29 total
+Snapshots:   0 total
+Time:        2.404 s
+Ran all test suites.
+
+> careconnect-electron-app@1.0.0 test:window-state
+> node --test tests/window-state.test.cjs
+
+TAP version 13
+# Subtest: uses safe defaults when no state exists
+ok 1 - uses safe defaults when no state exists
+  ---
+  duration_ms: 0.557292
+  ...
+# Subtest: restores a visible saved position and maximized state
+ok 2 - restores a visible saved position and maximized state
+  ---
+  duration_ms: 0.093875
+  ...
+# Subtest: moves an off-screen window back to the primary display
+ok 3 - moves an off-screen window back to the primary display
+  ---
+  duration_ms: 0.052917
+  ...
+# Subtest: enforces minimum size and clamps oversized windows
+ok 4 - enforces minimum size and clamps oversized windows
+  ---
+  duration_ms: 0.063375
+  ...
+# Subtest: writes normal bounds and maximized state when a tracked window closes
+ok 5 - writes normal bounds and maximized state when a tracked window closes
+  ---
+  duration_ms: 1.377208
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 36.673208
+
+> careconnect-electron-app@1.0.0 test:smoke
+> npm run build && node tests/smoke.cjs
+
+
+> careconnect-electron-app@1.0.0 build
+> node scripts/build.mjs
+
+
+  dist/preload.cjs  654b
+
+⚡ Done in 17ms
+
+  dist/renderer.js  246.0kb
+
+⚡ Done in 55ms
+Evidence: <temporary-test-path>
+PASS H01 Dashboard loads
+PASS H02 Native menu exists
+PASS H10 Sidebar, toolbar, and F6 pane navigation
+PASS S01 Empty search
+PASS H03 Note persists after reload
+PASS S02 Required fields
+PASS S03 Past date rejected
+PASS H04 Add future demo appointment
+PASS S04 Duplicate time rejected
+PASS H05 Contrast setting
+PASS H06 Dialog focus and Escape return
+PASS S05 Save failure preserves note
+PASS H07 Three desktop widths
+PASS H08 200 percent zoom reflow
+PASS H09 No renderer errors
+
+> careconnect-electron-app@1.0.0 test:auth
+> npm run build && node tests/auth.cjs
+
+
+> careconnect-electron-app@1.0.0 build
+> node scripts/build.mjs
+
+
+  dist/preload.cjs  654b
+
+⚡ Done in 4ms
+
+  dist/renderer.js  246.0kb
+
+⚡ Done in 35ms
+Evidence: <temporary-test-path>
+PASS A01 Login gate ignores workspace menu commands
+PASS A02 Empty login rejected
+PASS A18 Password recovery uses account-neutral confirmation and both return paths
+PASS A03 Invalid email rejected and error receives focus
+PASS A04 Short password rejected
+PASS A05 Password mismatch rejected
+PASS A06 Account save failure preserves form
+PASS A07 Sign-up stores salted hash and returns to login
+PASS A08 Duplicate email is case insensitive
+PASS A09 Wrong credentials rejected
+PASS A10 Login and saved account data survive reload
+PASS A11 Logout Keep editing and Discard protect saved data; reload stays logged out
+PASS A12 Save-and-logout stays open on failed save and succeeds on retry
+PASS A13 Accounts have separate workspace data
+PASS A14 Original sample data remains intact and accessible
+PASS A15 Corrupt account storage fails safely without resetting it
+PASS A16 Login layout fits desktop widths and 200 percent zoom
+PASS A17 No uncaught renderer errors
+
+> careconnect-electron-app@1.0.0 test:clipboard
+> npm run build && node tests/clipboard.cjs
+
+
+> careconnect-electron-app@1.0.0 build
+> node scripts/build.mjs
+
+
+  dist/preload.cjs  654b
+
+⚡ Done in 3ms
+
+  dist/renderer.js  246.0kb
+
+⚡ Done in 25ms
+Evidence: <temporary-test-path>
+{"phase":"after","url":"file:///Volumes/TerenceB/SWEN%20661/output/Week8_SWEN661/Assignment_8_Review_Evidence_2026-10-03/repository/desktop-electron-app/index.html","title":"CareConnect Safeview","outcome":["3 visits","Appointment details copied."],"errors":[]}
+PASS actual clipboard matches the second selected appointment
+PASS native failure and retry clear stale error and status
+PASS invalid clipboard payloads rejected
+
+> careconnect-electron-app@1.0.0 test:integration
+> npm run build && node tests/desktop-integration.cjs
+
+
+> careconnect-electron-app@1.0.0 build
+> node scripts/build.mjs
+
+
+  dist/preload.cjs  654b
+
+⚡ Done in 2ms
+
+  dist/renderer.js  246.0kb
+
+⚡ Done in 24ms
+Evidence: <temporary-test-path>
+PASS HP-01 Page identity and real Electron launch
+PASS HP-03/04/05 Native navigation and find IPC
+PASS SP-02 Required visit field errors and summary focus
+PASS HP-08/SP-07 Settings cancel and save survive reopening/reload
+PASS HP-10 Help menu action and Escape
+PASS HP-10 Native menus present
+PASS Secure renderer isolation
+PASS IPC payload and spoofed sender/frame rejection
+PASS HP-11/SP-06 400% workspace reflow and focus outlines
+PASS SP-08 Reduced-motion emulation has no CSS animation/transition
+PASS HP-20/SP-11 400% auth reflow, keyboard focus, and linked errors
+PASS SP-04 Keep editing prevents real window close
+PASS Window bounds persist after close and relaunch
+PASS SP-04 Discard close does not save note
+PASS Window maximized state restores on relaunch
+PASS HP-14 Clean close without edit prompt
+PASS No uncaught renderer errors

@@ -18,15 +18,17 @@ The native menu uses Cmd on macOS and Ctrl on Windows/Linux. F1 opens the shortc
 ## Check
 
 ```sh
-npm test
+npm test -- --coverage
+npm run test:smoke
 npm run test:auth
 npm run test:clipboard
 npm run test:window-state
+npm run test:integration
 npm run lint
 npm run security:audit
 ```
 
-The test runner launches real Electron windows with a fresh temporary profile. It writes results and screenshots to a fresh temporary folder and prints that path. Close only these test windows after the run; tests do not use your normal app profile. To capture clean window views separately, run `node tests/capture.cjs`.
+The `test:smoke`, `test:auth`, `test:clipboard`, and `test:integration` runners launch real Electron windows with a fresh temporary profile. It writes results and screenshots to a fresh temporary folder and prints that path. Close only these test windows after the run; tests do not use your normal app profile. To capture clean window views separately, run `node tests/capture.cjs`.
 
 The recorded macOS suite passed 14 checks: launch, native menu presence, note save/reload, new visit, custom contrast, sampled focus return, three widths, 200% zoom, no renderer errors, and five error paths. The test plan lists the exact scope. VoiceOver, NVDA, Windows/Linux, OS contrast, full keyboard traversal, native menu key use, and 400% zoom remain manual checks.
 
@@ -55,10 +57,26 @@ Use a made-up email and a password you do not use elsewhere. Passwords are store
 
 Each account has its own notes, visits, and settings. Open sample workspace keeps the original Olivia data under its existing storage key. The old data is not copied into new accounts or deleted. Log out clears the session; unsaved changes offer Keep editing, Discard and log out, and Save and log out. A reload keeps the current window session; a fresh app session asks for login again.
 
-Run `npm test` for 14 desktop checks, `npm run test:auth` for 17 account and data-preservation checks, and `npm run test:clipboard` for native copying and failure recovery. Tests use fresh temporary profiles and print their evidence folder paths. The clipboard test restores the prior clipboard contents after it runs. Close only test windows. If Electron launches as Node, unset `ELECTRON_RUN_AS_NODE` before running these commands.
+Run `npm test -- --coverage` for Jest and React Testing Library checks, `npm run test:smoke` for 15 desktop checks, `npm run test:auth` for 18 account and data-preservation checks, and `npm run test:clipboard` for native copying and failure recovery. Tests use fresh temporary profiles and print their evidence folder paths. The clipboard test restores the prior clipboard contents after it runs. Close only test windows. If Electron launches as Node, unset `ELECTRON_RUN_AS_NODE` before running these commands.
 
 ## Copy appointment details
 
 Choose Appointments, select a visit, then More actions → Copy appointment details. The app copies the title, date, time, and location through a narrow Electron clipboard bridge. A success message appears only after the write succeeds; a failed copy shows an error that clears on a successful retry.
 
 Local demo accounts have no password reset service. The authentication workflow in the design documents may describe planned features beyond this early implementation.
+
+## Week 8 local review
+
+This local branch adds Jest tests for main-process and window-state logic, React Testing Library checks for the workspace and local accounts, and real Electron IPC/window tests. Run `npm run test:all` to run the full automated set. `npm test -- --coverage` writes `coverage/lcov-report/index.html` and fails if any source file or the total falls below 60% statements, branches, functions, or lines. All JS, JSX, and CJS files in `src/` are included. CSS, dependencies, built bundles, and test code are outside that code coverage measure.
+
+Settings Cancel restores the prior settings and unsaved state. Form errors link to fields and move focus to the summary; password mismatch moves to confirmation. Search has live result status. Controls remain available at narrow widths and 400% zoom.
+
+To capture the real coverage page after running coverage:
+
+```sh
+node scripts/capture-coverage.cjs /absolute/path/coverage-60-plus.png
+```
+
+Published review evidence is in [`docs/electron/week8`](../docs/electron/week8/README.md).
+
+The scope uses all 33 cases in Tiffany's desktop plan. See [`WEEK8_TEST_EXECUTION_MACOS_LOCAL.md`](../docs/electron/WEEK8_TEST_EXECUTION_MACOS_LOCAL.md) for the evidence and remaining manual checks. Instructor approval remains Not verified. VoiceOver speech, actual macOS Increase Contrast, and a full native shortcut/menu check still need a tester's record. The original DOCX plan remains unchanged.

@@ -1,0 +1,242 @@
+{
+  "total": {
+    "lines": {
+      "total": 492,
+      "covered": 474,
+      "skipped": 0,
+      "pct": 96.34
+    },
+    "statements": {
+      "total": 536,
+      "covered": 510,
+      "skipped": 0,
+      "pct": 95.14
+    },
+    "functions": {
+      "total": 150,
+      "covered": 139,
+      "skipped": 0,
+      "pct": 92.66
+    },
+    "branches": {
+      "total": 371,
+      "covered": 336,
+      "skipped": 0,
+      "pct": 90.56
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "desktop-electron-app/src/main/main.js": {
+    "lines": {
+      "total": 53,
+      "covered": 53,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 62,
+      "covered": 61,
+      "skipped": 0,
+      "pct": 98.38
+    },
+    "branches": {
+      "total": 29,
+      "covered": 26,
+      "skipped": 0,
+      "pct": 89.65
+    }
+  },
+  "desktop-electron-app/src/main/menu.js": {
+    "lines": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "desktop-electron-app/src/main/window-state.js": {
+    "lines": {
+      "total": 61,
+      "covered": 61,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 12,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 62,
+      "covered": 62,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 30,
+      "covered": 30,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "desktop-electron-app/src/preload/preload.js": {
+    "lines": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 12,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "desktop-electron-app/src/renderer/App.jsx": {
+    "lines": {
+      "total": 224,
+      "covered": 208,
+      "skipped": 0,
+      "pct": 92.85
+    },
+    "functions": {
+      "total": 72,
+      "covered": 62,
+      "skipped": 0,
+      "pct": 86.11
+    },
+    "statements": {
+      "total": 247,
+      "covered": 227,
+      "skipped": 0,
+      "pct": 91.9
+    },
+    "branches": {
+      "total": 176,
+      "covered": 150,
+      "skipped": 0,
+      "pct": 85.22
+    }
+  },
+  "desktop-electron-app/src/renderer/main.jsx": {
+    "lines": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "desktop-electron-app/src/renderer/auth/DemoSession.jsx": {
+    "lines": {
+      "total": 135,
+      "covered": 133,
+      "skipped": 0,
+      "pct": 98.51
+    },
+    "functions": {
+      "total": 34,
+      "covered": 33,
+      "skipped": 0,
+      "pct": 97.05
+    },
+    "statements": {
+      "total": 143,
+      "covered": 138,
+      "skipped": 0,
+      "pct": 96.5
+    },
+    "branches": {
+      "total": 127,
+      "covered": 121,
+      "skipped": 0,
+      "pct": 95.27
+    }
+  },
+  "desktop-electron-app/src/shared/ipc-channels.cjs": {
+    "lines": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  }
+}

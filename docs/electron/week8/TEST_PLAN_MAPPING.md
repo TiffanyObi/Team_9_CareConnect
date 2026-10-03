@@ -1,0 +1,43 @@
+# macOS Desktop Test Plan Execution
+
+October 3, 2026. Review branch `codex/week8-local-gap-fixes`, based on `bb353f5939d00a0f18c9a165d6d1be87544585a3`. All 33 cases in Tiffany’s DOCX are in scope. Instructor approval is **Not verified** for every case. The original DOCX remains unchanged.
+
+A passing automated check can cover part of a plan case. The status reflects the full case and its limits. Live regions and accessibility trees do not prove speech.
+
+| Case | Name | Status | Evidence | Limit |
+| --- | --- | --- | --- | --- |
+| HP-01 | Launch | Met | integration: HP-01; smoke: H01 | Real Electron window and page identity pass. |
+| HP-02 | Keyboard destinations | Partly met | Jest app navigation; smoke H10; integration focus traversal | Native macOS keyboard activation and VoiceOver reading order need a full manual record. |
+| HP-03 | Dashboard | Partly met | Jest app navigation; smoke H01; native observation | Dashboard and route pass; full native shortcut and keyboard visit workflow remains manual. |
+| HP-04 | Select visit | Partly met | Jest app selection/arrows; clipboard; integration navigation | Selection and details pass; full native Command+2/Enter flow and speech remain manual. |
+| HP-05 | Search | Partly met | Jest search; integration Find IPC; native Command+F observation | Match and empty result status pass; spoken live update remains manual. |
+| HP-06 | Add appointment | Partly met | Jest appointment test; smoke H04; integration field checks | Valid visit added; full native Command+N keyboard workflow and speech remain manual. |
+| HP-07 | Save note | Partly met | Jest save/failure; smoke H03 | Saved note and reload pass; native Command+S and spoken confirmation remain manual. |
+| HP-08 | Settings | Partly met | Jest Settings; integration HP-08/SP-07 | Save, reopen, reload, and Cancel pass; full native Command+comma path remains manual. |
+| HP-09 | Context actions | Partly met | Jest IPC; clipboard suite | Real clipboard and failure/retry pass; native Shift+F10/Menu key and speech/focus return need a full record. |
+| HP-10 | Native menus and shortcuts | Partly met | Jest menu; integration menu actions and Help/Escape | Native callbacks and IPC pass. Every native key combination and native menu keyboard traversal remain manual. |
+| HP-11 | Resize and zoom | Met | smoke H07/H08; integration 400% traversal | Three widths, 200%, and minimum-window 400% geometry/focus checks pass. Native screenshots are viewport samples. |
+| HP-12 | VoiceOver core flow | Not verified | MANUAL_MACOS_CHECKS.md | No VoiceOver speech or recording has been verified. |
+| HP-13 | OS contrast | Not verified | CSS prefers-contrast; integration contrast emulation | Actual macOS Increase Contrast and Differentiate Without Color have not been tested. |
+| HP-14 | Close with no edits | Met | integration HP-14 | Real clean window closes with zero intercepted edit prompt calls. |
+| HP-15 | Sign in | Partly met | Jest auth; auth A09/A10; App heading focus | Local login works and heading focus is covered; spoken success/heading remains manual. |
+| HP-16 | Create account | Partly met | Jest auth; auth A07/A08 | Single account, hash, Account created state and focus pass; speech remains manual. |
+| HP-17 | Auth routes | Partly met | Jest auth; auth A07 and route actions | Routes and heading focus pass; full keyboard/VoiceOver reading order remains manual. |
+| HP-18 | Reset request | Partly met | Jest recovery; auth A18 | Neutral demo confirmation and heading focus pass; no real reset email is sent; speech remains manual. |
+| HP-19 | Reset return paths | Partly met | Jest recovery; auth A18 | Both routes and heading focus pass; spoken focus/reading order remains manual. |
+| HP-20 | Auth zoom and assistive tech | Partly met | auth A16; integration 400% auth | 200/400% layout and focus pass; keyboard/screen-reader completion of all auth workflows remains manual. |
+| SP-01 | Empty search | Partly met | Jest search; smoke S01 | Empty UI, Clear search, and live status pass; spoken update remains manual. |
+| SP-02 | Empty visit form | Partly met | Jest required fields; integration SP-02 | All four fields have visible linked errors and invalid states; summary receives focus. Speech covered by manual HP-12. |
+| SP-03 | Past date | Partly met | Jest date validation; smoke S03 | Past date blocked with specific visible error linked to date. Live alert is exposed; actual speech remains part of HP-12. |
+| SP-04 | Unsaved window close | Partly met | integration Keep editing/Discard/relaunch | Real close events test both choices and preserve/discard data. Native dialog choice is stubbed; clicking/hearing native dialog remains manual. |
+| SP-05 | Unavailable command | Met | Jest busy-account test; auth A01 | Busy submit/input disabled states are exposed. Double submission does not create a second account; login ignores workspace commands. |
+| SP-06 | Extreme layout | Met | integration 400% workspace traversal | At minimum window size all sampled controls have focus outlines and fit the viewport after scrolling. Full VoiceOver traversal remains manual. |
+| SP-07 | Dismiss without saving | Met | Jest Settings Cancel; integration cancel/save/reload; smoke H06 | Settings roll back in-memory values and prior dirty state. New visit Cancel closes without adding a visit; focus return passes. |
+| SP-08 | Motion safeguards | Partly met | integration reduced-motion/contrast emulation | No CSS animation or transition in tested state; actual OS setting and all urgent/error states remain manual. No safety certification is claimed. |
+| SP-09 | Empty login | Partly met | Jest auth required fields; auth A02 | Fields have visible linked errors and invalid states; summary receives focus. Actual speech remains part of HP-12/20. |
+| SP-10 | Invalid credentials | Partly met | Jest invalid/valid retry; auth A09 | Generic error and retry pass; screen-reader error announcement remains manual. |
+| SP-11 | Incomplete account | Partly met | Jest auth missing fields; integration 400% errors | Missing fields get linked errors; existing values remain; summary focus passes. Actual speech remains part of HP-20. |
+| SP-12 | Password mismatch | Partly met | Jest validation; auth A05 | Blocked with visible linked error; confirmation receives focus and other values stay. Speech remains manual. |
+| SP-13 | Unknown recovery email | Partly met | Jest neutral-response comparison; auth A18 | Same demo confirmation for two addresses; actual spoken response remains manual. This prototype does not send email. |
+
+See [Week 8 evidence](README.md) and [the manual macOS checklist](MANUAL_MACOS_CHECKS.md). Instructor approval remains Not verified.
