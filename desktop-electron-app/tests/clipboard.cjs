@@ -34,9 +34,9 @@ const path=require('node:path');
    // A native failure must show an error; a later success must remove it.
    await app.evaluate(({clipboard})=>{global.originalWrite=clipboard.writeText;clipboard.writeText=()=>{throw new Error('Test clipboard failure');};});
    await copy();await expect(page.getByRole('alert')).toHaveText('Could not copy. Select and copy the details instead.');
-   await expect(page.getByRole('status')).toHaveText('Copy failed. Try again.');
+   await expect(page.locator('footer').getByRole('status')).toHaveText('Copy failed. Try again.');
    await app.evaluate(({clipboard})=>{clipboard.writeText=global.originalWrite;});
-   await copy();await expect(page.getByRole('status')).toHaveText('Appointment details copied.');
+   await copy();await expect(page.locator('footer').getByRole('status')).toHaveText('Appointment details copied.');
    await expect(page.getByRole('alert')).toHaveCount(0);
    console.log('PASS native failure and retry clear stale error and status');
    const validation=await page.evaluate(async()=>{const results=[];for(const value of [null,'','x'.repeat(100001)]){try{await window.desktop.copyAppointmentDetails(value);results.push(false);}catch{results.push(true);}}return results;});

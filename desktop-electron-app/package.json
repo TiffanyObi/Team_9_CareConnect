@@ -17,20 +17,31 @@
     "package:mac:dir": "npm run build && npx --yes electron-builder@26.15.3 --mac dir --universal",
     "lint": "eslint .",
     "security:audit": "npm audit --audit-level=high",
-    "test": "npm run build && node tests/smoke.cjs",
+    "test": "jest",
     "test:auth": "npm run build && node tests/auth.cjs",
     "test:clipboard": "npm run build && node tests/clipboard.cjs",
     "test:window-state": "node --test tests/window-state.test.cjs",
-    "test:all": "npm run test:window-state && npm test && npm run test:auth && npm run test:clipboard"
+    "test:all": "npm test -- --coverage && npm run test:window-state && npm run test:smoke && npm run test:auth && npm run test:clipboard && npm run test:integration",
+    "test:smoke": "npm run build && node tests/smoke.cjs",
+    "test:integration": "npm run build && node tests/desktop-integration.cjs"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.63.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "babel-jest": "^30.5.2",
     "electron": "^43.7.7",
     "esbuild": "^0.28.2",
     "eslint": "^10.12.0",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "globals": "^17.13.0"
+    "globals": "^17.13.0",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2"
   },
   "dependencies": {
     "react": "^19.3.0",

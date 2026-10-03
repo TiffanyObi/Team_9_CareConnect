@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-03T18:07:00.736Z",
+  "platform": "darwin",
+  "sizes": [
+    {
+      "width": 1024,
+      "height": 900
+    },
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 1920,
+      "height": 900
+    }
+  ],
+  "results": [
+    {
+      "name": "H01 Dashboard loads",
+      "status": "Pass"
+    },
+    {
+      "name": "H02 Native menu exists",
+      "status": "Pass"
+    },
+    {
+      "name": "H10 Sidebar, toolbar, and F6 pane navigation",
+      "status": "Pass"
+    },
+    {
+      "name": "S01 Empty search",
+      "status": "Pass"
+    },
+    {
+      "name": "H03 Note persists after reload",
+      "status": "Pass"
+    },
+    {
+      "name": "S02 Required fields",
+      "status": "Pass"
+    },
+    {
+      "name": "S03 Past date rejected",
+      "status": "Pass"
+    },
+    {
+      "name": "H04 Add future demo appointment",
+      "status": "Pass"
+    },
+    {
+      "name": "S04 Duplicate time rejected",
+      "status": "Pass"
+    },
+    {
+      "name": "H05 Contrast setting",
+      "status": "Pass"
+    },
+    {
+      "name": "H06 Dialog focus and Escape return",
+      "status": "Pass"
+    },
+    {
+      "name": "S05 Save failure preserves note",
+      "status": "Pass"
+    },
+    {
+      "name": "H07 Three desktop widths",
+      "status": "Pass"
+    },
+    {
+      "name": "H08 200 percent zoom reflow",
+      "status": "Pass"
+    },
+    {
+      "name": "H09 No renderer errors",
+      "status": "Pass"
+    }
+  ],
+  "errors": []
+}

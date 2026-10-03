@@ -1,0 +1,34 @@
+
+> careconnect-electron-app@1.0.0 test:integration
+> npm run build && node tests/desktop-integration.cjs
+
+
+> careconnect-electron-app@1.0.0 build
+> node scripts/build.mjs
+
+
+  dist/preload.cjs  654b
+
+⚡ Done in 31ms
+
+  dist/renderer.js  246.0kb
+
+⚡ Done in 78ms
+Evidence: <temporary-test-path>
+PASS HP-01 Page identity and real Electron launch
+PASS HP-03/04/05 Native navigation and find IPC
+PASS SP-02 Required visit field errors and summary focus
+PASS HP-08/SP-07 Settings cancel and save survive reopening/reload
+PASS HP-10 Help menu action and Escape
+PASS HP-10 Native menus present
+PASS Secure renderer isolation
+PASS IPC payload and spoofed sender/frame rejection
+PASS HP-11/SP-06 400% workspace reflow and focus outlines
+PASS SP-08 Reduced-motion emulation has no CSS animation/transition
+PASS HP-20/SP-11 400% auth reflow, keyboard focus, and linked errors
+PASS SP-04 Keep editing prevents real window close
+PASS Window bounds persist after close and relaunch
+PASS SP-04 Discard close does not save note
+PASS Window maximized state restores on relaunch
+PASS HP-14 Clean close without edit prompt
+PASS No uncaught renderer errors

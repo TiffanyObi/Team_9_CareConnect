@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-03T18:07:04.496Z",
+  "platform": "darwin",
+  "profile": "<temporary-test-profile>",
+  "actual": "<temporary-test-profile>",
+  "results": [
+    {
+      "name": "A01 Login gate ignores workspace menu commands",
+      "status": "Pass"
+    },
+    {
+      "name": "A02 Empty login rejected",
+      "status": "Pass"
+    },
+    {
+      "name": "A18 Password recovery uses account-neutral confirmation and both return paths",
+      "status": "Pass"
+    },
+    {
+      "name": "A03 Invalid email rejected and error receives focus",
+      "status": "Pass"
+    },
+    {
+      "name": "A04 Short password rejected",
+      "status": "Pass"
+    },
+    {
+      "name": "A05 Password mismatch rejected",
+      "status": "Pass"
+    },
+    {
+      "name": "A06 Account save failure preserves form",
+      "status": "Pass"
+    },
+    {
+      "name": "A07 Sign-up stores salted hash and returns to login",
+      "status": "Pass"
+    },
+    {
+      "name": "A08 Duplicate email is case insensitive",
+      "status": "Pass"
+    },
+    {
+      "name": "A09 Wrong credentials rejected",
+      "status": "Pass"
+    },
+    {
+      "name": "A10 Login and saved account data survive reload",
+      "status": "Pass"
+    },
+    {
+      "name": "A11 Logout Keep editing and Discard protect saved data; reload stays logged out",
+      "status": "Pass"
+    },
+    {
+      "name": "A12 Save-and-logout stays open on failed save and succeeds on retry",
+      "status": "Pass"
+    },
+    {
+      "name": "A13 Accounts have separate workspace data",
+      "status": "Pass"
+    },
+    {
+      "name": "A14 Original sample data remains intact and accessible",
+      "status": "Pass"
+    },
+    {
+      "name": "A15 Corrupt account storage fails safely without resetting it",
+      "status": "Pass"
+    },
+    {
+      "name": "A16 Login layout fits desktop widths and 200 percent zoom",
+      "status": "Pass"
+    },
+    {
+      "name": "A17 No uncaught renderer errors",
+      "status": "Pass"
+    }
+  ],
+  "errors": []
+}
