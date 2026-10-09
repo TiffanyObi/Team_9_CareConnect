@@ -72,7 +72,7 @@ p {
   color: var(--secondary);
 }
 .app {
-  --primary: #0b7f79;
+  --primary: #08736e;
   --text: #102a43;
   --secondary: #52667a;
   --surface: #fff;
@@ -713,7 +713,7 @@ dialog::backdrop {
 }
 /* Local demo account pages share the desktop type and color choices. */
 .auth-shell {
-  --primary: #0b7f79;
+  --primary: #08736e;
   --text: #102a43;
   --secondary: #52667a;
   --surface: #fff;

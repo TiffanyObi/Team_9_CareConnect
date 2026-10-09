@@ -270,6 +270,7 @@ async function tabAll() {
       w.webContents.setZoomFactor(1);
       w.setBounds({ x: 50, y: 70, width: 1000, height: 750 });
     });
+    const userDataPath = await app.evaluate(({ app }) => app.getPath("userData"));
     await page.getByRole("button", { name: "Back to login" }).click();
     await page.getByRole("button", { name: "Open sample workspace" }).click();
     await action("Appointments");
@@ -307,11 +308,33 @@ async function tabAll() {
       .toBe(0);
     await app.close();
     app = null;
+    const expectedBounds = JSON.parse(
+      fs.readFileSync(
+        path.join(userDataPath, "careconnect", "window-state.json"),
+        "utf8",
+      ),
+    );
+    assert.equal(expectedBounds.x, 50);
+    assert.equal(expectedBounds.width, 1000);
+    assert.equal(expectedBounds.height, 750);
+    assert.equal(expectedBounds.maximized, false);
     await launch();
     const restored = await app.evaluate(({ BrowserWindow }) =>
       BrowserWindow.getAllWindows()[0].getBounds(),
     );
-    assert.deepEqual(restored, { x: 50, y: 70, width: 1000, height: 750 });
+    assert.equal(restored.x, expectedBounds.x);
+    assert.equal(restored.width, expectedBounds.width);
+    assert.equal(restored.height, expectedBounds.height);
+    assert(
+      Math.abs(restored.y - expectedBounds.y) <= 12,
+      "macOS may adjust the restored y position for the native window frame",
+    );
+    assert.equal(
+      await app.evaluate(({ BrowserWindow }) =>
+        BrowserWindow.getAllWindows()[0].isMaximized(),
+      ),
+      expectedBounds.maximized,
+    );
     pass("Window bounds persist after close and relaunch", restored);
     await page.getByRole("button", { name: "Open sample workspace" }).click();
     await action("Appointments");

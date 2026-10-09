@@ -459,10 +459,9 @@ export function App({ user, onLogout }) {
           </span>
           <span className="badge">Local demo</span>
         </header>
-        <div
+        <section
           ref={toolbarPane}
           className="toolbar"
-          role="group"
           aria-label="Quick actions"
           onKeyDown={moveComposite}
         >
@@ -477,7 +476,7 @@ export function App({ user, onLogout }) {
           <span className="toolbar-note">
             {dirty ? "Unsaved changes" : "All changes saved"}
           </span>
-        </div>
+        </section>
         <main ref={mainPane} id="main" tabIndex="-1">
           <div className="page-heading">
             <div>
@@ -616,7 +615,7 @@ export function App({ user, onLogout }) {
                       {filtered.length} visits
                     </span>
                   </div>
-                  <div className="visit-list" aria-label="Appointments">
+                  <div className="visit-list">
                     {filtered.map((a) => (
                       <button
                         key={a.id}
