@@ -1,6 +1,6 @@
 'use strict';
 
-function createMenuTemplate(sendAction, platform = process.platform) {
+function createMenuTemplate(sendAction, platform = process.platform, enableDevTools = false) {
   const isMac = platform === 'darwin';
   const action = (label, accelerator, command) => ({
     label,
@@ -62,6 +62,16 @@ function createMenuTemplate(sendAction, platform = process.platform) {
         {role: 'zoomIn'},
         {role: 'zoomOut'},
         {role: 'togglefullscreen'},
+        ...(enableDevTools
+          ? [
+              {type: 'separator'},
+              {
+                label: 'Developer Tools',
+                role: 'toggleDevTools',
+                accelerator: isMac ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+              },
+            ]
+          : []),
       ],
     },
     {

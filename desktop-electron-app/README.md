@@ -24,13 +24,16 @@ npm run test:auth
 npm run test:clipboard
 npm run test:window-state
 npm run test:integration
+npm run test:accessibility
 npm run lint
 npm run security:audit
 ```
 
-The `test:smoke`, `test:auth`, `test:clipboard`, and `test:integration` runners launch real Electron windows with a fresh temporary profile. It writes results and screenshots to a fresh temporary folder and prints that path. Close only these test windows after the run; tests do not use your normal app profile. To capture clean window views separately, run `node tests/capture.cjs`.
+The `test:smoke`, `test:auth`, `test:clipboard`, `test:integration`, and `test:accessibility` runners launch real Electron windows with a fresh temporary profile. They write results and screenshots to fresh temporary folders and print those paths. Close only these test windows after the run; tests do not use your normal app profile. To capture clean window views separately, run `node tests/capture.cjs`.
 
-The recorded macOS suite passed 14 checks: launch, native menu presence, note save/reload, new visit, custom contrast, sampled focus return, three widths, 200% zoom, no renderer errors, and five error paths. The test plan lists the exact scope. VoiceOver, NVDA, Windows/Linux, OS contrast, full keyboard traversal, native menu key use, and 400% zoom remain manual checks.
+`npm run test:accessibility` injects axe-core from a local external script permitted by the production Content Security Policy and scans the major authentication, dashboard, appointment, settings, help, and validation states in the real renderer. This repeatable automated scan supplements, but does not replace, the assignment's axe DevTools UI screenshot or a human VoiceOver session.
+
+For the required axe DevTools UI screenshot, install Deque's official extension in Google Chrome and run `npm run axe:preview`. Open the printed loopback URL in Chrome, open Chrome DevTools, select **axe DevTools**, run **Scan ALL of my page**, and capture the result. This preview builds and serves the same React renderer used by Electron from four explicit read-only routes on `127.0.0.1`; it does not expose the repository or change the packaged application. Electron's own DevTools cannot run the current axe extension because Electron does not implement every Chrome extension API it requires.
 
 ## Project structure
 
@@ -51,13 +54,13 @@ The desktop design is ready at https://www.figma.com/design/FOtJBJipdHlL1nQOsBko
 
 ## Local demo login and sign-up — September 27, 2026
 
-The app now starts at Log in. Choose Sign up to create a local demo account, then log in with the same email and password. Email matching ignores case and outer spaces. Passwords need at least eight characters; confirmation must match. No email verification or password reset service is provided.
+The app now starts at Log in. Choose Sign up, review the entered name and email, and explicitly confirm before the local account is saved. Then log in with the same email and password. Email matching ignores case and outer spaces. Passwords need at least eight characters; confirmation must match. No email verification or password reset service is provided.
 
 Use a made-up email and a password you do not use elsewhere. Passwords are stored as salted PBKDF2 hashes, but this local-only demo is not a security boundary or an account service for patient data. Anyone with device/storage access can alter local records. No network account service is used.
 
-Each account has its own notes, visits, and settings. Open sample workspace keeps the original Olivia data under its existing storage key. The old data is not copied into new accounts or deleted. Log out clears the session; unsaved changes offer Keep editing, Discard and log out, and Save and log out. A reload keeps the current window session; a fresh app session asks for login again.
+Each account has its own notes, visits, and settings. Open sample workspace keeps the original Olivia data under its existing storage key. The old data is not copied into new accounts or deleted. After a successful appointment, note, or settings save, Undo last save provides one-step reversal of the stored change. Log out clears the session; unsaved changes offer Keep editing, Discard and log out, and Save and log out. A reload keeps the current window session; a fresh app session asks for login again.
 
-Run `npm test -- --coverage` for Jest and React Testing Library checks, `npm run test:smoke` for 15 desktop checks, `npm run test:auth` for 18 account and data-preservation checks, and `npm run test:clipboard` for native copying and failure recovery. Tests use fresh temporary profiles and print their evidence folder paths. The clipboard test restores the prior clipboard contents after it runs. Close only test windows. If Electron launches as Node, unset `ELECTRON_RUN_AS_NODE` before running these commands.
+Run `npm run test:all` for the complete automated suite, including coverage and the real-renderer accessibility scans. Tests use fresh temporary profiles and print their evidence folder paths. The clipboard test restores the prior clipboard contents after it runs. Close only test windows. If Electron launches as Node, unset `ELECTRON_RUN_AS_NODE` before running these commands.
 
 ## Copy appointment details
 
@@ -80,3 +83,7 @@ node scripts/capture-coverage.cjs /absolute/path/coverage-60-plus.png
 Published review evidence is in [`docs/electron/week8`](../docs/electron/week8/README.md).
 
 The scope uses all 33 cases in Tiffany's desktop plan. See [`WEEK8_TEST_EXECUTION_MACOS_LOCAL.md`](../docs/electron/WEEK8_TEST_EXECUTION_MACOS_LOCAL.md) for the evidence and remaining manual checks. Instructor approval remains Not verified. VoiceOver speech, actual macOS Increase Contrast, and a full native shortcut/menu check still need a tester's record. The original DOCX plan remains unchanged.
+
+## Week 9 accessibility verification
+
+The Week 9 implementation keeps programmatic screen and skip-link focus visible, names the appointment collection, hides decorative glyphs from assistive technology, preserves native keyboard shortcuts, and provides confirmation or reversal for saved user-controlled data. Automated checks cannot establish how VoiceOver sounds or prove a physical mouse-unplug test. Record those manual results separately and retain the required 3–5 minute VoiceOver video and axe DevTools UI screenshot with the submission.

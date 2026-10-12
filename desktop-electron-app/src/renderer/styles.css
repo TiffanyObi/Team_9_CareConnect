@@ -47,7 +47,8 @@ button:active {
 }
 h1:focus,
 main:focus {
-  outline: none;
+  outline: 3px solid #6b4eff;
+  outline-offset: 3px;
 }
 h1,
 h2,
@@ -770,6 +771,19 @@ dialog::backdrop {
   padding: 12px;
   border: 1px solid #166534;
   border-radius: 6px;
+}
+.account-review {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px 18px;
+  margin: 24px 0;
+}
+.account-review dt,
+.account-review dd {
+  margin: 0;
+}
+.account-review dd {
+  overflow-wrap: anywhere;
 }
 .auth-card [role="alert"]:focus {
   outline: 3px solid #6b4eff;
