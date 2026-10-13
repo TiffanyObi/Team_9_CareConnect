@@ -225,22 +225,7 @@ function AccountPages({ onEnter }) {
           );
           return;
         }
-        const salt = hex(crypto.getRandomValues(new Uint8Array(16)));
-        const hash = await passwordHash(password, salt);
-        localStorage.setItem(
-          ACCOUNTS,
-          JSON.stringify([
-            ...list,
-            {
-              id: crypto.randomUUID(),
-              name: name.trim(),
-              email: address,
-              salt,
-              hash,
-            },
-          ]),
-        );
-        openPage("account-created");
+        setPage("confirm-account");
       } else {
         if (
           !account ||
@@ -251,6 +236,47 @@ function AccountPages({ onEnter }) {
         }
         onEnter(account);
       }
+    } catch {
+      setError(
+        "Could not read or save local account data. Your existing data has not been reset. Try again.",
+      );
+    } finally {
+      submitting.current = false;
+      setBusy(false);
+    }
+  }
+
+  async function confirmAccount() {
+    if (submitting.current) return;
+    submitting.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      const address = email.trim().toLowerCase();
+      const list = accounts();
+      if (list.some((item) => item.email === address)) {
+        setPage("signup");
+        setError(
+          "A demo account with this email already exists. Log in instead.",
+        );
+        return;
+      }
+      const salt = hex(crypto.getRandomValues(new Uint8Array(16)));
+      const hash = await passwordHash(password, salt);
+      localStorage.setItem(
+        ACCOUNTS,
+        JSON.stringify([
+          ...list,
+          {
+            id: crypto.randomUUID(),
+            name: name.trim(),
+            email: address,
+            salt,
+            hash,
+          },
+        ]),
+      );
+      openPage("account-created");
     } catch {
       setError(
         "Could not read or save local account data. Your existing data has not been reset. Try again.",
@@ -286,6 +312,52 @@ function AccountPages({ onEnter }) {
         >
           Go to sign in
         </button>
+      </AccountFrame>
+    );
+  }
+
+  if (page === "confirm-account") {
+    return (
+      <AccountFrame
+        heading="Review account"
+        eyebrow="CONFIRM YOUR DETAILS"
+        headingRef={heading}
+      >
+        <p>
+          Review these details before saving the account on this device. Your
+          password is hidden and will be stored only as a salted hash.
+        </p>
+        <dl className="account-review">
+          <dt>Name</dt>
+          <dd>{name.trim()}</dd>
+          <dt>Email</dt>
+          <dd>{email.trim().toLowerCase()}</dd>
+        </dl>
+        {error ? (
+          <p ref={alert} tabIndex="-1" role="alert" className="error">
+            {error}
+          </p>
+        ) : null}
+        <div className="button-row">
+          <button
+            type="button"
+            onClick={() => {
+              setPage("signup");
+              setError("");
+            }}
+            disabled={busy}
+          >
+            Back to edit
+          </button>
+          <button
+            className="primary"
+            type="button"
+            onClick={confirmAccount}
+            disabled={busy}
+          >
+            {busy ? "Please wait…" : "Confirm and create account"}
+          </button>
+        </div>
       </AccountFrame>
     );
   }

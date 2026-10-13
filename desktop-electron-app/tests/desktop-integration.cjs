@@ -92,7 +92,41 @@ async function tabAll() {
       profile,
     );
     await page.getByRole("button", { name: "Open sample workspace" }).click();
-    await page.getByRole("heading", { name: "Good morning, Olivia" }).waitFor();
+    const dashboardHeading = page.getByRole("heading", {
+      name: "Good morning, Olivia",
+    });
+    await dashboardHeading.waitFor();
+    await expect(dashboardHeading).toBeFocused();
+    const headingOutline = await dashboardHeading.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        style: style.outlineStyle,
+        width: parseFloat(style.outlineWidth),
+      };
+    });
+    assert(
+      headingOutline.style !== "none" && headingOutline.width >= 3,
+      "Programmatically focused screen heading must have a visible outline",
+    );
+    const skip = page.getByRole("link", { name: "Skip to main content" });
+    await skip.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("main")).toBeFocused();
+    const mainOutline = await page.getByRole("main").evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        style: style.outlineStyle,
+        width: parseFloat(style.outlineWidth),
+      };
+    });
+    assert(
+      mainOutline.style !== "none" && mainOutline.width >= 3,
+      "Skip-link destination must have a visible outline",
+    );
+    pass("WCAG 2.4.7 screen-change and skip-link focus are visible", {
+      headingOutline,
+      mainOutline,
+    });
     pass("HP-01 Page identity and real Electron launch");
     // Use native menu callbacks so main -> preload -> renderer is exercised.
     await action("Appointments");

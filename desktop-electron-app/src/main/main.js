@@ -98,7 +98,9 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  Menu.setApplicationMenu(Menu.buildFromTemplate(createMenuTemplate(sendAction)));
+  Menu.setApplicationMenu(
+    Menu.buildFromTemplate(createMenuTemplate(sendAction, process.platform, !app.isPackaged)),
+  );
   registerIpcHandlers();
   nativeTheme.on('updated', () => {
     if (mainWindow && !mainWindow.isDestroyed()) {

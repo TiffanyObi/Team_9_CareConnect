@@ -101,7 +101,7 @@ function Modal({ title, children, onClose }) {
       <div className="dialog-head">
         <h2 id="dialog-title">{title}</h2>
         <button aria-label="Close dialog" onClick={onClose}>
-          ×
+          <span aria-hidden="true">×</span>
         </button>
       </div>
       {children}
@@ -153,7 +153,14 @@ export function App({ user, onLogout }) {
     [status, setStatus] = useState("Ready. Demo data only."),
     [error, setError] = useState(""),
     [draft, setDraft] = useState(null),
-    [dirty, setDirty] = useState(false);
+    [editingId, setEditingId] = useState(null),
+    [dirty, setDirty] = useState(false),
+    [lastSaved, setLastSaved] = useState(() => ({
+      items: seed.items,
+      contrast: seed.contrast,
+      dense: seed.dense,
+    })),
+    [undoSnapshot, setUndoSnapshot] = useState(null);
   const heading = useRef(),
     search = useRef(),
     picked = useRef(selected),
@@ -192,10 +199,12 @@ export function App({ user, onLogout }) {
   }
   function persist(next = items, c = contrast, d = dense) {
     try {
-      localStorage.setItem(
-        KEY,
-        JSON.stringify({ items: next, contrast: c, dense: d }),
-      );
+      const nextSaved = { items: next, contrast: c, dense: d };
+      localStorage.setItem(KEY, JSON.stringify(nextSaved));
+      if (JSON.stringify(nextSaved) !== JSON.stringify(lastSaved)) {
+        setUndoSnapshot(lastSaved);
+      }
+      setLastSaved(nextSaved);
       setDirty(false);
       setError("");
       setStatus("Saved on this device. Demo data only.");
@@ -206,6 +215,28 @@ export function App({ user, onLogout }) {
       );
       setStatus("Save failed. Changes are not saved.");
       return false;
+    }
+  }
+  function undoLastSave() {
+    if (!undoSnapshot) return;
+    try {
+      localStorage.setItem(KEY, JSON.stringify(undoSnapshot));
+      setItems(undoSnapshot.items);
+      setContrast(undoSnapshot.contrast);
+      setDense(undoSnapshot.dense);
+      setSelected((value) =>
+        undoSnapshot.items.some((item) => item.id === value)
+          ? value
+          : undoSnapshot.items[0]?.id,
+      );
+      setLastSaved(undoSnapshot);
+      setUndoSnapshot(null);
+      setDirty(false);
+      setError("");
+      setStatus("Last saved change undone.");
+    } catch {
+      setError("Could not undo the last save. Your current data was not changed.");
+      setStatus("Undo failed. Current saved data remains unchanged.");
     }
   }
   function go(next) {
@@ -226,6 +257,31 @@ export function App({ user, onLogout }) {
       setStatus("Copy failed. Try again.");
     }
   }
+  function openAppointmentEditor(visit = null) {
+    setEditingId(visit?.id ?? null);
+    setDraft(
+      visit
+        ? {
+            title: visit.title,
+            provider: visit.provider === "Not set" ? "" : visit.provider,
+            date: visit.date,
+            time: visit.time,
+            location: visit.location,
+            note: visit.note,
+          }
+        : {
+            title: "",
+            provider: "",
+            date: "",
+            time: "",
+            location: "",
+            note: "",
+          },
+    );
+    setModal(visit ? "edit" : "new");
+    setFieldErrors({});
+    setError("");
+  }
   function command(a) {
     if (a === "save") {
       if (!modal) persist();
@@ -238,17 +294,7 @@ export function App({ user, onLogout }) {
       setTimeout(() => search.current?.focus(), 0);
     }
     if (a === "new") {
-      setDraft({
-        title: "",
-        provider: "",
-        date: "",
-        time: "",
-        location: "",
-        note: "",
-      });
-      setModal("new");
-      setFieldErrors({});
-      setError("");
+      openAppointmentEditor();
     }
     if (["settings", "help", "about"].includes(a)) {
       if (a === "settings") settingsBefore.current = { contrast, dense, dirty };
@@ -320,6 +366,8 @@ export function App({ user, onLogout }) {
       setDirty(settingsBefore.current.dirty);
     }
     settingsBefore.current = null;
+    setEditingId(null);
+    setDraft(null);
     setModal(null);
     setError("");
     setFieldErrors({});
@@ -330,7 +378,7 @@ export function App({ user, onLogout }) {
       close();
     }
   }
-  function add(e) {
+  function saveAppointment(e) {
     e.preventDefault();
     const missing = Object.fromEntries(
       [
@@ -346,12 +394,24 @@ export function App({ user, onLogout }) {
       return;
     }
     const when = new Date(`${draft.date}T${draft.time}`);
-    if (!Number.isFinite(+when) || when <= new Date()) {
+    const existing = editingId
+      ? items.find((item) => item.id === editingId)
+      : null;
+    const changedSchedule =
+      !existing || existing.date !== draft.date || existing.time !== draft.time;
+    if (!Number.isFinite(+when) || (changedSchedule && when <= new Date())) {
       setFieldErrors({ date: "Choose a future date and time." });
       setError("Choose a future date and time.");
       return;
     }
-    if (items.some((i) => i.date === draft.date && i.time === draft.time)) {
+    if (
+      items.some(
+        (i) =>
+          i.id !== editingId &&
+          i.date === draft.date &&
+          i.time === draft.time,
+      )
+    ) {
       setFieldErrors({
         time: "That time already has an appointment. Choose another time.",
       });
@@ -360,16 +420,25 @@ export function App({ user, onLogout }) {
     }
     const item = {
       ...draft,
-      id: Date.now(),
+      id: editingId ?? Date.now(),
       title: draft.title.trim(),
       provider: draft.provider.trim() || "Not set",
+      location: draft.location.trim(),
     };
-    const next = [...items, item].sort((a, b) =>
+    const next = (editingId
+      ? items.map((entry) => (entry.id === editingId ? item : entry))
+      : [...items, item]
+    ).sort((a, b) =>
       (a.date + a.time).localeCompare(b.date + b.time),
     );
     if (persist(next)) {
       setItems(next);
       setSelected(item.id);
+      setStatus(
+        editingId
+          ? "Appointment updated and saved."
+          : "Appointment added and saved.",
+      );
       close();
       setScreen("appointments");
       setTimeout(() => heading.current?.focus(), 0);
@@ -423,7 +492,8 @@ export function App({ user, onLogout }) {
         </nav>
         <div className="sidebar-bottom">
           <p className="safety">
-            <span>●</span> Calm view is on<small>No motion or flashing</small>
+            <span aria-hidden="true">●</span> Calm view is on
+            <small>No motion or flashing</small>
           </p>
           <button data-sidebar-nav onClick={() => command("settings")}>
             <Icon name="settings" />
@@ -473,6 +543,9 @@ export function App({ user, onLogout }) {
             <Icon name="save" />
             Save note
           </button>
+          {undoSnapshot && !dirty ? (
+            <button onClick={undoLastSave}>Undo last save</button>
+          ) : null}
           <span className="toolbar-note">
             {dirty ? "Unsaved changes" : "All changes saved"}
           </span>
@@ -610,12 +683,16 @@ export function App({ user, onLogout }) {
               <div className="appointments-grid">
                 <section className="panel">
                   <div className="section-head">
-                    <h2>Your schedule</h2>
+                    <h2 id="appointments-list-heading">Your schedule</h2>
                     <span role="status" aria-live="polite">
                       {filtered.length} visits
                     </span>
                   </div>
-                  <div className="visit-list">
+                  <div
+                    className="visit-list"
+                    role="group"
+                    aria-labelledby="appointments-list-heading"
+                  >
                     {filtered.map((a) => (
                       <button
                         key={a.id}
@@ -731,6 +808,9 @@ export function App({ user, onLogout }) {
                           <Icon name="save" />
                           Save note
                         </button>
+                        <button onClick={() => openAppointmentEditor(current)}>
+                          Edit appointment
+                        </button>
                         <button onClick={(e) => context(e, current.id)}>
                           More actions
                         </button>
@@ -758,6 +838,7 @@ export function App({ user, onLogout }) {
               settings: "Settings",
               help: "Keyboard shortcuts",
               new: "New appointment",
+              edit: "Edit appointment",
               about: "About CareConnect",
               logout: "Log out of the demo",
             }[modal]
@@ -821,8 +902,8 @@ export function App({ user, onLogout }) {
                 Save settings
               </button>
             </>
-          ) : modal === "new" ? (
-            <form onSubmit={add} noValidate>
+          ) : modal === "new" || modal === "edit" ? (
+            <form onSubmit={saveAppointment} noValidate>
               {[
                 ["title", "Visit title"],
                 ["provider", "Provider (optional)"],
@@ -856,14 +937,16 @@ export function App({ user, onLogout }) {
                 </div>
               ))}
               <p className="muted">
-                Creates a local demo visit. No clinic booking is sent.
+                {modal === "edit"
+                  ? "Updates this local demo visit. No clinic change is sent."
+                  : "Creates a local demo visit. No clinic booking is sent."}
               </p>
               <div className="button-row">
                 <button type="button" onClick={close}>
                   Cancel
                 </button>
                 <button className="primary" type="submit">
-                  Add appointment
+                  {modal === "edit" ? "Save appointment" : "Add appointment"}
                 </button>
               </div>
             </form>

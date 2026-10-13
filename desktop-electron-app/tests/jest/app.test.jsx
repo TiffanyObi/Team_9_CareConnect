@@ -54,6 +54,9 @@ test("HP-02/03/04/05 and SP-01 navigation, selection and live search counts", as
   await waitFor(() =>
     expect(screen.getByRole("heading", { level: 1 })).toHaveFocus(),
   );
+  expect(
+    screen.getByRole("group", { name: "Your schedule" }),
+  ).toBeInTheDocument();
   const visits = screen.getAllByRole("button", { name: /Care check-in/ });
   fireEvent.click(visits[0]);
   expect(visits[0]).toHaveAttribute("aria-pressed", "true");
@@ -103,6 +106,12 @@ test("HP-06/07 SP-02/03 required fields, date, duplicate time and persistence", 
       (x) => x.title === "Test visit",
     ).note,
   ).toBe("Question");
+  click("Undo last save");
+  expect(screen.getByLabelText("Note for this visit")).toHaveValue("");
+  expect(screen.getByText("Last saved change undone.")).toHaveAttribute(
+    "role",
+    "status",
+  );
   newVisit();
   validForm("Duplicate");
   click("Add appointment");
@@ -113,11 +122,53 @@ test("HP-06/07 SP-02/03 required fields, date, duplicate time and persistence", 
   click("Cancel");
 });
 
+test("saved appointments can be edited and the edit can be undone", () => {
+  mount();
+  visit();
+  click("Edit appointment");
+  expect(screen.getByRole("dialog")).toHaveAccessibleName("Edit appointment");
+  expect(screen.getByLabelText("Visit title", { exact: true })).toHaveValue(
+    "Physical therapy",
+  );
+  input("Visit title", "Physical therapy follow-up");
+  input("Provider (optional)", "Jordan Kim");
+  input("Location", "Rehabilitation Center");
+  click("Save appointment");
+
+  expect(
+    screen.getByRole("heading", { name: "Physical therapy follow-up" }),
+  ).toBeVisible();
+  expect(screen.getAllByText("Jordan Kim")).toHaveLength(2);
+  expect(screen.getByText("Rehabilitation Center")).toBeVisible();
+  expect(screen.getByText("Appointment updated and saved.")).toHaveAttribute(
+    "role",
+    "status",
+  );
+  const saved = JSON.parse(
+    localStorage.getItem("careconnect-desktop-demo-v1"),
+  ).items.find((item) => item.id === 1);
+  expect(saved).toMatchObject({
+    title: "Physical therapy follow-up",
+    provider: "Jordan Kim",
+    location: "Rehabilitation Center",
+  });
+
+  click("Undo last save");
+  expect(
+    screen.getByRole("heading", { name: "Physical therapy" }),
+  ).toBeVisible();
+  expect(screen.getAllByText("Jordan Lee")).toHaveLength(2);
+  expect(screen.getByText("Northside Clinic")).toBeVisible();
+});
+
 test("HP-08 SP-07 settings cancel rolls back, saving persists and dialog returns focus", () => {
   mount();
   const button = screen.getByRole("button", { name: "Settings", exact: true });
   button.focus();
   click("Settings");
+  expect(
+    screen.getByRole("button", { name: "Close dialog" }).firstElementChild,
+  ).toHaveAttribute("aria-hidden", "true");
   fireEvent.click(screen.getByLabelText("High contrast"));
   fireEvent.click(screen.getByLabelText("Compact appointment rows"));
   expect(document.querySelector(".app")).toHaveClass("high-contrast", "dense");

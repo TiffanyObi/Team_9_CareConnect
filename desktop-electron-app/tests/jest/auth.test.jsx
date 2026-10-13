@@ -24,6 +24,11 @@ function signup() {
   input("Password", "demo-password");
   input("Confirm password", "demo-password");
 }
+function reviewAndConfirmAccount() {
+  click("Create account");
+  expect(screen.getByRole("heading", { name: "Review account" })).toHaveFocus();
+  click("Confirm and create account");
+}
 
 test("SP-09/11 required field errors are linked and preserve entered values", () => {
   mount();
@@ -62,6 +67,12 @@ test("HP-15/16/17 SP-10 create once, duplicate email, wrong password, valid logi
   const view = mount();
   signup();
   click("Create account");
+  await screen.findByRole("heading", { name: "Review account" });
+  expect(screen.getByText("Alex Demo", { selector: "dd" })).toBeVisible();
+  expect(screen.getByText("alex@example.test", { selector: "dd" })).toBeVisible();
+  click("Back to edit");
+  expect(screen.getByLabelText("Name")).toHaveValue("Alex Demo");
+  reviewAndConfirmAccount();
   await screen.findByRole("heading", { name: "Account created" });
   expect(screen.getByRole("heading")).toHaveFocus();
   expect(screen.getByRole("status")).toHaveTextContent("ready");
@@ -127,19 +138,22 @@ test("HP-18/19 SP-13 recovery is account neutral and has both return paths", () 
 test("storage errors preserve form and sample workspace; logout errors leave session", async () => {
   mount();
   signup();
+  click("Create account");
+  expect(screen.getByRole("heading", { name: "Review account" })).toHaveFocus();
   const write = jest
     .spyOn(Storage.prototype, "setItem")
     .mockImplementation(() => {
       throw Error("Full");
     });
-  click("Create account");
+  click("Confirm and create account");
   await waitFor(() =>
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Could not read or save",
     ),
   );
-  expect(screen.getByLabelText("Name")).toHaveValue("Alex Demo");
+  expect(screen.getByText("Alex Demo", { selector: "dd" })).toBeVisible();
   write.mockRestore();
+  click("Back to edit");
   click("Back to login");
   click("Open sample workspace");
   expect(screen.getByRole("heading")).toHaveTextContent("Olivia Reed");
@@ -180,11 +194,13 @@ test("corrupt accounts fail safely; sample-session writes fail visibly", async (
 
 test('SP-05 busy account command cannot submit twice and exposes unavailable state', async () => {
   mount(); signup();
+  click('Create account');
+  expect(screen.getByRole('heading', {name: 'Review account'})).toHaveFocus();
   let finish;
   const derive = jest.spyOn(crypto.subtle, 'deriveBits').mockImplementation(() => new Promise(resolve => { finish = resolve; }));
-  click('Create account');
+  click('Confirm and create account');
   await waitFor(() => expect(screen.getByRole('button', {name: 'Please wait…'})).toBeDisabled());
-  expect(screen.getByLabelText('Email')).toBeDisabled();
+  expect(screen.getByRole('button', {name: 'Back to edit'})).toBeDisabled();
   fireEvent.click(screen.getByRole('button', {name: 'Please wait…'}));
   expect(derive).toHaveBeenCalledTimes(1);
   finish(new ArrayBuffer(32));

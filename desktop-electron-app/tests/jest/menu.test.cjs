@@ -19,5 +19,27 @@ test.each(["darwin", "win32", "linux"])(
     expect(send).toHaveBeenCalledWith("about");
     expect(send).toHaveBeenCalledWith("settings");
     expect(menu.some((x) => x.role === "appMenu")).toBe(platform === "darwin");
+    const groups = menu.flatMap((item) => item.submenu || []);
+    const settings = groups.find((item) => item.label === "Settings…");
+    expect(settings.accelerator).toBe("CmdOrCtrl+,");
   },
 );
+
+test("development menu exposes Developer Tools without shipping it in production", () => {
+  const development = createMenuTemplate(jest.fn(), "darwin", true);
+  const production = createMenuTemplate(jest.fn(), "darwin", false);
+  const viewItems = (menu) => menu.find((item) => item.label === "&View").submenu;
+
+  expect(viewItems(development)).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        label: "Developer Tools",
+        role: "toggleDevTools",
+        accelerator: "Alt+Command+I",
+      }),
+    ]),
+  );
+  expect(viewItems(production)).not.toEqual(
+    expect.arrayContaining([expect.objectContaining({role: "toggleDevTools"})]),
+  );
+});

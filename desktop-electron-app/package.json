@@ -12,6 +12,7 @@
   "scripts": {
     "postinstall": "install-electron",
     "start": "npm run build && electron .",
+    "axe:preview": "npm run build && node scripts/axe-preview.cjs",
     "build": "node scripts/build.mjs",
     "package:mac:universal": "npm run build && npx --yes electron-builder@26.15.3 --mac dmg --universal",
     "package:mac:dir": "npm run build && npx --yes electron-builder@26.15.3 --mac dir --universal",
@@ -20,8 +21,9 @@
     "test": "jest",
     "test:auth": "npm run build && node tests/auth.cjs",
     "test:clipboard": "npm run build && node tests/clipboard.cjs",
+    "test:accessibility": "npm run build && node tests/accessibility.cjs",
     "test:window-state": "node --test tests/window-state.test.cjs",
-    "test:all": "npm test -- --coverage && npm run test:window-state && npm run test:smoke && npm run test:auth && npm run test:clipboard && npm run test:integration",
+    "test:all": "npm test -- --coverage && npm run test:window-state && npm run test:smoke && npm run test:auth && npm run test:clipboard && npm run test:integration && npm run test:accessibility",
     "test:smoke": "npm run build && node tests/smoke.cjs",
     "test:integration": "npm run build && node tests/desktop-integration.cjs"
   },
@@ -34,6 +36,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
+    "axe-core": "^4.14.0",
     "babel-jest": "^30.5.2",
     "electron": "^43.7.7",
     "esbuild": "^0.28.2",
