@@ -10,6 +10,10 @@
   --color-muted: #526a78;
   --color-focus: #f4b942;
   --color-border: #cad9e1;
+  --color-error: #9f1d20;
+  --color-error-surface: #fff2f2;
+  --color-success: #176b52;
+  --color-success-surface: #e6f6ef;
   --radius-md: 10px;
   --shadow-menu: 0 18px 50px rgb(16 60 85 / 24%);
   --header-height: 66px;

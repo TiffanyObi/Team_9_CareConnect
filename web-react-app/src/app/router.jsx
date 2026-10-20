@@ -1,6 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from '../layouts/AppLayout';
 import { DashboardPage } from '../pages/DashboardPage';
+import { AppointmentConfirmationPage } from '../pages/AppointmentConfirmationPage';
+import { AppointmentDetailsPage } from '../pages/AppointmentDetailsPage';
+import { AppointmentsPage } from '../pages/AppointmentsPage';
+import { NewAppointmentPage } from '../pages/NewAppointmentPage';
 import { PlaceholderPage } from '../pages/PlaceholderPage';
 
 export const router = createBrowserRouter([
@@ -9,18 +13,10 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <DashboardPage /> },
-      {
-        path: 'appointments',
-        element: <PlaceholderPage title="Appointments" description="Review upcoming and past appointments." />,
-      },
-      {
-        path: 'appointments/new',
-        element: <PlaceholderPage title="New appointment" description="Create and review a new appointment." />,
-      },
-      {
-        path: 'appointments/:appointmentId',
-        element: <PlaceholderPage title="Appointment details" description="Review visit details and available actions." />,
-      },
+      { path: 'appointments', element: <AppointmentsPage /> },
+      { path: 'appointments/new', element: <NewAppointmentPage /> },
+      { path: 'appointments/confirmation/:appointmentId', element: <AppointmentConfirmationPage /> },
+      { path: 'appointments/:appointmentId', element: <AppointmentDetailsPage /> },
       {
         path: 'search',
         element: <PlaceholderPage title="Search visits" description="Find appointments using accessible search and filters." />,
