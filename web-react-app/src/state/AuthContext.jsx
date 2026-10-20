@@ -10,7 +10,7 @@ import {
 
 const AuthContext = createContext(null);
 
-function applyPreferences(preferences = {}) {
+export function applyPreferences(preferences = {}) {
   const root = document.documentElement;
   root.dataset.textScale = preferences.textScale || '100';
   root.dataset.highContrast = String(Boolean(preferences.highContrast));

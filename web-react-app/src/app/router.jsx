@@ -6,6 +6,9 @@ import { AccessibilityOnboardingPage } from '../pages/AccessibilityOnboardingPag
 import { DashboardPage } from '../pages/DashboardPage';
 import { ForgotPasswordPage } from '../pages/ForgotPasswordPage';
 import { LoginPage } from '../pages/LoginPage';
+import { MedicationDetailsPage } from '../pages/MedicationDetailsPage';
+import { MedicationsPage } from '../pages/MedicationsPage';
+import { NewMedicationPage } from '../pages/NewMedicationPage';
 import { AppointmentConfirmationPage } from '../pages/AppointmentConfirmationPage';
 import { AppointmentDetailsPage } from '../pages/AppointmentDetailsPage';
 import { AppointmentsPage } from '../pages/AppointmentsPage';
@@ -14,7 +17,7 @@ import { PlaceholderPage } from '../pages/PlaceholderPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { SignUpPage } from '../pages/SignUpPage';
 
-export const router = createBrowserRouter([
+export const appRoutes = [
   {
     element: <AuthLayout />,
     children: [
@@ -39,6 +42,9 @@ export const router = createBrowserRouter([
               { path: 'appointments/new', element: <NewAppointmentPage /> },
               { path: 'appointments/confirmation/:appointmentId', element: <AppointmentConfirmationPage /> },
               { path: 'appointments/:appointmentId', element: <AppointmentDetailsPage /> },
+              { path: 'medications', element: <MedicationsPage /> },
+              { path: 'medications/new', element: <NewMedicationPage /> },
+              { path: 'medications/:medicationId', element: <MedicationDetailsPage /> },
               { path: 'search', element: <PlaceholderPage title="Search visits" description="Find appointments using accessible search and filters." /> },
               { path: 'visit-actions', element: <PlaceholderPage title="Visit actions" description="Complete visit-related tasks and review their status." /> },
               { path: 'settings', element: <SettingsPage /> },
@@ -49,4 +55,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+export const router = createBrowserRouter(appRoutes);
