@@ -7,7 +7,7 @@ const headerLinks = [
   { to: '/help', label: 'Help' },
 ];
 
-export function AppHeader({ menuButtonRef, menuOpen, onMenuToggle }) {
+export function AppHeader({ menuButtonRef, menuOpen, onMenuToggle, onLogoutRequest, userName }) {
   return (
     <header className="app-header">
       <NavLink className="brand" to="/" aria-label="CareConnect Safeview dashboard">
@@ -24,6 +24,7 @@ export function AppHeader({ menuButtonRef, menuOpen, onMenuToggle }) {
             {link.label}
           </NavLink>
         ))}
+        <button className="header-logout" type="button" onClick={onLogoutRequest} aria-label={`Log out ${userName}`}>Log out</button>
       </nav>
       <button
         ref={menuButtonRef}

@@ -2,9 +2,10 @@ import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
 import { useAppointments } from '../state/AppointmentsContext';
+import { useAuth } from '../state/AuthContext';
 
 const initialValues = {
-  patient: 'Olivia Martinez',
+  patient: '',
   provider: '',
   date: '',
   time: '',
@@ -32,7 +33,8 @@ function validate(values) {
 }
 
 export function NewAppointmentPage() {
-  const [values, setValues] = useState(initialValues);
+  const { user } = useAuth();
+  const [values, setValues] = useState({ ...initialValues, patient: user.name });
   const [errors, setErrors] = useState({});
   const errorSummaryRef = useRef(null);
   const { addAppointment } = useAppointments();

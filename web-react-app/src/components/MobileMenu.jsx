@@ -9,7 +9,7 @@ const links = [
   { to: '/help', label: 'Help & shortcuts' },
 ];
 
-export function MobileMenu({ open, onClose }) {
+export function MobileMenu({ open, onClose, onLogoutRequest }) {
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -87,6 +87,7 @@ export function MobileMenu({ open, onClose }) {
             ))}
           </ul>
         </nav>
+        <button className="button button--secondary mobile-menu__logout" type="button" onClick={onLogoutRequest}>Log out</button>
       </div>
     </div>
   );

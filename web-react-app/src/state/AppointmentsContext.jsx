@@ -1,41 +1,51 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { demoAppointments } from '../data/appointments';
+import { useAuth } from './AuthContext';
 
-const STORAGE_KEY = 'careconnect-safeview-appointments';
+const STORAGE_KEY_PREFIX = 'careconnect-safeview-appointments:';
 const AppointmentsContext = createContext(null);
 
-function loadAppointments() {
+function loadAppointments(user) {
+  if (!user) return [];
   try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : demoAppointments;
+    const saved = window.localStorage.getItem(`${STORAGE_KEY_PREFIX}${user.id}`);
+    if (saved) return JSON.parse(saved);
+    return user.isDemo ? demoAppointments : [];
   } catch {
-    return demoAppointments;
+    return user.isDemo ? demoAppointments : [];
   }
 }
 
 export function AppointmentsProvider({ children }) {
-  const [appointments, setAppointments] = useState(loadAppointments);
+  const { user } = useAuth();
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(appointments));
-    } catch {
-      // The app remains usable when browser storage is unavailable.
-    }
-  }, [appointments]);
+    setAppointments(loadAppointments(user));
+  }, [user?.id]);
 
   const value = useMemo(() => ({
     appointments,
     addAppointment(appointment) {
       const id = globalThis.crypto?.randomUUID?.() ?? `appointment-${Date.now()}`;
       const savedAppointment = { ...appointment, id };
-      setAppointments((current) => [...current, savedAppointment]);
+      setAppointments((current) => {
+        const nextAppointments = [...current, savedAppointment];
+        if (user) {
+          try {
+            window.localStorage.setItem(`${STORAGE_KEY_PREFIX}${user.id}`, JSON.stringify(nextAppointments));
+          } catch {
+            // The app remains usable when browser storage is unavailable.
+          }
+        }
+        return nextAppointments;
+      });
       return savedAppointment;
     },
     getAppointment(id) {
       return appointments.find((appointment) => appointment.id === id);
     },
-  }), [appointments]);
+  }), [appointments, user]);
 
   return <AppointmentsContext.Provider value={value}>{children}</AppointmentsContext.Provider>;
 }

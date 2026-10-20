@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { AppHeader } from '../components/AppHeader';
 import { DesktopSidebar } from '../components/DesktopSidebar';
+import { LogoutDialog } from '../components/LogoutDialog';
 import { MobileMenu } from '../components/MobileMenu';
+import { useAuth } from '../state/AuthContext';
 
 export function AppLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -25,12 +30,19 @@ export function AppLayout() {
         menuButtonRef={menuButtonRef}
         menuOpen={menuOpen}
         onMenuToggle={() => setMenuOpen((open) => !open)}
+        onLogoutRequest={() => setLogoutOpen(true)}
+        userName={user.name}
       />
       <DesktopSidebar />
-      <MobileMenu open={menuOpen} onClose={closeMenu} />
+      <MobileMenu open={menuOpen} onClose={closeMenu} onLogoutRequest={() => { setMenuOpen(false); setLogoutOpen(true); }} />
       <main id="main-content" className="page-content" tabIndex="-1">
         <Outlet />
       </main>
+      <LogoutDialog
+        open={logoutOpen}
+        onCancel={() => setLogoutOpen(false)}
+        onConfirm={() => { logout(); navigate('/login', { replace: true }); }}
+      />
     </div>
   );
 }
