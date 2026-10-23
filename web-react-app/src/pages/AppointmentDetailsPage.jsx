@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { DetailPanel } from '../components/DetailPanel';
 import { PageHeader } from '../components/PageHeader';
 import { useAppointments } from '../state/AppointmentsContext';
@@ -7,6 +8,7 @@ import { formatAppointmentDate, formatAppointmentTime } from '../utils/dateTime'
 export function AppointmentDetailsPage() {
   const { appointmentId } = useParams();
   const { getAppointment } = useAppointments();
+  const [copyStatus, setCopyStatus] = useState('');
   const appointment = getAppointment(appointmentId);
 
   if (!appointment) {
@@ -22,12 +24,27 @@ export function AppointmentDetailsPage() {
     );
   }
 
+  const copyDetails = async () => {
+    const details = `${appointment.type} | ${appointment.date} ${appointment.time} | ${appointment.location}`;
+    try {
+      await navigator.clipboard.writeText(details);
+      setCopyStatus('Appointment details copied.');
+    } catch {
+      setCopyStatus('Could not copy appointment details. Select and copy the details instead.');
+    }
+  };
+
   return (
     <>
       <div className="page-heading-row">
         <PageHeader title="Appointment details" description="Your care workspace · Demo information" />
-        <Link className="button button--secondary" to="/appointments">Back to appointments</Link>
+        <div className="appointment-detail-actions">
+          <Link className="button button--secondary" to={`/appointments/${appointment.id}/edit`}>Edit appointment</Link>
+          <button className="button button--secondary" type="button" onClick={copyDetails}>Copy details</button>
+          <Link className="button button--secondary" to="/appointments">Back to appointments</Link>
+        </div>
       </div>
+      {copyStatus && <p className="settings-status" role="status">{copyStatus}</p>}
 
       <div className="workflow-grid">
         <DetailPanel title="Visit summary">

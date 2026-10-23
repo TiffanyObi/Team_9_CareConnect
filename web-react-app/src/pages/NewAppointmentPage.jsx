@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
 import { useAppointments } from '../state/AppointmentsContext';
 import { useAuth } from '../state/AuthContext';
@@ -34,10 +34,22 @@ export function validateAppointment(values) {
 
 export function NewAppointmentPage() {
   const { user } = useAuth();
-  const [values, setValues] = useState({ ...initialValues, patient: user.name });
+  const { appointmentId } = useParams();
+  const { addAppointment, getAppointment, updateAppointment } = useAppointments();
+  const existingAppointment = appointmentId ? getAppointment(appointmentId) : null;
+  const [values, setValues] = useState(() => existingAppointment
+    ? {
+      patient: existingAppointment.patient,
+      provider: existingAppointment.provider,
+      date: existingAppointment.date,
+      time: existingAppointment.time,
+      type: existingAppointment.type,
+      notes: existingAppointment.notes || '',
+    }
+    : { ...initialValues, patient: user.name });
   const [errors, setErrors] = useState({});
+  const [saveError, setSaveError] = useState('');
   const errorSummaryRef = useRef(null);
-  const { addAppointment } = useAppointments();
   const navigate = useNavigate();
 
   const updateField = (event) => {
@@ -56,12 +68,21 @@ export function NewAppointmentPage() {
       return;
     }
 
-    const appointment = addAppointment({
+    const details = {
       ...values,
       location: providerLocations[values.provider],
       contact: '(555) 014-2200',
-    });
-    navigate(`/appointments/confirmation/${appointment.id}`);
+    };
+    const appointment = existingAppointment
+      ? updateAppointment(existingAppointment.id, details)
+      : addAppointment(details);
+    if (!appointment) {
+      setSaveError('The appointment could not be saved on this device. Please try again.');
+      return;
+    }
+    navigate(existingAppointment
+      ? `/appointments/${appointment.id}`
+      : `/appointments/confirmation/${appointment.id}`);
   };
 
   const errorEntries = Object.entries(errors).filter(([, message]) => message);
@@ -69,10 +90,11 @@ export function NewAppointmentPage() {
   return (
     <>
       <div className="page-heading-row">
-        <PageHeader title="New appointment" description="Your care workspace · Demo information" />
+        <PageHeader title={existingAppointment ? 'Edit appointment' : 'New appointment'} description="Your care workspace · Demo information" />
         <Link className="button button--secondary" to="/appointments">Cancel</Link>
       </div>
 
+      {saveError && <p className="inline-alert" role="alert">{saveError}</p>}
       {errorEntries.length > 0 && (
         <section ref={errorSummaryRef} className="error-summary" role="alert" tabIndex="-1" aria-labelledby="error-summary-title">
           <h2 id="error-summary-title">Please correct the following information</h2>
@@ -170,7 +192,7 @@ export function NewAppointmentPage() {
         <p className="required-note"><span aria-hidden="true">*</span> Required field</p>
         <div className="form-actions">
           <Link className="button button--secondary" to="/appointments">Cancel</Link>
-          <button className="button button--primary" type="submit">Save appointment</button>
+          <button className="button button--primary" type="submit">{existingAppointment ? 'Save changes' : 'Save appointment'}</button>
         </div>
       </form>
     </>

@@ -8,10 +8,19 @@ module.exports = {
   },
   collectCoverageFrom: [
     'src/**/*.{js,jsx}',
+    '!src/**/*.test.{js,jsx}',
     '!src/main.jsx',
     '!src/test/**',
   ],
   coverageDirectory: '<rootDir>/coverage',
   coverageProvider: 'v8',
   coverageReporters: ['text', 'html', 'lcov'],
+  coverageThreshold: {
+    global: {
+      branches: 75,
+      functions: 75,
+      lines: 75,
+      statements: 75,
+    },
+  },
 };

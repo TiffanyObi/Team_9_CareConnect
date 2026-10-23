@@ -64,11 +64,30 @@ npm install
 npm start
 ```
 
+Run ESLint and tests with the coverage gate:
+
+```bash
+npm run lint
+npm test -- --coverage
+```
+
+The coverage command writes `web-react-app/coverage/lcov-report/index.html` and enforces at least 75% statements, branches, functions, and lines across the app source. It includes all application source; it excludes `src/main.jsx` because it only mounts the app, `src/test/` because those are test harness helpers, and `*.test.js`/`*.test.jsx` because test code is not production code.
+
 Production build check:
 
 ```bash
 npm run build
 ```
+
+Playwright end-to-end flows run in Chromium, Firefox, and WebKit:
+
+```bash
+npx playwright install chromium firefox webkit
+npm run test:e2e
+npm run test:e2e:report
+```
+
+The account/access and appointment flows save an HTML report to `web-react-app/playwright-report/` and machine-readable results, screenshots, videos, and failure traces to `web-react-app/test-results/`. Playwright WebKit is not real Safari. A separate real-Safari smoke check must be run on macOS; see [SAFARI_SMOKE_CHECK.md](./web-react-app/SAFARI_SMOKE_CHECK.md).
 
 ### Electron
 
