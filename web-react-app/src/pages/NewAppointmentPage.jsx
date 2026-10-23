@@ -19,7 +19,7 @@ const providerLocations = {
   'Jordan Lee, PT': 'CareConnect Physical Therapy · Studio B',
 };
 
-function validate(values) {
+export function validateAppointment(values) {
   const errors = {};
   if (!values.provider) errors.provider = 'Select a provider.';
   if (!values.date) errors.date = 'Enter an appointment date.';
@@ -48,7 +48,7 @@ export function NewAppointmentPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const nextErrors = validate(values);
+    const nextErrors = validateAppointment(values);
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length) {

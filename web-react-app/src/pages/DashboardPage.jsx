@@ -1,19 +1,32 @@
 import { ContentCard } from '../components/ContentCard';
 import { PageHeader } from '../components/PageHeader';
-
-const cards = [
-  { title: 'Upcoming visits', description: 'Review and manage your information', to: '/appointments' },
-  { title: 'Quick actions', description: 'View details or make changes', to: '/appointments/new' },
-  { title: 'Recent activity', description: 'Select to continue' },
-  { title: 'Care notes', description: 'View details or make changes' },
-  { title: 'Reminders', description: 'Select to continue' },
-  { title: 'Your profile', description: 'View details or make changes', to: '/settings' },
-];
+import { useAppointments } from '../state/AppointmentsContext';
+import { useAuth } from '../state/AuthContext';
+import { useMedications } from '../state/MedicationsContext';
+import { formatAppointmentDate, isUpcomingAppointment, sortAppointments } from '../utils/dateTime';
+import { formatMedicationLogTime, sortMedicationLogs } from '../utils/medications';
 
 export function DashboardPage() {
+  const { user } = useAuth();
+  const { appointments } = useAppointments();
+  const { medications, logs } = useMedications();
+  const nextAppointment = sortAppointments(appointments.filter(isUpcomingAppointment))[0];
+  const latestLog = sortMedicationLogs(logs)[0];
+  const medicationDescription = medications.length
+    ? `${medications.length} current ${medications.length === 1 ? 'medication' : 'medications'} · ${latestLog ? `last logged ${formatMedicationLogTime(latestLog.takenAt)}` : 'no doses logged yet'}`
+    : 'No medications added yet';
+  const cards = [
+    { title: 'Upcoming visits', description: nextAppointment ? `${nextAppointment.type} · ${formatAppointmentDate(nextAppointment.date)}` : 'No upcoming appointments', to: '/appointments' },
+    { title: 'Medications', description: medicationDescription, to: '/medications' },
+    { title: 'Add appointment', description: 'Schedule a new care visit', to: '/appointments/new' },
+    { title: 'Add medication', description: 'Create a medication schedule', to: '/medications/new' },
+    { title: 'Recent medication activity', description: latestLog ? `${latestLog.medicationName} taken · ${formatMedicationLogTime(latestLog.takenAt)}` : 'No medication activity yet', to: '/medications' },
+    { title: 'Your profile', description: 'Manage accessibility, privacy, and account settings', to: '/settings' },
+  ];
+
   return (
     <>
-      <PageHeader title="Dashboard" description="Your care workspace · Demo information" />
+      <PageHeader title="Dashboard" description={`${user.name}'s care workspace · Demo information`} />
       <section className="card-grid" aria-label="Dashboard information">
         {cards.map((card) => <ContentCard key={card.title} {...card} />)}
       </section>

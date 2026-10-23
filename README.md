@@ -6,7 +6,7 @@ This repository contains Flutter and React Native implementations of the CareCon
 
 ## Team Members
 
-Tiffany Obi, Chris Colclough, Terence Boyce
+Tiffany Obi, Chris Colclough, Terence Boyce, Zack Bristor
 
 Team Charter: View [here](https://umuc365-my.sharepoint.com/:w:/g/personal/tboyce11_student_umgc_edu/IQA6FjPtPCpYTZd5HCF-ij7xAbVbqCUF-9Jd5F3E0uAMafk?e=VrXKoE)
 

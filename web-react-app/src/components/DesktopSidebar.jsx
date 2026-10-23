@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 const navigation = [
   { to: '/', label: 'Overview', symbol: '⌂', end: true },
   { to: '/appointments', label: 'Appointments', symbol: '▦' },
+  { to: '/medications', label: 'Medications', symbol: '✚' },
   { to: '/search', label: 'Search', symbol: '⌕' },
   { to: '/settings', label: 'Settings', symbol: '⚙' },
   { to: '/help', label: 'Help', symbol: '?' },

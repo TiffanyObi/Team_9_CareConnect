@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 const headerLinks = [
   { to: '/', label: 'Dashboard', end: true },
   { to: '/appointments', label: 'Appointments' },
+  { to: '/medications', label: 'Medications' },
   { to: '/settings', label: 'Settings' },
   { to: '/help', label: 'Help' },
 ];

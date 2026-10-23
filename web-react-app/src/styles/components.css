@@ -747,6 +747,130 @@
   justify-content: flex-end;
 }
 
+.medication-layout,
+.medication-detail-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.medication-panel,
+.dose-card {
+  min-width: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.medication-panel h2,
+.dose-card h2 {
+  margin: 0 0 var(--space-4);
+  font-size: 1.125rem;
+}
+
+.medication-panel p,
+.dose-card p {
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+.medication-list,
+.medication-log-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.medication-item a,
+.medication-log-list li {
+  display: grid;
+  min-height: 64px;
+  gap: 3px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.medication-item a {
+  text-decoration: none;
+}
+
+.medication-item a:hover {
+  border-color: var(--color-teal);
+  background: var(--color-info);
+}
+
+.medication-item span,
+.medication-log-list span,
+.medication-log-list time {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.medication-panel--history .medication-log-list {
+  max-height: 420px;
+  padding-right: 4px;
+  overflow-y: auto;
+}
+
+.empty-state {
+  padding: clamp(18px, 4vw, 34px);
+  border: 2px dashed var(--color-border);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.empty-state h3 {
+  margin-top: 0;
+}
+
+.empty-state .button {
+  margin-top: var(--space-3);
+}
+
+.dose-card {
+  border-width: 2px;
+  border-color: var(--color-teal);
+  background: var(--color-info);
+}
+
+.dose-card .button {
+  margin-top: var(--space-3);
+}
+
+.medication-sharing {
+  background: var(--color-info);
+}
+
+.medication-demo-notice {
+  max-width: none;
+  margin-top: var(--space-5);
+}
+
+.dismissible-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.dismissible-alert button {
+  min-width: 48px;
+  min-height: 48px;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-weight: 700;
+}
+
 .dialog-layer {
   position: fixed;
   z-index: 80;
@@ -885,6 +1009,15 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .medication-layout,
+  .medication-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .medication-panel--history {
+    grid-column: 1 / -1;
+  }
+
   .settings-actions {
     grid-column: 1 / -1;
   }
@@ -960,6 +1093,22 @@
 
   .settings-form {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .medication-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.8fr);
+  }
+
+  .medication-layout .medication-panel--history {
+    grid-column: auto;
+  }
+
+  .medication-detail-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .medication-detail-grid .medication-panel--history {
+    grid-column: 1 / -1;
   }
 }
 
