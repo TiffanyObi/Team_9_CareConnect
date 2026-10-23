@@ -61,7 +61,7 @@ Each application manages its own dependencies. Run commands from the application
 ```bash
 cd web-react-app
 npm install
-npm run dev
+npm start
 ```
 
 Production build check:
