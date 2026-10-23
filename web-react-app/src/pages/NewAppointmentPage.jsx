@@ -26,7 +26,7 @@ export function validateAppointment(values) {
   if (!values.time) errors.time = 'Enter a start time.';
   if (!values.type) errors.type = 'Select a visit type.';
 
-  if (values.date && values.time && new Date(`${values.date}T${values.time}:00`) <= new Date()) {
+  if (values.date && values.time && (!Number.isFinite(new Date(`${values.date}T${values.time}:00`).getTime()) || new Date(`${values.date}T${values.time}:00`) <= new Date())) {
     errors.date = 'Choose an appointment date and time in the future.';
   }
   return errors;
@@ -37,6 +37,8 @@ export function NewAppointmentPage() {
   const [values, setValues] = useState({ ...initialValues, patient: user.name });
   const [errors, setErrors] = useState({});
   const errorSummaryRef = useRef(null);
+  const saveLocked = useRef(false);
+  const [saveError, setSaveError] = useState('');
   const { addAppointment } = useAppointments();
   const navigate = useNavigate();
 
@@ -48,6 +50,8 @@ export function NewAppointmentPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (saveLocked.current) return;
+    setSaveError('');
     const nextErrors = validateAppointment(values);
     setErrors(nextErrors);
 
@@ -56,12 +60,19 @@ export function NewAppointmentPage() {
       return;
     }
 
-    const appointment = addAppointment({
-      ...values,
-      location: providerLocations[values.provider],
-      contact: '(555) 014-2200',
-    });
-    navigate(`/appointments/confirmation/${appointment.id}`);
+    saveLocked.current = true;
+    try {
+      const appointment = addAppointment({
+        ...values,
+        location: providerLocations[values.provider],
+        contact: '(555) 014-2200',
+      });
+      navigate(`/appointments/confirmation/${appointment.id}`);
+    } catch {
+      saveLocked.current = false;
+      setSaveError('Appointment not saved. Your entries are still here. Check device storage and try Save appointment again.');
+      requestAnimationFrame(() => errorSummaryRef.current?.focus());
+    }
   };
 
   const errorEntries = Object.entries(errors).filter(([, message]) => message);
@@ -73,9 +84,10 @@ export function NewAppointmentPage() {
         <Link className="button button--secondary" to="/appointments">Cancel</Link>
       </div>
 
-      {errorEntries.length > 0 && (
+      {(errorEntries.length > 0 || saveError) && (
         <section ref={errorSummaryRef} className="error-summary" role="alert" tabIndex="-1" aria-labelledby="error-summary-title">
           <h2 id="error-summary-title">Please correct the following information</h2>
+          {saveError && <p>{saveError}</p>}
           <ul>
             {errorEntries.map(([field, message]) => (
               <li key={field}><a href={`#${field}`}>{message}</a></li>

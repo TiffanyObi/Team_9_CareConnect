@@ -22,10 +22,8 @@ export function formatAppointmentTime(date, time) {
   return timeFormatter.format(new Date(`${date}T${time}:00`));
 }
 
-export function isUpcomingAppointment(appointment) {
-  const endOfToday = new Date();
-  endOfToday.setHours(23, 59, 59, 999);
-  return new Date(`${appointment.date}T${appointment.time}:00`) > endOfToday;
+export function isUpcomingAppointment(appointment, now = new Date()) {
+  return new Date(`${appointment.date}T${appointment.time}:00`) > now;
 }
 
 export function sortAppointments(appointments) {

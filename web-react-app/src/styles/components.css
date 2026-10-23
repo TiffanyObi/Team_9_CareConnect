@@ -1130,3 +1130,15 @@
     width: 100%;
   }
 }
+
+.pwa-status { padding: 12px 20px; border-top: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); }
+.pwa-status p { margin: 8px 0; line-height: 1.5; }
+.pwa-status summary { min-height: 44px; cursor: pointer; padding: 10px 0; }
+.pwa-status details { max-width: 70ch; }
+.recovery-page { max-width: 70ch; padding: 32px 20px; margin: auto; }
+@media (min-width: 768px) {
+  #root:has(.app-shell) > .pwa-status { margin-left: var(--sidebar-tablet); }
+}
+@media (min-width: 1024px) {
+  #root:has(.app-shell) > .pwa-status { margin-left: var(--sidebar-desktop); }
+}
