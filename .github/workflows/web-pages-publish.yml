@@ -1,0 +1,85 @@
+name: Publish web app to GitHub Pages
+
+on:
+  workflow_run:
+    workflows: ["Web app CI and GitHub Pages"]
+    types: [completed]
+  pull_request_target:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  deploy-preview:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.pull_requests[0].number
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: github-pages-publish
+      cancel-in-progress: false
+    environment:
+      name: preview/pr-${{ github.event.workflow_run.pull_requests[0].number }}
+      url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/${{ github.event.workflow_run.pull_requests[0].number }}/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-site-dist
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          path: web-react-app/dist/
+      - name: Publish pull request preview
+        env:
+          GITHUB_PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
+        run: node web-react-app/scripts/publish-github-pages.mjs preview
+
+  deploy-production:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: github-pages-publish
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-site-dist
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          path: web-react-app/dist/
+      - name: Publish production site
+        run: node web-react-app/scripts/publish-github-pages.mjs production
+
+  cleanup-preview:
+    if: github.event_name == 'pull_request_target' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: github-pages-publish
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+      - name: Remove pull request preview
+        env:
+          GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node web-react-app/scripts/publish-github-pages.mjs cleanup

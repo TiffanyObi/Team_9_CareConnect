@@ -56,7 +56,7 @@ export function AppointmentDetailsPage() {
         </div>
       </div>
       {appointment.checkedIn && (
-        <section className="success-banner" role="status">
+        <section className="success-banner" role="status" aria-label="Appointment check-in">
           <h2>You have been checked in</h2>
           <p>Your check-in for this appointment is complete.</p>
         </section>

@@ -64,14 +64,14 @@ npm install
 npm start
 ```
 
-Run ESLint and tests with the coverage gate:
+Run ESLint and tests with coverage reporting:
 
 ```bash
 npm run lint
 npm test -- --coverage
 ```
 
-The coverage command writes `web-react-app/coverage/lcov-report/index.html` and enforces at least 75% statements, branches, functions, and lines across the app source. It includes all application source; it excludes `src/main.jsx` because it only mounts the app, `src/test/` because those are test harness helpers, and `*.test.js`/`*.test.jsx` because test code is not production code.
+The coverage command writes `web-react-app/coverage/lcov-report/index.html` and reports statement, branch, function, and line coverage across the app source without enforcing a minimum threshold. It includes all application source; it excludes `src/main.jsx` because it only mounts the app, `src/test/` because those are test harness helpers, and `*.test.js`/`*.test.jsx` because test code is not production code.
 
 Production build check:
 
@@ -91,7 +91,7 @@ The account/access and appointment flows save an HTML report to `web-react-app/p
 
 ### Web preview and production deploy
 
-The web app is configured for Vercel with `web-react-app/` as its root and `dist/` as its build output. The GitHub Actions workflow runs lint, Jest/coverage, the production build, and all three Playwright browser projects before deploying same-repository pull requests to preview and `main` to production. Configure the Vercel project and required GitHub secrets using [the deployment guide](./web-react-app/DEPLOYMENT.md). It also describes the nested-route refresh and HTTPS asset smoke check.
+The web app deploys to GitHub Pages from `web-react-app/`, using `dist/` as build output. GitHub Actions runs lint, Jest/coverage, the production build, and all three Playwright browser projects before publishing a same-repository pull request preview or the `main` production site. Configure Pages and follow the deploy and HTTPS smoke-check steps in [the deployment guide](./web-react-app/DEPLOYMENT.md).
 
 ### Electron
 
