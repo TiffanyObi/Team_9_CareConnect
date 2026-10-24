@@ -51,8 +51,6 @@ export function NewAppointmentPage() {
   const [saveError, setSaveError] = useState('');
   const errorSummaryRef = useRef(null);
   const saveLocked = useRef(false);
-  const [saveError, setSaveError] = useState('');
-  const { addAppointment } = useAppointments();
   const navigate = useNavigate();
 
   const updateField = (event) => {
@@ -92,12 +90,6 @@ export function NewAppointmentPage() {
       navigate(existingAppointment
         ? `/appointments/${appointment.id}`
         : `/appointments/confirmation/${appointment.id}`);
-      const appointment = addAppointment({
-        ...values,
-        location: providerLocations[values.provider],
-        contact: '(555) 014-2200',
-      });
-      navigate(`/appointments/confirmation/${appointment.id}`);
     } catch {
       saveLocked.current = false;
       setSaveError('Appointment not saved. Your entries are still here. Check device storage and try Save appointment again.');

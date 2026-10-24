@@ -46,7 +46,10 @@ it('checks in for an appointment and shows the saved confirmation banner', async
   renderApp('/appointments/visit-pt-follow-up');
   await screen.findByRole('heading', { name: 'Appointment details' });
 
-  expect(screen.queryByRole('link', { name: 'Edit appointment' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Edit appointment' })).toHaveAttribute(
+    'href',
+    '/appointments/visit-pt-follow-up/edit',
+  );
   await user.click(screen.getByRole('button', { name: 'Check-in' }));
 
   expect(await screen.findByRole('status')).toHaveTextContent('You have been checked in');

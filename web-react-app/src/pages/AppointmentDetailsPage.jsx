@@ -51,6 +51,7 @@ export function AppointmentDetailsPage() {
           {!appointment.checkedIn && (
             <button className="button button--primary" type="button" onClick={checkIn}>Check-in</button>
           )}
+          <Link className="button button--secondary" to={`/appointments/${appointment.id}/edit`}>Edit appointment</Link>
           <button className="button button--secondary" type="button" onClick={copyDetails}>Copy details</button>
           <Link className="button button--secondary" to="/appointments">Back to appointments</Link>
         </div>

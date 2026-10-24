@@ -93,7 +93,7 @@ test('appointment flow: validate, create, search, edit, copy, reload, and confir
   await expect(page.getByRole('heading', { name: 'Appointment details' })).toBeVisible();
   await expect(page.getByText('Updated by the Playwright appointment flow.')).toBeVisible();
   await page.getByRole('button', { name: 'Copy details' }).click();
-  await expect(page.getByRole('status')).toContainText('Appointment details copied.');
+  await expect(page.getByRole('status').filter({ hasText: 'Appointment details copied.' })).toBeVisible();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
     .toContain('Physical therapy follow-up | 2035-06-20 13:45');
 
