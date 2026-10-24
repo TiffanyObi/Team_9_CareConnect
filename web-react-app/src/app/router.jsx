@@ -8,7 +8,7 @@ import { MessagesPage } from '../pages/MessagesPage';
 import { PlaceholderPage } from '../pages/PlaceholderPage';
 import { SearchVisitsPage } from '../pages/SearchVisitsPage';
 import { SettingsPage } from '../pages/SettingsPage';
-import { PlaceholderPage } from '../pages/PlaceholderPage';
+// import { PlaceholderPage } from '../pages/PlaceholderPage';
 
 const page = (load, name) => async () => ({ Component: (await load())[name] });
 
