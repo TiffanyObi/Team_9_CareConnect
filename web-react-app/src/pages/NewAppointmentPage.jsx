@@ -63,7 +63,6 @@ export function NewAppointmentPage() {
     event.preventDefault();
     if (saveLocked.current) return;
     setSaveError('');
-
     const nextErrors = validateAppointment(values);
     setErrors(nextErrors);
 
