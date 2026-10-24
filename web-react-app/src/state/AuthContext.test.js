@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { applyPreferences } from './AuthContext';
 
 describe('settings preference application', () => {

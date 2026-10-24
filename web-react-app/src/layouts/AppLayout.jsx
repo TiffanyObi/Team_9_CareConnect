@@ -17,13 +17,79 @@ export function AppLayout() {
 
   useEffect(() => {
     setMenuOpen(false);
-    document.getElementById('main-content')?.focus();
-  }, [location.pathname]);
+    if (!location.state?.focusSearch) document.getElementById('main-content')?.focus();
+  }, [location.pathname, location.state]);
 
   const closeMenu = ({ restoreFocus = false } = {}) => {
     setMenuOpen(false);
     if (restoreFocus) requestAnimationFrame(() => menuButtonRef.current?.focus());
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (logoutOpen || menuOpen || event.altKey) return;
+
+      const target = event.target;
+      const editingText = target instanceof Element
+        && Boolean(target.closest('input, textarea, select, [contenteditable="true"]'));
+      const key = event.key.toLowerCase();
+
+      if (event.key === 'F6' && !editingText) {
+        const header = document.querySelector('.app-header');
+        const sideNavigation = document.querySelector('.side-rail nav');
+        const main = document.querySelector('#main-content');
+        const panes = [
+          {
+            element: header,
+            focus() { header?.querySelector('a[href], button:not([disabled])')?.focus(); },
+          },
+          ...(sideNavigation && window.getComputedStyle(sideNavigation.closest('.side-rail')).display !== 'none'
+            ? [{ element: sideNavigation, focus() { sideNavigation.querySelector('a[href], button:not([disabled])')?.focus(); } }]
+            : []),
+          { element: main, focus() { main?.focus(); } },
+        ].filter((pane) => pane.element);
+        const currentPane = panes.findIndex((pane) => pane.element.contains(document.activeElement));
+        const nextIndex = (currentPane + (event.shiftKey ? -1 : 1) + panes.length) % panes.length;
+        event.preventDefault();
+        panes[nextIndex].focus();
+        return;
+      }
+
+      if (event.key === 'F1' && !editingText) {
+        event.preventDefault();
+        navigate('/help');
+        return;
+      }
+
+      if (!(event.ctrlKey || event.metaKey) || event.shiftKey) return;
+      if (key === 's' && location.pathname === '/appointments/new') {
+        const appointmentForm = document.querySelector('.appointment-form');
+        if (appointmentForm) {
+          event.preventDefault();
+          appointmentForm.requestSubmit();
+        }
+        return;
+      }
+      if (editingText) return;
+
+      const destinations = {
+        '1': '/',
+        '2': '/appointments',
+        n: '/appointments/new',
+        f: '/search',
+        ',': '/settings',
+      };
+      const destination = destinations[key];
+      if (!destination) return;
+
+      event.preventDefault();
+      if (key === 'f') navigate(destination, { state: { focusSearch: true } });
+      else navigate(destination);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [location.pathname, logoutOpen, menuOpen, navigate]);
 
   return (
     <div className="app-shell">

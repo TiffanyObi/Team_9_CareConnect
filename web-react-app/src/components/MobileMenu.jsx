@@ -5,6 +5,7 @@ const links = [
   { to: '/', label: 'Dashboard', end: true },
   { to: '/appointments', label: 'Appointments' },
   { to: '/medications', label: 'Medications' },
+  { to: '/messages', label: 'Messages' },
   { to: '/search', label: 'Search visits' },
   { to: '/settings', label: 'Settings' },
   { to: '/help', label: 'Help & shortcuts' },

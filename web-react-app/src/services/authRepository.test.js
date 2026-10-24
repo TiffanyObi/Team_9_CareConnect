@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { createAccount, restoreSession, signIn, signOut, updateAccount } from './authRepository';
 
 describe('authRepository', () => {
