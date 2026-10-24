@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { careconnectPwa } from './scripts/pwa-build.mjs';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), careconnectPwa()],
   test: {
     environment: 'jsdom',
     globals: true,
