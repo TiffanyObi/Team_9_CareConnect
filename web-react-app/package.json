@@ -16,7 +16,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --runInBand",
     "test:e2e": "playwright test",
-    "test:e2e:report": "playwright show-report playwright-report"
+    "test:e2e:report": "playwright show-report playwright-report",
+    "deploy:preview": "npx --yes vercel@65.2.0 deploy --yes",
+    "deploy:production": "npx --yes vercel@65.2.0 deploy --prod --yes"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.0.5",

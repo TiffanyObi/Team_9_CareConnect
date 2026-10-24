@@ -26,7 +26,7 @@ export function validateAppointment(values) {
   if (!values.time) errors.time = 'Enter a start time.';
   if (!values.type) errors.type = 'Select a visit type.';
 
-  if (values.date && values.time && new Date(`${values.date}T${values.time}:00`) <= new Date()) {
+  if (values.date && values.time && (!Number.isFinite(new Date(`${values.date}T${values.time}:00`).getTime()) || new Date(`${values.date}T${values.time}:00`) <= new Date())) {
     errors.date = 'Choose an appointment date and time in the future.';
   }
   return errors;
@@ -50,6 +50,7 @@ export function NewAppointmentPage() {
   const [errors, setErrors] = useState({});
   const [saveError, setSaveError] = useState('');
   const errorSummaryRef = useRef(null);
+  const saveLocked = useRef(false);
   const navigate = useNavigate();
 
   const updateField = (event) => {
@@ -60,6 +61,9 @@ export function NewAppointmentPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (saveLocked.current) return;
+    setSaveError('');
+
     const nextErrors = validateAppointment(values);
     setErrors(nextErrors);
 
@@ -68,21 +72,30 @@ export function NewAppointmentPage() {
       return;
     }
 
-    const details = {
-      ...values,
-      location: providerLocations[values.provider],
-      contact: '(555) 014-2200',
-    };
-    const appointment = existingAppointment
-      ? updateAppointment(existingAppointment.id, details)
-      : addAppointment(details);
-    if (!appointment) {
-      setSaveError('The appointment could not be saved on this device. Please try again.');
-      return;
+    saveLocked.current = true;
+    try {
+      const details = {
+        ...values,
+        location: providerLocations[values.provider],
+        contact: '(555) 014-2200',
+      };
+      const appointment = existingAppointment
+        ? updateAppointment(existingAppointment.id, details)
+        : addAppointment(details);
+      if (!appointment) {
+        saveLocked.current = false;
+        setSaveError('The appointment could not be saved on this device. Please try again.');
+        requestAnimationFrame(() => errorSummaryRef.current?.focus());
+        return;
+      }
+      navigate(existingAppointment
+        ? `/appointments/${appointment.id}`
+        : `/appointments/confirmation/${appointment.id}`);
+    } catch {
+      saveLocked.current = false;
+      setSaveError('Appointment not saved. Your entries are still here. Check device storage and try Save appointment again.');
+      requestAnimationFrame(() => errorSummaryRef.current?.focus());
     }
-    navigate(existingAppointment
-      ? `/appointments/${appointment.id}`
-      : `/appointments/confirmation/${appointment.id}`);
   };
 
   const errorEntries = Object.entries(errors).filter(([, message]) => message);
@@ -94,10 +107,10 @@ export function NewAppointmentPage() {
         <Link className="button button--secondary" to="/appointments">Cancel</Link>
       </div>
 
-      {saveError && <p className="inline-alert" role="alert">{saveError}</p>}
-      {errorEntries.length > 0 && (
+      {(errorEntries.length > 0 || saveError) && (
         <section ref={errorSummaryRef} className="error-summary" role="alert" tabIndex="-1" aria-labelledby="error-summary-title">
-          <h2 id="error-summary-title">Please correct the following information</h2>
+          <h2 id="error-summary-title">{saveError ? 'Appointment not saved' : 'Please correct the following information'}</h2>
+          {saveError && <p>{saveError}</p>}
           <ul>
             {errorEntries.map(([field, message]) => (
               <li key={field}><a href={`#${field}`}>{message}</a></li>

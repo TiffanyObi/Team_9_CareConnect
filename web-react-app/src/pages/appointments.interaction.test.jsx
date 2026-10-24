@@ -39,3 +39,22 @@ it('separates upcoming and past visits and opens appointment details', async () 
   expect(await screen.findByRole('heading', { name: 'Appointment details' })).toBeInTheDocument();
   expect(screen.getByText('Review knee mobility exercises and current pain level.')).toBeInTheDocument();
 });
+
+it('checks in for an appointment and shows the saved confirmation banner', async () => {
+  await signIn({ email: 'omartinez@careconnect.com', password: 'password' });
+  const user = userEvent.setup();
+  renderApp('/appointments/visit-pt-follow-up');
+  await screen.findByRole('heading', { name: 'Appointment details' });
+
+  expect(screen.queryByRole('link', { name: 'Edit appointment' })).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Check-in' }));
+
+  expect(await screen.findByRole('status')).toHaveTextContent('You have been checked in');
+  expect(screen.queryByRole('button', { name: 'Check-in' })).not.toBeInTheDocument();
+  const appointmentsKey = Array.from({ length: window.localStorage.length }, (_, index) => (
+    window.localStorage.key(index)
+  )).find((key) => key.startsWith('careconnect-safeview-appointments:'));
+  expect(appointmentsKey).toBeDefined();
+  const savedAppointments = window.localStorage.getItem(appointmentsKey);
+  expect(JSON.parse(savedAppointments).find(({ id }) => id === 'visit-pt-follow-up').checkedIn).toBe(true);
+});

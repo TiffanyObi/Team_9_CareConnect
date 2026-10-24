@@ -1076,6 +1076,22 @@
   font-weight: 700;
 }
 
+.route-error {
+  display: grid;
+  min-height: 100vh;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  color: var(--color-text);
+}
+
+.route-error h1,
+.route-error p {
+  margin: 0;
+}
+
 .auth-shell {
   min-height: 100vh;
   background: var(--color-canvas);

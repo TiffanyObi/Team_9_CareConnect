@@ -7,8 +7,9 @@ import { formatAppointmentDate, formatAppointmentTime } from '../utils/dateTime'
 
 export function AppointmentDetailsPage() {
   const { appointmentId } = useParams();
-  const { getAppointment } = useAppointments();
+  const { getAppointment, updateAppointment } = useAppointments();
   const [copyStatus, setCopyStatus] = useState('');
+  const [checkInError, setCheckInError] = useState('');
   const appointment = getAppointment(appointmentId);
 
   if (!appointment) {
@@ -34,16 +35,33 @@ export function AppointmentDetailsPage() {
     }
   };
 
+  const checkIn = () => {
+    setCheckInError('');
+    const checkedInAppointment = updateAppointment(appointment.id, { checkedIn: true });
+    if (!checkedInAppointment) {
+      setCheckInError('Check-in could not be saved on this device. Please try again.');
+    }
+  };
+
   return (
     <>
       <div className="page-heading-row">
         <PageHeader title="Appointment details" description="Your care workspace · Demo information" />
         <div className="appointment-detail-actions">
-          <Link className="button button--secondary" to={`/appointments/${appointment.id}/edit`}>Edit appointment</Link>
+          {!appointment.checkedIn && (
+            <button className="button button--primary" type="button" onClick={checkIn}>Check-in</button>
+          )}
           <button className="button button--secondary" type="button" onClick={copyDetails}>Copy details</button>
           <Link className="button button--secondary" to="/appointments">Back to appointments</Link>
         </div>
       </div>
+      {appointment.checkedIn && (
+        <section className="success-banner" role="status">
+          <h2>You have been checked in</h2>
+          <p>Your check-in for this appointment is complete.</p>
+        </section>
+      )}
+      {checkInError && <p className="inline-alert" role="alert">{checkInError}</p>}
       {copyStatus && <p className="settings-status" role="status">{copyStatus}</p>}
 
       <div className="workflow-grid">

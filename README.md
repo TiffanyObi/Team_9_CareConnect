@@ -89,6 +89,10 @@ npm run test:e2e:report
 
 The account/access and appointment flows save an HTML report to `web-react-app/playwright-report/` and machine-readable results, screenshots, videos, and failure traces to `web-react-app/test-results/`. Playwright WebKit is not real Safari. A separate real-Safari smoke check must be run on macOS; see [SAFARI_SMOKE_CHECK.md](./web-react-app/SAFARI_SMOKE_CHECK.md).
 
+### Web preview and production deploy
+
+The web app is configured for Vercel with `web-react-app/` as its root and `dist/` as its build output. The GitHub Actions workflow runs lint, Jest/coverage, the production build, and all three Playwright browser projects before deploying same-repository pull requests to preview and `main` to production. Configure the Vercel project and required GitHub secrets using [the deployment guide](./web-react-app/DEPLOYMENT.md). It also describes the nested-route refresh and HTTPS asset smoke check.
+
 ### Electron
 
 ```bash
