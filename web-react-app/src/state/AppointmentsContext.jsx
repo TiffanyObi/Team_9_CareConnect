@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { demoAppointments } from '../data/appointments';
 import { useAuth } from './AuthContext';
 
@@ -9,7 +9,11 @@ function loadAppointments(user) {
   if (!user) return [];
   try {
     const saved = window.localStorage.getItem(`${STORAGE_KEY_PREFIX}${user.id}`);
-    if (saved) return JSON.parse(saved);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (!Array.isArray(parsed)) throw new Error('Invalid saved appointments');
+      return parsed;
+    }
     return user.isDemo ? demoAppointments : [];
   } catch {
     return user.isDemo ? demoAppointments : [];
@@ -19,27 +23,24 @@ function loadAppointments(user) {
 export function AppointmentsProvider({ children }) {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState([]);
+  const currentAppointments = useRef([]);
 
   useEffect(() => {
-    setAppointments(loadAppointments(user));
+    currentAppointments.current = loadAppointments(user);
+    setAppointments(currentAppointments.current);
   }, [user?.id]);
 
   const value = useMemo(() => ({
     appointments,
     addAppointment(appointment) {
+      if (!user) throw new Error('Log in before saving an appointment.');
       const id = globalThis.crypto?.randomUUID?.() ?? `appointment-${Date.now()}`;
       const savedAppointment = { ...appointment, id };
-      setAppointments((current) => {
-        const nextAppointments = [...current, savedAppointment];
-        if (user) {
-          try {
-            window.localStorage.setItem(`${STORAGE_KEY_PREFIX}${user.id}`, JSON.stringify(nextAppointments));
-          } catch {
-            // The app remains usable when browser storage is unavailable.
-          }
-        }
-        return nextAppointments;
-      });
+      const nextAppointments = [...currentAppointments.current, savedAppointment];
+      // A storage failure must keep the form open, not show confirmation.
+      window.localStorage.setItem(`${STORAGE_KEY_PREFIX}${user.id}`, JSON.stringify(nextAppointments));
+      currentAppointments.current = nextAppointments;
+      setAppointments(nextAppointments);
       return savedAppointment;
     },
     updateAppointment(id, changes) {

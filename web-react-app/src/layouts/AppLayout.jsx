@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import { AppHeader } from '../components/AppHeader';
 import { DesktopSidebar } from '../components/DesktopSidebar';
 import { LogoutDialog } from '../components/LogoutDialog';
@@ -12,11 +12,13 @@ export function AppLayout() {
   const menuButtonRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const { user, logout } = useAuth();
 
   useEffect(() => {
     setMenuOpen(false);
-  }, [location.pathname]);
+    if (!location.state?.focusSearch) document.getElementById('main-content')?.focus();
+  }, [location.pathname, location.state]);
 
   const closeMenu = ({ restoreFocus = false } = {}) => {
     setMenuOpen(false);
@@ -102,6 +104,7 @@ export function AppLayout() {
       <DesktopSidebar />
       <MobileMenu open={menuOpen} onClose={closeMenu} onLogoutRequest={() => { setMenuOpen(false); setLogoutOpen(true); }} />
       <main id="main-content" className="page-content" tabIndex="-1">
+        {navigation.state !== 'idle' && <p role="status">Loading page…</p>}
         <Outlet />
       </main>
       <LogoutDialog

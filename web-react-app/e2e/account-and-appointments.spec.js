@@ -85,7 +85,7 @@ test('appointment flow: validate, create, search, check in, copy, reload, and co
   await expect(page.getByRole('status', { name: 'Appointment check-in' }))
     .toContainText('You have been checked in');
   await page.getByRole('button', { name: 'Copy details' }).click();
-  await expect(page.getByText('Appointment details copied.')).toBeVisible();
+  await expect(page.getByRole('status').filter({ hasText: 'Appointment details copied.' })).toBeVisible();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
     .toContain('Specialist consultation | 2035-06-15 10:30');
 
