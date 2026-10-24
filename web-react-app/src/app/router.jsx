@@ -8,6 +8,7 @@ import { MessagesPage } from '../pages/MessagesPage';
 import { PlaceholderPage } from '../pages/PlaceholderPage';
 import { SearchVisitsPage } from '../pages/SearchVisitsPage';
 import { SettingsPage } from '../pages/SettingsPage';
+import { PlaceholderPage } from '../pages/PlaceholderPage';
 
 const page = (load, name) => async () => ({ Component: (await load())[name] });
 
@@ -33,10 +34,6 @@ export const appRoutes = [{
         { path: 'medications/new', lazy: page(() => import('../pages/NewMedicationPage'), 'NewMedicationPage') },
         { path: 'medications/:medicationId', lazy: page(() => import('../pages/MedicationDetailsPage'), 'MedicationDetailsPage') },
         // Zach owns these remaining feature pages and route replacements.
-        { path: 'messages', element: <MessagesPage /> },
-        { path: 'search', element: <SearchVisitsPage /> },
-        { path: 'settings', element: <SettingsPage /> },
-        { path: 'help', element: <HelpPage /> },
         { path: 'search', element: <PlaceholderPage title="Search visits" description="Find appointments using accessible search and filters." /> },
         { path: 'visit-actions', element: <PlaceholderPage title="Visit actions" description="Complete visit-related tasks and review their status." /> },
         { path: 'settings', lazy: page(() => import('../pages/SettingsPage'), 'SettingsPage') },

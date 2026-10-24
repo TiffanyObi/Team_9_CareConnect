@@ -14,4 +14,8 @@ describe('appointment validation', () => {
   it('accepts a complete future appointment', () => {
     expect(validateAppointment({ provider: 'Dr. Maya Chen', date: '2035-06-15', time: '10:30', type: 'Medication review' })).toEqual({});
   });
+
+  it('rejects an invalid date instead of treating it as a future visit', () => {
+    expect(validateAppointment({ provider: 'Dr. Maya Chen', date: 'not-a-date', time: '10:30', type: 'Medication review' }).date).toMatch(/future/);
+  });
 });
