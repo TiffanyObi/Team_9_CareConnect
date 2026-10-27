@@ -2,7 +2,7 @@
 
 Team 9 UI Design Implementation for a CareConnect Recipient with Photosensitive Epilepsy.
 
-This repository contains Flutter and React Native implementations of the CareConnect Safeview care-recipient experience, plus web and desktop starters. Both mobile applications include authentication, accessibility preferences, medication logging, care and appointment workflows, messaging, emergency-demo feedback, local prototype persistence, and automated tests.
+This repository contains Flutter, React Native, React web, and Electron implementations of the CareConnect Safeview care-recipient experience. The applications include authentication, accessibility preferences, medication logging, care and appointment workflows, messaging, emergency-demo feedback, local prototype persistence, and automated tests.
 
 ## Team Members
 
@@ -18,8 +18,8 @@ Team 9's assigned focus is **photosensitive epilepsy**. The starter screens ther
 
 | Folder | Technology | Purpose |
 | --- | --- | --- |
-| `web-react-app/` | React + Vite | Browser-based CareConnect starter |
-| `desktop-electron-app/` | Electron | Desktop CareConnect starter |
+| `web-react-app/` | React + Vite | Responsive, installable CareConnect PWA |
+| `desktop-electron-app/` | Electron + React | Desktop CareConnect application |
 | `mobile-react-native-app/` | React Native + Expo | Functional cross-platform mobile application |
 | `mobile-flutter-app/` | Flutter | Functional Flutter application for Android and iOS |
 | `design-samples/careconnect-calm-flutter/` | Flutter | Five runnable CareConnect interface samples focused on photosensitive-epilepsy safety |
@@ -64,6 +64,8 @@ npm install
 npm start
 ```
 
+The public HTTPS deployment is available at [https://tiffanyobi.github.io/Team_9_CareConnect/](https://tiffanyobi.github.io/Team_9_CareConnect/). The web app uses hash-based routes so protected and nested pages can refresh correctly on GitHub Pages.
+
 Run ESLint and tests with coverage reporting:
 
 ```bash
@@ -71,7 +73,7 @@ npm run lint
 npm test -- --coverage
 ```
 
-The coverage command writes `web-react-app/coverage/lcov-report/index.html` and reports statement, branch, function, and line coverage across the app source without enforcing a minimum threshold. It includes all application source; it excludes `src/main.jsx` because it only mounts the app, `src/test/` because those are test harness helpers, and `*.test.js`/`*.test.jsx` because test code is not production code.
+The coverage command writes `web-react-app/coverage/lcov-report/index.html` and enforces a 75% minimum for statements, branches, functions, and lines. It includes all application source; it excludes `src/main.jsx` because it only mounts the app, `src/test/` because those are test harness helpers, and `*.test.js`/`*.test.jsx` because test code is not production code.
 
 Production build check:
 
@@ -87,11 +89,31 @@ npm run test:e2e
 npm run test:e2e:report
 ```
 
-The account/access and appointment flows save an HTML report to `web-react-app/playwright-report/` and machine-readable results, screenshots, videos, and failure traces to `web-react-app/test-results/`. Playwright WebKit is not real Safari. A separate real-Safari smoke check must be run on macOS; see [SAFARI_SMOKE_CHECK.md](./web-react-app/SAFARI_SMOKE_CHECK.md).
+The account/access, appointment, medication, care/settings, responsive-layout, and production-offline checks save an HTML report to `web-react-app/playwright-report/` and machine-readable results, screenshots, videos, and failure traces to `web-react-app/test-results/`. Playwright WebKit is not real Safari. A separate real-Safari smoke check must be run on macOS; see [SAFARI_SMOKE_CHECK.md](./web-react-app/SAFARI_SMOKE_CHECK.md).
+
+Run the production PWA offline flow separately:
+
+```bash
+npm run test:e2e:offline
+```
 
 ### Web preview and production deploy
 
-The web app deploys to GitHub Pages from `web-react-app/`, using `dist/` as build output. GitHub Actions runs lint, Jest/coverage, the production build, and all three Playwright browser projects before publishing a same-repository pull request preview or the `main` production site. Configure Pages and follow the deploy and HTTPS smoke-check steps in [the deployment guide](./web-react-app/DEPLOYMENT.md).
+The web app deploys to GitHub Pages from `web-react-app/`, using `dist/` as build output. GitHub Actions runs lint, Jest/coverage, focused PWA tests, the production build, and all three Playwright browser projects before publishing a same-repository pull request preview or the `main` production site. Configure Pages and follow the deploy and HTTPS smoke-check steps in [the deployment guide](./web-react-app/DEPLOYMENT.md).
+
+## Week 11 web verification
+
+The final documentation branch, based on merged application commit `18f807a`, passed the following local checks on October 27, 2026:
+
+- ESLint with no errors.
+- 14 Jest/React Testing Library suites and 32 tests.
+- 90.04% statement and line coverage, 80.40% branch coverage, and 82.84% function coverage.
+- Nine focused PWA and service-worker tests.
+- 36 Playwright workflow, approved-plan, and responsive-layout checks across Chromium, Firefox, and WebKit.
+- Three production PWA offline checks across Chromium, Firefox, and WebKit.
+- Production Vite build with route-level lazy chunks.
+
+See the [Week 11 final verification record](docs/week11/FINAL_VERIFICATION.md), [test-plan execution map](docs/week11/WEB_TEST_PLAN_EXECUTION.md), and [submission evidence index](docs/week11/EVIDENCE_INDEX.md). Live deployment, real Safari, install-prompt, and final Lighthouse evidence remain separate manual checks and must be recorded against the final deployed build.
 
 ### Electron
 
@@ -154,7 +176,9 @@ See the [Week 6 integration/E2E guide](docs/week6/INTEGRATION_E2E_TESTING.md), [
 
 ## Current Limitations and Known Issues
 
-- The web and desktop folders remain environment-verification starters; the Flutter and React Native applications contain the current mobile workflows.
+- The applications use local prototype persistence rather than a shared production medical backend. Use only synthetic demonstration data.
+- Browser support tests use Playwright Chromium, Firefox, and WebKit. WebKit automation does not replace the required real-Safari smoke check.
+- PWA install prompts depend on browser support and installation eligibility. Final install, update, and deployed-offline behavior require manual confirmation on the published HTTPS site.
 - Each application is installed and run independently. The mobile apps use local prototype persistence rather than a shared production backend.
 - iOS builds require macOS and Xcode.
 - Android builds require a configured Android SDK and accepted SDK licenses.

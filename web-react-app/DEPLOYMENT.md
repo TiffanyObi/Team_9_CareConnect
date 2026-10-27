@@ -5,7 +5,7 @@ The public site is configured for GitHub Pages:
 - App root: `web-react-app/`
 - Build output: `web-react-app/dist/`
 - Production URL: `https://tiffanyobi.github.io/Team_9_CareConnect/`
-- Preview URL for PR `42`: `https://tiffanyobi.github.io/Team_9_CareConnect/pr-preview/42/`
+- Preview URL pattern: `https://tiffanyobi.github.io/Team_9_CareConnect/pr-preview/<number>/`
 
 The app uses hash-based routes (for example, `/#/appointments`) because GitHub Pages does not rewrite arbitrary nested paths to the SPA entry point. Refreshing a route reloads `index.html` while retaining its route fragment. Vite emits relative `./assets/` URLs so the same build works from the production root and PR preview subdirectories. `npm run verify:build` checks that the generated JavaScript and CSS paths resolve to files inside `dist/`.
 
@@ -21,7 +21,7 @@ The deployment workflow needs the repository's default `GITHUB_TOKEN` with `cont
 
 ## Automated build, test, and deployment
 
-The workflow at `.github/workflows/web-ci-deploy.yml` runs ESLint, Jest with coverage reporting (no minimum coverage threshold), the Vite build and asset-path verification, and Playwright in Chromium, Firefox, and WebKit. It saves browser reports and failure artifacts for 14 days. The separate `.github/workflows/web-pages-publish.yml` workflow publishes the successful build artifact. Keeping deployment in a trusted `workflow_run` workflow means PR-controlled build code does not execute with the repository's write token.
+The workflow at `.github/workflows/web-ci-deploy.yml` runs ESLint, Jest with a 75% global coverage threshold, focused PWA tests, the Vite build and asset-path verification, and Playwright in Chromium, Firefox, and WebKit. It saves browser reports and failure artifacts for 14 days. The separate `.github/workflows/web-pages-publish.yml` workflow publishes the successful build artifact. Keeping deployment in a trusted `workflow_run` workflow means PR-controlled build code does not execute with the repository's write token.
 
 - Same-repository pull requests publish at `/pr-preview/<number>/` after all checks pass. The route is removed from the published branch when the PR closes.
 - Fork pull requests run checks but do not publish a preview, because their code is untrusted.
@@ -37,9 +37,11 @@ Run from `web-react-app/` with a Git remote named `origin` and permission to pus
 npm ci
 npm run lint
 npm test -- --coverage
+npm run test:pwa
 npm run build
 npm run verify:build
 npm run test:e2e
+npm run test:e2e:offline
 npm run deploy:production
 ```
 
@@ -63,5 +65,7 @@ After deployment:
 4. In browser developer tools, verify the JavaScript and CSS requests use relative `assets/` URLs under the current site or preview directory and return HTTP 200.
 5. Open the public PR preview URL and repeat the route-refresh and asset checks.
 6. Open `/#/appointments` while signed out and confirm the app redirects to its login screen.
+7. Confirm the deployed JavaScript and CSS asset hashes match the latest successful production workflow artifact before recording final evidence.
+8. Complete the install, offline, reconnection, and update checks in a clean supported-browser profile.
 
 This is a local-data demo. Do not enter real patient information or credentials into the public deployment.

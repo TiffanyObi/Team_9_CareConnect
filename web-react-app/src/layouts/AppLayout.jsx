@@ -17,7 +17,7 @@ export function AppLayout() {
 
   useEffect(() => {
     setMenuOpen(false);
-    if (!location.state?.focusSearch) document.getElementById('main-content')?.focus();
+    if (!location.state?.focusSearch) document.getElementById('main-content')?.focus({ preventScroll: true });
   }, [location.pathname, location.state]);
 
   const closeMenu = ({ restoreFocus = false } = {}) => {
