@@ -2,6 +2,7 @@ node_modules/
 dist/
 coverage/
 playwright-report/
+playwright-report-*/
 test-results/
 *.log
 npm-debug.log*

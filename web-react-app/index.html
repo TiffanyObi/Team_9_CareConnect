@@ -15,6 +15,11 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if (!window.location.hash && !window.localStorage.getItem('careconnect-safeview-session-v1')) {
+        window.location.replace(`${window.location.pathname}${window.location.search}#/login`);
+      }
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

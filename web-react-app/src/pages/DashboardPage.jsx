@@ -3,6 +3,7 @@ import { PageHeader } from '../components/PageHeader';
 import { useAppointments } from '../state/AppointmentsContext';
 import { useAuth } from '../state/AuthContext';
 import { useMedications } from '../state/MedicationsContext';
+import { useHealthLogs } from '../state/HealthLogsContext';
 import { formatAppointmentDate, isUpcomingAppointment, sortAppointments } from '../utils/dateTime';
 import { formatMedicationLogTime, sortMedicationLogs } from '../utils/medications';
 
@@ -10,6 +11,7 @@ export function DashboardPage() {
   const { user } = useAuth();
   const { appointments } = useAppointments();
   const { medications, logs } = useMedications();
+  const { logs: healthLogs } = useHealthLogs();
   const nextAppointment = sortAppointments(appointments.filter(isUpcomingAppointment))[0];
   const latestLog = sortMedicationLogs(logs)[0];
   const medicationDescription = medications.length
@@ -21,6 +23,7 @@ export function DashboardPage() {
     { title: 'Add appointment', description: 'Schedule a new care visit', to: '/appointments/new' },
     { title: 'Add medication', description: 'Create a medication schedule', to: '/medications/new' },
     { title: 'Recent medication activity', description: latestLog ? `${latestLog.medicationName} taken · ${formatMedicationLogTime(latestLog.takenAt)}` : 'No medication activity yet', to: '/medications' },
+    { title: 'Care and health log', description: healthLogs.length ? `${healthLogs.length} private health ${healthLogs.length === 1 ? 'entry' : 'entries'} saved` : 'Appointments, symptoms, and emergency assistance', to: '/care' },
     { title: 'Your profile', description: 'Manage accessibility, privacy, and account settings', to: '/settings' },
   ];
 

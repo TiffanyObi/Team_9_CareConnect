@@ -52,6 +52,8 @@ export function AppointmentDetailsPage() {
             <button className="button button--primary" type="button" onClick={checkIn}>Check-in</button>
           )}
           <Link className="button button--secondary" to={`/appointments/${appointment.id}/edit`}>Edit appointment</Link>
+          <Link className="button button--secondary" to="/care/health-log">Add health update</Link>
+          <Link className="button button--secondary" to="/messages">Message care team</Link>
           <button className="button button--secondary" type="button" onClick={copyDetails}>Copy details</button>
           <Link className="button button--secondary" to="/appointments">Back to appointments</Link>
         </div>

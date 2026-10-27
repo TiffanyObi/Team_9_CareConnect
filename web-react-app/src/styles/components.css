@@ -236,6 +236,17 @@
   background: var(--color-sidebar);
 }
 
+.button--emergency {
+  border-color: #8d1d23;
+  background: #8d1d23;
+  color: #fff;
+}
+
+.button--emergency:hover {
+  border-color: #5f1015;
+  background: #5f1015;
+}
+
 .button--full {
   width: 100%;
 }
@@ -1300,6 +1311,110 @@
   justify-content: flex-end;
 }
 
+.care-layout,
+.health-log-layout {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: 28px;
+}
+
+.care-panel,
+.health-log-form,
+.health-log-history,
+.emergency-card {
+  min-width: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.care-panel h2,
+.health-log-form h2,
+.health-log-history h2,
+.emergency-card h2 {
+  margin: 0 0 var(--space-3);
+  font-size: 1.125rem;
+}
+
+.care-panel p,
+.emergency-card p,
+.empty-copy {
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+.care-panel .button {
+  margin-top: var(--space-3);
+}
+
+.care-panel__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.care-panel__heading p,
+.care-panel__heading .text-link {
+  margin: 0;
+}
+
+.care-panel--emergency {
+  border-width: 2px;
+  border-color: #8d1d23;
+}
+
+.health-log-form {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+}
+
+.health-log-list {
+  display: grid;
+  max-height: 520px;
+  margin: 0;
+  padding: 0;
+  gap: var(--space-3);
+  overflow-y: auto;
+  list-style: none;
+}
+
+.health-log-list li {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.health-log-list li > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.health-log-list time,
+.health-log-list span {
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+}
+
+.health-log-list p {
+  margin: var(--space-2) 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.emergency-card {
+  max-width: 760px;
+  margin-top: var(--space-4);
+}
+
+.emergency-card:nth-of-type(2) {
+  border: 2px solid #8d1d23;
+}
+
 .medication-layout,
 .medication-detail-grid {
   display: grid;
@@ -1580,6 +1695,19 @@
     grid-column: 1 / -1;
   }
 
+  .care-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .care-panel--appointments {
+    grid-column: 1 / -1;
+  }
+
+  .health-log-layout {
+    grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
+    align-items: start;
+  }
+
   .messages-workspace {
     grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.5fr);
     align-items: start;
@@ -1701,6 +1829,16 @@
 
   .medication-detail-grid .medication-panel--history {
     grid-column: 1 / -1;
+  }
+
+  .care-layout {
+    grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(240px, 0.75fr));
+    align-items: start;
+  }
+
+  .care-panel--appointments {
+    grid-column: auto;
+    grid-row: span 2;
   }
 }
 
