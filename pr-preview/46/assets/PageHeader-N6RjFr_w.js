@@ -1,0 +1,1 @@
+import{l as e}from"./index-CnInck-t.js";var t=e();function n({title:e,description:n}){return(0,t.jsxs)(`header`,{className:`page-header`,children:[(0,t.jsx)(`h1`,{children:e}),(0,t.jsx)(`p`,{children:n})]})}export{n as t};
