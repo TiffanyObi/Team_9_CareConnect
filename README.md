@@ -61,14 +61,37 @@ Each application manages its own dependencies. Run commands from the application
 ```bash
 cd web-react-app
 npm install
-npm run dev
+npm start
 ```
+
+Run ESLint and tests with coverage reporting:
+
+```bash
+npm run lint
+npm test -- --coverage
+```
+
+The coverage command writes `web-react-app/coverage/lcov-report/index.html` and reports statement, branch, function, and line coverage across the app source without enforcing a minimum threshold. It includes all application source; it excludes `src/main.jsx` because it only mounts the app, `src/test/` because those are test harness helpers, and `*.test.js`/`*.test.jsx` because test code is not production code.
 
 Production build check:
 
 ```bash
 npm run build
 ```
+
+Playwright end-to-end flows run in Chromium, Firefox, and WebKit:
+
+```bash
+npx playwright install chromium firefox webkit
+npm run test:e2e
+npm run test:e2e:report
+```
+
+The account/access and appointment flows save an HTML report to `web-react-app/playwright-report/` and machine-readable results, screenshots, videos, and failure traces to `web-react-app/test-results/`. Playwright WebKit is not real Safari. A separate real-Safari smoke check must be run on macOS; see [SAFARI_SMOKE_CHECK.md](./web-react-app/SAFARI_SMOKE_CHECK.md).
+
+### Web preview and production deploy
+
+The web app deploys to GitHub Pages from `web-react-app/`, using `dist/` as build output. GitHub Actions runs lint, Jest/coverage, the production build, and all three Playwright browser projects before publishing a same-repository pull request preview or the `main` production site. Configure Pages and follow the deploy and HTTPS smoke-check steps in [the deployment guide](./web-react-app/DEPLOYMENT.md).
 
 ### Electron
 

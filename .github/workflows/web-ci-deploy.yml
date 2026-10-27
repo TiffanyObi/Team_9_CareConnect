@@ -1,0 +1,57 @@
+name: Web app CI and GitHub Pages
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - "web-react-app/**"
+      - ".github/workflows/web-ci-deploy.yml"
+      - ".github/workflows/web-pages-publish.yml"
+  push:
+    branches: [main]
+    paths:
+      - "web-react-app/**"
+      - ".github/workflows/web-ci-deploy.yml"
+      - ".github/workflows/web-pages-publish.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web-react-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: npm
+          cache-dependency-path: web-react-app/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test -- --coverage
+      - run: npm run build
+      - run: npm run verify:build
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-site-dist
+          path: web-react-app/dist/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Save browser reports and failure artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-playwright-${{ github.run_id }}
+          path: |
+            web-react-app/playwright-report/
+            web-react-app/test-results/
+          if-no-files-found: ignore
+          retention-days: 14

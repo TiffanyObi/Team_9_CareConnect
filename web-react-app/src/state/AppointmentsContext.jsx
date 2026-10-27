@@ -43,6 +43,23 @@ export function AppointmentsProvider({ children }) {
       setAppointments(nextAppointments);
       return savedAppointment;
     },
+    updateAppointment(id, changes) {
+      const currentAppointment = appointments.find((appointment) => appointment.id === id);
+      if (!currentAppointment) return null;
+      const updatedAppointment = { ...currentAppointment, ...changes, id };
+      const nextAppointments = appointments.map((appointment) => (
+        appointment.id === id ? updatedAppointment : appointment
+      ));
+      if (user) {
+        try {
+          window.localStorage.setItem(`${STORAGE_KEY_PREFIX}${user.id}`, JSON.stringify(nextAppointments));
+        } catch {
+          return null;
+        }
+      }
+      setAppointments(nextAppointments);
+      return updatedAppointment;
+    },
     getAppointment(id) {
       return appointments.find((appointment) => appointment.id === id);
     },
