@@ -2,12 +2,18 @@ import assert from 'node:assert/strict';
 
 // Use a fresh desktop Playwright context and a production build on HTTPS or localhost.
 export async function runOfflineFlow(page, context, baseURL) {
-  const origin = new URL(baseURL).origin;
+  const appRoot = new URL(baseURL);
+  if (!appRoot.pathname.endsWith('/')) appRoot.pathname += '/';
+  const route = (path) => {
+    const url = new URL(appRoot);
+    url.hash = path;
+    return url.href;
+  };
   const errors = [];
   const recordError = (error) => errors.push(error.message);
   page.on('pageerror', recordError);
   try {
-    await page.goto(`${origin}/login`);
+    await page.goto(route('/login'));
     await page.getByLabel('Email', { exact: true }).fill('omartinez@careconnect.com');
     await page.getByLabel('Password', { exact: true }).fill('password');
     await page.getByRole('button', { name: 'Log in', exact: true }).click();
@@ -22,7 +28,8 @@ export async function runOfflineFlow(page, context, baseURL) {
     assert.ok(manifest.icons.some((icon) => icon.sizes === '512x512'));
     await context.setOffline(true);
     // The appointment form's lazy chunk has not yet been visited online.
-    await page.goto(`${origin}/appointments/new`);
+    await page.goto(route('/appointments/new'));
+    await page.reload();
     await page.getByRole('heading', { name: 'New appointment', exact: true }).waitFor();
     await page.getByText(/You are offline/).waitFor();
     await page.getByLabel(/Provider/).selectOption('Dr. Maya Chen');
@@ -41,12 +48,12 @@ export async function runOfflineFlow(page, context, baseURL) {
     await page.getByRole('button', { name: /Log out Olivia/ }).click();
     await page.getByRole('dialog').getByRole('button', { name: 'Log out', exact: true }).click();
     await page.getByRole('heading', { name: 'Log in', exact: true }).waitFor();
-    await page.goto(`${origin}/appointments/new`);
+    await page.goto(route('/appointments/new'));
     await page.getByRole('heading', { name: 'Log in', exact: true }).waitFor();
     assert.equal(await page.getByText(note, { exact: true }).count(), 0);
     await context.setOffline(false); await page.reload();
     await page.getByRole('heading', { name: 'Log in', exact: true }).waitFor();
     assert.deepEqual(errors, []);
-    return { status: 'passed', origin, flow: 'offline unvisited route, appointment save, reload, logout, private route, reconnect' };
+    return { status: 'passed', appRoot: appRoot.href, flow: 'offline unvisited route, appointment save, reload, logout, private route, reconnect' };
   } finally { await context.setOffline(false); page.off('pageerror', recordError); }
 }

@@ -4,7 +4,8 @@ import { gzipSync } from 'node:zlib';
 
 const dist = resolve(process.argv[2] || 'dist');
 const html = await readFile(resolve(dist, 'index.html'), 'utf8');
-const initial = [...html.matchAll(/(?:src|href)="([^"]+\.js)"/g)].map((match) => match[1].replace(/^\//, ''));
+const initial = [...html.matchAll(/(?:src|href)="([^"]+\.js)"/g)]
+  .map((match) => match[1].replace(/^\.?\//, ''));
 const chunks = [];
 for (const name of (await readdir(resolve(dist, 'assets'))).filter((name) => name.endsWith('.js'))) {
   const bytes = await readFile(resolve(dist, 'assets', name));

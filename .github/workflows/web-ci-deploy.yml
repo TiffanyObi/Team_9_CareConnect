@@ -35,6 +35,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test -- --coverage
+      - run: npm run test:pwa
       - run: npm run build
       - run: npm run verify:build
       - run: npx playwright install --with-deps chromium firefox webkit
