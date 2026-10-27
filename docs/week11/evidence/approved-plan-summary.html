@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CareConnect Week 11 Approved Test Plan Summary</title>
+    <style>
+      :root { color-scheme: light; font-family: Arial, sans-serif; color: #17324a; background: #f3f7fa; }
+      body { margin: 0; padding: 48px; }
+      main { max-width: 1100px; margin: auto; padding: 40px; border: 1px solid #c7d6e2; border-radius: 16px; background: #fff; }
+      h1 { margin: 0; font-size: 32px; }
+      .meta { margin: 12px 0 32px; color: #49657a; }
+      .score { display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 28px; }
+      .score strong { display: grid; width: 160px; height: 160px; border: 12px solid #17875f; border-radius: 50%; place-items: center; color: #0b6a49; font-size: 44px; }
+      .score h2 { margin: 0 0 10px; font-size: 28px; }
+      .score p { margin: 0; font-size: 18px; line-height: 1.5; }
+      table { width: 100%; margin-top: 32px; border-collapse: collapse; font-size: 17px; }
+      th, td { padding: 14px 16px; border: 1px solid #c7d6e2; text-align: left; vertical-align: top; }
+      th { background: #123f58; color: #fff; }
+      tr:nth-child(even) td { background: #f3f7fa; }
+      .pass { color: #0b6a49; font-weight: 700; }
+      .partial { color: #7a5700; font-weight: 700; }
+      .pending { color: #8d1d23; font-weight: 700; }
+      footer { margin-top: 28px; color: #49657a; font-size: 15px; line-height: 1.5; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>CareConnect Week 11 Approved Test Plan Summary</h1>
+      <p class="meta">Team 9 · October 27, 2026 · Web application</p>
+      <section class="score" aria-labelledby="score-heading">
+        <strong aria-label="60 percent">60%</strong>
+        <div>
+          <h2 id="score-heading">15 of 25 approved cases passed exactly</h2>
+          <p>The full submitted-plan denominator is retained. Partial evidence is not counted as a pass. The exact result meets the submission requirement of 60% or more.</p>
+        </div>
+      </section>
+      <table>
+        <thead><tr><th>Status</th><th>Count</th><th>Case identifiers</th></tr></thead>
+        <tbody>
+          <tr><td class="pass">Passed</td><td>15</td><td>H01, H02, H03, H04, H05, H06, H07, H08, H09, R01, S01, S02, S03, S06, P04</td></tr>
+          <tr><td class="partial">Partial</td><td>7</td><td>S04, S05, A01, A02, P01, P02, P03</td></tr>
+          <tr><td class="pending">Not run or superseded</td><td>3</td><td>R02, A03, A04</td></tr>
+        </tbody>
+      </table>
+      <footer>
+        Browser evidence: 36 of 36 Playwright checks passed across Chromium, Firefox, and WebKit. Production PWA evidence: 3 of 3 offline checks passed. See <code>WEB_TEST_PLAN_EXECUTION.md</code> for case-level rationale and remaining manual work.
+      </footer>
+    </main>
+  </body>
+</html>

@@ -14,6 +14,7 @@ for (const width of widths) {
     await expect(page.getByRole('heading', { name: 'Care', exact: true })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Open health log' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Emergency assistance' })).toBeVisible();
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
 
     if (width < 1024) {
       await expect(page.getByRole('button', { name: 'Open navigation menu' })).toBeVisible();
