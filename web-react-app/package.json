@@ -17,6 +17,7 @@
     "test:coverage": "jest --coverage --runInBand",
     "test:pwa": "node --test tests/terence-core.node.mjs",
     "test:e2e": "playwright test",
+    "test:e2e:offline": "npm run build && playwright test --config playwright.offline.config.js",
     "test:e2e:report": "playwright show-report playwright-report",
     "verify:build": "node scripts/verify-build.mjs",
     "analyze:bundle": "node scripts/analyze-bundle.mjs",

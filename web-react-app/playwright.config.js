@@ -4,6 +4,7 @@ const port = 4173;
 
 export default defineConfig({
   testDir: './e2e',
+  testIgnore: 'offline.spec.js',
   timeout: 90_000,
   fullyParallel: false,
   workers: 1,

@@ -4,6 +4,7 @@ const navigation = [
   { to: '/', label: 'Overview', symbol: '⌂', end: true },
   { to: '/appointments', label: 'Appointments', symbol: '▦' },
   { to: '/medications', label: 'Medications', symbol: '✚' },
+  { to: '/care', label: 'Care', symbol: '♥' },
   { to: '/messages', label: 'Messages', symbol: '✉' },
   { to: '/search', label: 'Search', symbol: '⌕' },
   { to: '/settings', label: 'Settings', symbol: '⚙' },
