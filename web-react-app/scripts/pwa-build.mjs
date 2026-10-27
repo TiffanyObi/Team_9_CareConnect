@@ -20,12 +20,13 @@ export function careconnectPwa() {
     configResolved(resolved) { config = resolved; },
     async closeBundle() {
       const out = resolve(config.root, config.build.outDir);
-      const base = config.base;
-      if (!base.startsWith('/') || !base.endsWith('/')) throw new Error('PWA base must be an absolute path ending with /.');
       const files = (await filesAt(out)).filter((name) => name !== 'sw.js' && !name.endsWith('.map')).sort();
       const hash = createHash('sha256');
       for (const file of files) { hash.update(file); hash.update(await readFile(resolve(out, file))); }
-      await writeFile(resolve(out, 'sw.js'), createWorker({ version: hash.digest('hex').slice(0, 16), assets: files.map((file) => `${base}${file}`), base }));
+      await writeFile(resolve(out, 'sw.js'), createWorker({
+        version: hash.digest('hex').slice(0, 16),
+        assets: files,
+      }));
     },
   };
 }

@@ -15,4 +15,12 @@ module.exports = {
   coverageDirectory: '<rootDir>/coverage',
   coverageProvider: 'v8',
   coverageReporters: ['text', 'html', 'lcov'],
+  coverageThreshold: {
+    global: {
+      branches: 75,
+      functions: 75,
+      lines: 75,
+      statements: 75,
+    },
+  },
 };

@@ -36,7 +36,7 @@ test('account and access flow: reject bad login, sign up, save onboarding, reloa
   await expect(page.getByRole('heading', { name: 'Log in' })).toBeVisible();
 });
 
-test('appointment flow: validate, create, search, check in, copy, reload, and confirm saved data', async ({ page }) => {
+test('appointment flow: validate, create, search, edit, check in, copy, reload, and confirm saved data', async ({ page }) => {
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'clipboard', {
       configurable: true,
@@ -81,17 +81,29 @@ test('appointment flow: validate, create, search, check in, copy, reload, and co
   await results.getByRole('link', { name: /Specialist consultation/ }).click();
   await expect(page.getByRole('heading', { name: 'Appointment details' })).toBeVisible();
 
+  await page.getByRole('link', { name: 'Edit appointment' }).click();
+  await expect(page.getByRole('heading', { name: 'Edit appointment' })).toBeVisible();
+  await page.getByLabel('Provider').selectOption('Jordan Lee, PT');
+  await page.getByLabel('Appointment date').fill('2035-06-20');
+  await page.getByLabel('Start time').fill('13:45');
+  await page.getByLabel('Visit type').selectOption({ label: 'Physical therapy follow-up' });
+  await page.getByLabel('Notes').fill('Updated by the Playwright appointment flow.');
+  await page.getByRole('button', { name: 'Save changes' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Appointment details' })).toBeVisible();
+  await expect(page.getByText('Updated by the Playwright appointment flow.')).toBeVisible();
   await page.getByRole('button', { name: 'Check-in' }).click();
   await expect(page.getByRole('status', { name: 'Appointment check-in' }))
     .toContainText('You have been checked in');
   await page.getByRole('button', { name: 'Copy details' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Appointment details copied.' })).toBeVisible();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
-    .toContain('Specialist consultation | 2035-06-15 10:30');
+    .toContain('Physical therapy follow-up | 2035-06-20 13:45');
 
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Appointment details' })).toBeVisible();
-  await expect(page.getByText('Created by the Playwright appointment flow.')).toBeVisible();
+  await expect(page.getByText('Updated by the Playwright appointment flow.')).toBeVisible();
+  await expect(page.getByText('Jordan Lee, PT', { exact: true })).toBeVisible();
   await expect(page.getByRole('status', { name: 'Appointment check-in' }))
     .toContainText('You have been checked in');
 });

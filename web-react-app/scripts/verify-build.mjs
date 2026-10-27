@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = path.join(appRoot, 'dist');
 const htmlPath = path.join(distRoot, 'index.html');
+const requiredPwaFiles = ['manifest.json', 'sw.js'];
 
 if (!fs.existsSync(htmlPath)) {
   throw new Error('Build output is missing dist/index.html. Run npm run build first.');
@@ -28,4 +29,18 @@ for (const assetPath of assetPaths) {
   }
 }
 
-console.log(`Verified ${assetPaths.length} relative JavaScript/CSS asset paths.`);
+for (const requiredFile of requiredPwaFiles) {
+  if (!fs.existsSync(path.join(distRoot, requiredFile))) {
+    throw new Error(`PWA build output is missing dist/${requiredFile}.`);
+  }
+}
+
+const manifest = JSON.parse(fs.readFileSync(path.join(distRoot, 'manifest.json'), 'utf8'));
+for (const icon of manifest.icons || []) {
+  const iconPath = path.resolve(distRoot, icon.src);
+  if (!iconPath.startsWith(`${distRoot}${path.sep}`) || !fs.existsSync(iconPath)) {
+    throw new Error(`Manifest icon does not exist inside dist: ${icon.src}`);
+  }
+}
+
+console.log(`Verified ${assetPaths.length} relative JavaScript/CSS asset paths, the manifest, service worker, and ${manifest.icons?.length || 0} icons.`);

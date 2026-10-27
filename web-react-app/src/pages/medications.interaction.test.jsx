@@ -26,7 +26,8 @@ it('starts a new user empty and lets that user add a medication', async () => {
   renderApp('/medications');
   expect(await screen.findByRole('heading', { name: 'No medications added' })).toBeInTheDocument();
   await user.click(screen.getByRole('link', { name: 'Add your first medication' }));
-  await user.type(screen.getByLabelText(/Medication name/), 'Demo medicine');
+  const medicationName = await screen.findByLabelText(/Medication name/);
+  await user.type(medicationName, 'Demo medicine');
   await user.type(screen.getByLabelText(/Dosage/), '10 mg');
   await user.type(screen.getByLabelText(/Schedule/), 'At bedtime');
   await user.type(screen.getByLabelText(/Instructions/), 'Take with water');

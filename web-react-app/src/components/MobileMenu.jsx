@@ -81,6 +81,7 @@ export function MobileMenu({ open, onClose, onLogoutRequest }) {
                 <NavLink
                   className={({ isActive }) => `mobile-menu__link${isActive ? ' is-active' : ''}`}
                   end={link.end}
+                  onClick={() => onClose()}
                   to={link.to}
                 >
                   {link.label}

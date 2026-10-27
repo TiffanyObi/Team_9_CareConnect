@@ -27,10 +27,10 @@ test('sorting visits leaves the input unchanged', () => {
 function workerHarness({ failInstall = false } = {}) {
   const listeners = {}, deleted = [], fetched = [], cached = [];
   let skipped = false, claimed = false;
-  const cache = { addAll: async (requests) => { if (failInstall) throw Error('offline'); cached.push(...requests); }, match: async (key) => key === '/index.html' ? 'STATIC SHELL' : 'STATIC CHUNK' };
-  const self = { location: { origin: 'https://demo.test' }, clients: { claim: async () => { claimed = true; } }, skipWaiting: () => { skipped = true; }, addEventListener: (name, handler) => { listeners[name] = handler; } };
+  const cache = { addAll: async (requests) => { if (failInstall) throw Error('offline'); cached.push(...requests); }, match: async (key) => key === 'https://demo.test/index.html' ? 'STATIC SHELL' : 'STATIC CHUNK' };
+  const self = { location: { origin: 'https://demo.test' }, registration: { scope: 'https://demo.test/' }, clients: { claim: async () => { claimed = true; } }, skipWaiting: () => { skipped = true; }, addEventListener: (name, handler) => { listeners[name] = handler; } };
   const caches = { open: async () => cache, keys: async () => ['careconnect-shell:/:old', 'careconnect-shell:/:new', 'another-app'], delete: async (key) => { deleted.push(key); } };
-  vm.runInNewContext(createWorker({ version: 'new', assets: ['/index.html', '/assets/page.js'] }), { self, caches, URL, Request, fetch: async (request) => { fetched.push(request); return 'NETWORK'; } });
+  vm.runInNewContext(createWorker({ version: 'new', assets: ['index.html', 'assets/page.js'] }), { self, caches, URL, Request, fetch: async (request) => { fetched.push(request); return 'NETWORK'; } });
   return { listeners, deleted, fetched, cached, get skipped() { return skipped; }, get claimed() { return claimed; } };
 }
 
@@ -87,9 +87,9 @@ test('production worker includes lazy chunks and public icons and changes with t
     await writeFile(join(root, 'dist/index.html'), '<div>shell</div>');
     await writeFile(join(root, 'dist/assets/page.js'), 'route code');
     await writeFile(join(root, 'dist/icons/icon.png'), 'image');
-    const plugin = careconnectPwa(); plugin.configResolved({ root, base: '/', build: { outDir: 'dist' } });
+    const plugin = careconnectPwa(); plugin.configResolved({ root, base: './', build: { outDir: 'dist' } });
     await plugin.closeBundle(); const initial = await readFile(join(root, 'dist/sw.js'), 'utf8');
-    assert.match(initial, /\/assets\/page.js/); assert.match(initial, /\/icons\/icon.png/);
+    assert.match(initial, /assets\/page.js/); assert.match(initial, /icons\/icon.png/);
     await writeFile(join(root, 'dist/assets/page.js'), 'new route code');
     await plugin.closeBundle(); assert.notEqual(await readFile(join(root, 'dist/sw.js'), 'utf8'), initial);
   } finally { await rm(root, { recursive: true, force: true }); }
