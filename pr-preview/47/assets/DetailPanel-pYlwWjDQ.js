@@ -1,0 +1,1 @@
+import{l as e}from"./index-DH8gzStZ.js";var t=e();function n({title:e,children:n,className:r=``}){return(0,t.jsxs)(`section`,{className:`detail-panel ${r}`.trim(),children:[(0,t.jsx)(`h2`,{children:e}),(0,t.jsx)(`div`,{className:`detail-panel__content`,children:n})]})}export{n as t};
