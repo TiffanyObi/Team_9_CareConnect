@@ -81,9 +81,9 @@ export function SearchVisitsPage() {
       <PageHeader title="Search visits" description="Find appointments in your care workspace · Demo information" />
       <form className="visit-search-form" onSubmit={searchVisits}>
         <div className="visit-search-grid">
-          <label className="form-field">
+          <label className="form-field" htmlFor="visit-provider">
             <span>Provider</span>
-            <select ref={providerInputRef} name="provider" value={filters.provider} onChange={updateFilter}>
+            <select id="visit-provider" ref={providerInputRef} name="provider" value={filters.provider} onChange={updateFilter}>
               <option value="">Any provider</option>
               {Object.keys(providerSpecialties).map((provider) => (
                 <option key={provider} value={provider}>{provider}</option>
@@ -91,9 +91,9 @@ export function SearchVisitsPage() {
             </select>
           </label>
 
-          <label className="form-field">
+          <label className="form-field" htmlFor="visit-specialty">
             <span>Provider specialty</span>
-            <select name="specialty" value={filters.specialty} onChange={updateFilter}>
+            <select id="visit-specialty" name="specialty" value={filters.specialty} onChange={updateFilter}>
               <option value="">Any specialty</option>
               {[...new Set(Object.values(providerSpecialties))].map((specialty) => (
                 <option key={specialty} value={specialty}>{specialty}</option>
