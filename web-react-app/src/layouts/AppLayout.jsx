@@ -10,6 +10,7 @@ export function AppLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const menuButtonRef = useRef(null);
+  const logoutTriggerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const navigation = useNavigation();
@@ -23,6 +24,20 @@ export function AppLayout() {
   const closeMenu = ({ restoreFocus = false } = {}) => {
     setMenuOpen(false);
     if (restoreFocus) requestAnimationFrame(() => menuButtonRef.current?.focus());
+  };
+
+  const openLogout = () => {
+    logoutTriggerRef.current = document.activeElement;
+    setLogoutOpen(true);
+  };
+
+  const cancelLogout = () => {
+    setLogoutOpen(false);
+    requestAnimationFrame(() => {
+      const trigger = logoutTriggerRef.current;
+      if (trigger?.isConnected) trigger.focus();
+      else menuButtonRef.current?.focus();
+    });
   };
 
   useEffect(() => {
@@ -98,18 +113,18 @@ export function AppLayout() {
         menuButtonRef={menuButtonRef}
         menuOpen={menuOpen}
         onMenuToggle={() => setMenuOpen((open) => !open)}
-        onLogoutRequest={() => setLogoutOpen(true)}
+        onLogoutRequest={openLogout}
         userName={user.name}
       />
       <DesktopSidebar />
-      <MobileMenu open={menuOpen} onClose={closeMenu} onLogoutRequest={() => { setMenuOpen(false); setLogoutOpen(true); }} />
+      <MobileMenu open={menuOpen} onClose={closeMenu} onLogoutRequest={() => { openLogout(); setMenuOpen(false); }} />
       <main id="main-content" className="page-content" tabIndex="-1">
         {navigation.state !== 'idle' && <p role="status">Loading page…</p>}
         <Outlet />
       </main>
       <LogoutDialog
         open={logoutOpen}
-        onCancel={() => setLogoutOpen(false)}
+        onCancel={cancelLogout}
         onConfirm={() => { logout(); navigate('/login', { replace: true }); }}
       />
     </div>
