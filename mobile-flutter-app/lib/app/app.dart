@@ -1,3 +1,5 @@
+import 'dart:ui' show SemanticsRole;
+
 import 'package:careconnect_flutter/app/app_router.dart';
 import 'package:careconnect_flutter/app/theme/app_theme.dart';
 import 'package:careconnect_flutter/core/accessibility/accessibility_controller.dart';
@@ -10,6 +12,7 @@ import 'package:careconnect_flutter/features/care/health_log_controller.dart';
 import 'package:careconnect_flutter/features/care/health_log_repository.dart';
 import 'package:careconnect_flutter/features/medications/medication_controller.dart';
 import 'package:careconnect_flutter/features/medications/medication_log_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +56,7 @@ class _CareConnectAppState extends State<CareConnectApp> {
       store: widget.store ?? SharedPreferencesAccessibilitySettingsStore(),
     )..load();
     final database = AppDatabase();
-    final useMemory = widget.store != null;
+    final useMemory = widget.store != null || kIsWeb;
     _authController = AuthController(
       repository:
           widget.authRepository ??
@@ -139,17 +142,21 @@ class _CareConnectAppState extends State<CareConnectApp> {
               final media = MediaQuery.of(context);
               final platformScale = media.textScaler.scale(1);
               final requestedScale = settings.textScale.clamp(1.0, 2.0);
-              return FocusTraversalGroup(
-                policy: ReadingOrderTraversalPolicy(),
-                child: MediaQuery(
-                  data: media.copyWith(
-                    textScaler: TextScaler.linear(
-                      (platformScale * requestedScale).clamp(1.0, 2.0),
+              return Semantics(
+                container: true,
+                role: SemanticsRole.main,
+                child: FocusTraversalGroup(
+                  policy: ReadingOrderTraversalPolicy(),
+                  child: MediaQuery(
+                    data: media.copyWith(
+                      textScaler: TextScaler.linear(
+                        (platformScale * requestedScale).clamp(1.0, 2.0),
+                      ),
+                      disableAnimations:
+                          media.disableAnimations || settings.reducedMotion,
                     ),
-                    disableAnimations:
-                        media.disableAnimations || settings.reducedMotion,
+                    child: child!,
                   ),
-                  child: child!,
                 ),
               );
             },
