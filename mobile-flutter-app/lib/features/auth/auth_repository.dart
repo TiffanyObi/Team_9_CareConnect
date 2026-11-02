@@ -143,13 +143,9 @@ class MemoryAuthRepository implements AuthRepository {
     final key = email.trim().toLowerCase();
     final record = _accounts[key];
     if (record == null &&
-        key == 'olivia@example.com' &&
+        (key == 'olivia@example.com' || key == 'omartinez@careconnect.com') &&
         password == 'password') {
-      return const PatientAccount(
-        id: 0,
-        fullName: 'Olivia Martinez',
-        email: 'olivia@example.com',
-      );
+      return PatientAccount(id: 0, fullName: 'Olivia Martinez', email: key);
     }
     return record?.password == password ? record?.account : null;
   }

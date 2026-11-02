@@ -32,6 +32,23 @@ flutter test
 flutter run
 ```
 
+### Flutter Web accessibility preview
+
+Flutter Web is enabled for local browser accessibility and cross-browser checks:
+
+```bash
+flutter run -d chrome
+flutter build web
+```
+
+The web preview uses in-memory repositories for accounts, medication logs, and
+health logs. Data is not persisted across reloads, and this prototype must only
+use fictional demo information. Do not enter real patient data.
+
+The [Flutter Web accessibility report](../docs/week6/evidence/flutter-web-accessibility/ACCESSIBILITY_REPORT.md)
+records the automated results, browser limitations, and outstanding manual
+checks.
+
 Run the device-level integration suite with a running emulator, simulator, or
 physical device:
 

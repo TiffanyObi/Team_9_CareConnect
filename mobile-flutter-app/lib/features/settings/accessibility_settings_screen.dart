@@ -101,16 +101,44 @@ class _AccessibilitySettingsScreenState
                     'Text size',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Slider(
-                    value: settings.textScale,
-                    min: 1,
-                    max: 2,
-                    divisions: 4,
-                    label: '${(settings.textScale * 100).round()}%',
-                    semanticFormatterCallback: (value) =>
-                        '${(value * 100).round()} percent',
-                    onChanged: (value) =>
-                        _update(settings.copyWith(textScale: value)),
+                  Semantics(
+                    container: true,
+                    slider: true,
+                    label: 'Text size',
+                    value: '${(settings.textScale * 100).round()} percent',
+                    increasedValue:
+                        '${((settings.textScale + 0.25).clamp(1.0, 2.0) * 100).round()} percent',
+                    decreasedValue:
+                        '${((settings.textScale - 0.25).clamp(1.0, 2.0) * 100).round()} percent',
+                    onIncrease: settings.textScale < 2
+                        ? () => _update(
+                            settings.copyWith(
+                              textScale: (settings.textScale + 0.25)
+                                  .clamp(1.0, 2.0)
+                                  .toDouble(),
+                            ),
+                          )
+                        : null,
+                    onDecrease: settings.textScale > 1
+                        ? () => _update(
+                            settings.copyWith(
+                              textScale: (settings.textScale - 0.25)
+                                  .clamp(1.0, 2.0)
+                                  .toDouble(),
+                            ),
+                          )
+                        : null,
+                    child: ExcludeSemantics(
+                      child: Slider(
+                        value: settings.textScale,
+                        min: 1,
+                        max: 2,
+                        divisions: 4,
+                        label: '${(settings.textScale * 100).round()}%',
+                        onChanged: (value) =>
+                            _update(settings.copyWith(textScale: value)),
+                      ),
+                    ),
                   ),
                   if (MediaQuery.textScalerOf(context).scale(1) > 1.5)
                     Wrap(

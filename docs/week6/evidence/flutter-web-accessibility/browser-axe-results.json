@@ -1,0 +1,271 @@
+{
+  "generatedAt": "2026-11-02T01:50:22.199Z",
+  "url": "http://127.0.0.1:8766/",
+  "axeVersion": "4.10.3",
+  "testTags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa",
+    "best-practice"
+  ],
+  "browsers": {
+    "Chrome": {
+      "screens": {
+        "Sign in": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        },
+        "Today": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 7
+            }
+          ]
+        },
+        "Meds": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Care": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Messages": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Settings": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-prohibited-attr",
+              "nodes": 1
+            },
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        }
+      },
+      "keyboardTraversal": "Tab/Enter used for sign in and tabs; manual assistive technology was not used"
+    },
+    "Firefox": {
+      "screens": {
+        "Sign in": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        },
+        "Today": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 7
+            }
+          ]
+        },
+        "Meds": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Care": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Messages": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Settings": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-prohibited-attr",
+              "nodes": 1
+            },
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        }
+      },
+      "keyboardTraversal": "Tab/Enter used for sign in and tabs; manual assistive technology was not used"
+    },
+    "WebKit (not Safari)": {
+      "screens": {
+        "Sign in": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        },
+        "Today": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 7
+            }
+          ]
+        },
+        "Meds": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Care": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Messages": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Settings": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-prohibited-attr",
+              "nodes": 1
+            },
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        }
+      },
+      "keyboardTraversal": "Tab/Enter used for sign in and tabs; manual assistive technology was not used"
+    },
+    "Edge": {
+      "screens": {
+        "Sign in": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        },
+        "Today": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 7
+            }
+          ]
+        },
+        "Meds": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Care": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Messages": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "nodes": 6
+            }
+          ]
+        },
+        "Settings": {
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-prohibited-attr",
+              "nodes": 1
+            },
+            {
+              "id": "color-contrast",
+              "nodes": 8
+            }
+          ]
+        }
+      },
+      "keyboardTraversal": "Tab/Enter used for sign in and tabs; manual assistive technology was not used"
+    }
+  },
+  "notes": [
+    "WebKit is a Playwright WebKit engine check and is not real Safari.",
+    "Incomplete axe checks are reported separately from violations."
+  ]
+}

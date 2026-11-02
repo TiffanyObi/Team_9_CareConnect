@@ -32,11 +32,6 @@ class AppButton extends StatelessWidget {
     final button = secondary
         ? OutlinedButton(onPressed: onPressed, child: child)
         : FilledButton(onPressed: onPressed, child: child);
-    return Semantics(
-      button: true,
-      enabled: onPressed != null,
-      label: label,
-      child: button,
-    );
+    return button;
   }
 }
