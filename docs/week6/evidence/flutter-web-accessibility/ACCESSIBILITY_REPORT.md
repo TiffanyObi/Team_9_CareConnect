@@ -22,6 +22,27 @@ in.
 Lighthouse 12.8.2 reported an **accessibility score of 100**. See the [HTML
 report](./lighthouse.report.html) or [JSON report](./lighthouse.report.json).
 
+## WAVE results
+
+The official WAVE Evaluation Tool 3.3.1.0 browser extension analyzed the local
+Flutter Web page in Chrome. WAVE's extension evaluates locally in the browser;
+the page was not sent to the WAVE service. Each screen reported **0 errors**,
+**0 contrast errors**, and an AIM Score of **10/10**.
+
+| Screen | Errors | Contrast errors | Alerts | ARIA | Screenshot |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Sign in | 0 | 0 | 2 | 22 | [WAVE screenshot](./wave-chrome-sign-in.png) |
+| Today | 0 | 0 | 2 | 30 | [WAVE screenshot](./wave-chrome-today.png) |
+| Meds | 0 | 0 | 2 | 30 | [WAVE screenshot](./wave-chrome-meds.png) |
+| Care | 0 | 0 | 2 | 30 | [WAVE screenshot](./wave-chrome-care.png) |
+| Messages | 0 | 0 | 2 | 30 | [WAVE screenshot](./wave-chrome-messages.png) |
+| Settings | 0 | 0 | 2 | 30 | [WAVE screenshot](./wave-chrome-settings.png) |
+
+WAVE reported the same two **alerts**, not errors, on each screen: a missing
+first-level heading and very small text. These alerts warrant human review.
+The [WAVE results JSON](./wave-results.json) contains the summary counts and
+sidebar report text for each screen.
+
 ## Keyboard and semantic checks
 
 A keyboard-only Chrome flow reached Help, Email, Password, Show password,
@@ -43,9 +64,8 @@ and the generated range input receives the label of its Flutter semantic node.
 - **NVDA/VoiceOver:** not tested. NVDA was not installed in this Windows
   environment, and VoiceOver requires macOS. Axe and Flutter widget checks do
   not replace a screen-reader review.
-- **WAVE and axe DevTools:** their browser extensions were unavailable here.
-  Axe Core was run as the available automated alternative; this is not a claim
-  that WAVE or the axe DevTools extension was run.
+- **axe DevTools extension:** not run. Axe Core was run separately, as
+  documented above.
 - **Safari:** not tested. This environment is Windows. Playwright WebKit is
   reported separately and is **not Safari**.
 - Axe reported `color-contrast` and `aria-prohibited-attr` as incomplete/manual

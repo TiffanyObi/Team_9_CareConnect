@@ -1,0 +1,80 @@
+{
+  "generatedAt": "2026-11-02T18:33:17.802Z",
+  "tool": "WAVE Evaluation Tool 3.3.1.0 browser extension",
+  "target": "http://127.0.0.1:8766/",
+  "privacy": "Analyzed locally by the browser extension; page content was not submitted to the WAVE service.",
+  "screens": {
+    "Sign in": {
+      "summary": {
+        "errors": 0,
+        "contrastErrors": 0,
+        "alerts": 2,
+        "features": 1,
+        "structuralElements": 2,
+        "aria": 22,
+        "aimScore": 10
+      },
+      "sidebarText": "powered by\nWebAIM\nStyles:OFFON\nDetails\nDetails\nReference\nOrder\nStructure\nContrast\n 0\nErrors  0\nContrast Errors  2\nAlerts  1\nFeatures  2\nStructure  22\nARIA\n\nCongratulations! No errors were detected! Manual testing is still necessary to ensure compliance and optimal accessibility.\n\nAIM Score: 10 out of 10\n\n2 Alerts\n1 Missing first level heading\n1 Very small text\n1 Features\n1 Language\n2 Structural Elements\n1 Heading level 2\n1 Main content\n22 ARIA\n4 ARIA\n3 ARIA label\n6 ARIA tabindex\n2 ARIA alert or live region\n5 ARIA button\n2 ARIA hidden"
+    },
+    "Today": {
+      "summary": {
+        "errors": 0,
+        "contrastErrors": 0,
+        "alerts": 2,
+        "features": 1,
+        "structuralElements": 2,
+        "aria": 30,
+        "aimScore": 10
+      },
+      "sidebarText": "powered by\nWebAIM\nStyles:OFFON\nDetails\nDetails\nReference\nOrder\nStructure\nContrast\n 0\nErrors  0\nContrast Errors  2\nAlerts  1\nFeatures  2\nStructure  30\nARIA\n\nCongratulations! No errors were detected! Manual testing is still necessary to ensure compliance and optimal accessibility.\n\nAIM Score: 10 out of 10\n\n2 Alerts\n1 Missing first level heading\n1 Very small text\n1 Features\n1 Language\n2 Structural Elements\n1 Heading level 2\n1 Main content\n30 ARIA\n9 ARIA\n7 ARIA label\n8 ARIA tabindex\n2 ARIA alert or live region\n2 ARIA button\n2 ARIA hidden"
+    },
+    "Meds": {
+      "summary": {
+        "errors": 0,
+        "contrastErrors": 0,
+        "alerts": 2,
+        "features": 1,
+        "structuralElements": 2,
+        "aria": 30,
+        "aimScore": 10
+      },
+      "sidebarText": "powered by\nWebAIM\nStyles:OFFON\nDetails\nDetails\nReference\nOrder\nStructure\nContrast\n 0\nErrors  0\nContrast Errors  2\nAlerts  1\nFeatures  2\nStructure  30\nARIA\n\nCongratulations! No errors were detected! Manual testing is still necessary to ensure compliance and optimal accessibility.\n\nAIM Score: 10 out of 10\n\n2 Alerts\n1 Missing first level heading\n1 Very small text\n1 Features\n1 Language\n2 Structural Elements\n1 Heading level 2\n1 Main content\n30 ARIA\n9 ARIA\n7 ARIA label\n8 ARIA tabindex\n2 ARIA alert or live region\n2 ARIA button\n2 ARIA hidden"
+    },
+    "Care": {
+      "summary": {
+        "errors": 0,
+        "contrastErrors": 0,
+        "alerts": 2,
+        "features": 1,
+        "structuralElements": 2,
+        "aria": 30,
+        "aimScore": 10
+      },
+      "sidebarText": "powered by\nWebAIM\nStyles:OFFON\nDetails\nDetails\nReference\nOrder\nStructure\nContrast\n 0\nErrors  0\nContrast Errors  2\nAlerts  1\nFeatures  2\nStructure  30\nARIA\n\nCongratulations! No errors were detected! Manual testing is still necessary to ensure compliance and optimal accessibility.\n\nAIM Score: 10 out of 10\n\n2 Alerts\n1 Missing first level heading\n1 Very small text\n1 Features\n1 Language\n2 Structural Elements\n1 Heading level 2\n1 Main content\n30 ARIA\n9 ARIA\n7 ARIA label\n8 ARIA tabindex\n2 ARIA alert or live region\n2 ARIA button\n2 ARIA hidden"
+    },
+    "Messages": {
+      "summary": {
+        "errors": 0,
+        "contrastErrors": 0,
+        "alerts": 2,
+        "features": 1,
+        "structuralElements": 2,
+        "aria": 30,
+        "aimScore": 10
+      },
+      "sidebarText": "powered by\nWebAIM\nStyles:OFFON\nDetails\nDetails\nReference\nOrder\nStructure\nContrast\n 0\nErrors  0\nContrast Errors  2\nAlerts  1\nFeatures  2\nStructure  30\nARIA\n\nCongratulations! No errors were detected! Manual testing is still necessary to ensure compliance and optimal accessibility.\n\nAIM Score: 10 out of 10\n\n2 Alerts\n1 Missing first level heading\n1 Very small text\n1 Features\n1 Language\n2 Structural Elements\n1 Heading level 2\n1 Main content\n30 ARIA\n9 ARIA\n7 ARIA label\n8 ARIA tabindex\n2 ARIA alert or live region\n2 ARIA button\n2 ARIA hidden"
+    },
+    "Settings": {
+      "summary": {
+        "errors": 0,
+        "contrastErrors": 0,
+        "alerts": 2,
+        "features": 1,
+        "structuralElements": 2,
+        "aria": 30,
+        "aimScore": 10
+      },
+      "sidebarText": "powered by\nWebAIM\nStyles:OFFON\nDetails\nDetails\nReference\nOrder\nStructure\nContrast\n 0\nErrors  0\nContrast Errors  2\nAlerts  1\nFeatures  2\nStructure  30\nARIA\n\nCongratulations! No errors were detected! Manual testing is still necessary to ensure compliance and optimal accessibility.\n\nAIM Score: 10 out of 10\n\n2 Alerts\n1 Missing first level heading\n1 Very small text\n1 Features\n1 Language\n2 Structural Elements\n1 Heading level 2\n1 Main content\n30 ARIA\n9 ARIA\n7 ARIA label\n8 ARIA tabindex\n2 ARIA alert or live region\n2 ARIA button\n2 ARIA hidden"
+    }
+  }
+}
