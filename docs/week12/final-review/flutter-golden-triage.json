@@ -1,0 +1,82 @@
+[
+  {
+    "screen": "01-today_masterImage",
+    "pixels_different": 374,
+    "fraction": 0.000992,
+    "max_channel_difference": 34,
+    "count_difference_gt_1": 280,
+    "count_difference_gt_5": 49
+  },
+  {
+    "screen": "02-accessibility-settings_masterImage",
+    "pixels_different": 420,
+    "fraction": 0.001114,
+    "max_channel_difference": 38,
+    "count_difference_gt_1": 287,
+    "count_difference_gt_5": 59
+  },
+  {
+    "screen": "03-medications_masterImage",
+    "pixels_different": 322,
+    "fraction": 0.000854,
+    "max_channel_difference": 42,
+    "count_difference_gt_1": 238,
+    "count_difference_gt_5": 48
+  },
+  {
+    "screen": "04-medication-details_masterImage",
+    "pixels_different": 304,
+    "fraction": 0.000806,
+    "max_channel_difference": 36,
+    "count_difference_gt_1": 208,
+    "count_difference_gt_5": 44
+  },
+  {
+    "screen": "05-appointments_masterImage",
+    "pixels_different": 355,
+    "fraction": 0.000942,
+    "max_channel_difference": 42,
+    "count_difference_gt_1": 258,
+    "count_difference_gt_5": 66
+  },
+  {
+    "screen": "06-appointment-details_masterImage",
+    "pixels_different": 313,
+    "fraction": 0.00083,
+    "max_channel_difference": 30,
+    "count_difference_gt_1": 220,
+    "count_difference_gt_5": 30
+  },
+  {
+    "screen": "07-messages_masterImage",
+    "pixels_different": 373,
+    "fraction": 0.000989,
+    "max_channel_difference": 28,
+    "count_difference_gt_1": 261,
+    "count_difference_gt_5": 45
+  },
+  {
+    "screen": "08-message-details_masterImage",
+    "pixels_different": 156,
+    "fraction": 0.000414,
+    "max_channel_difference": 25,
+    "count_difference_gt_1": 119,
+    "count_difference_gt_5": 26
+  },
+  {
+    "screen": "09-health-log_masterImage",
+    "pixels_different": 278,
+    "fraction": 0.000737,
+    "max_channel_difference": 41,
+    "count_difference_gt_1": 196,
+    "count_difference_gt_5": 40
+  },
+  {
+    "screen": "10-emergency-assistance_masterImage",
+    "pixels_different": 434,
+    "fraction": 0.001151,
+    "max_channel_difference": 26,
+    "count_difference_gt_1": 302,
+    "count_difference_gt_5": 56
+  }
+]

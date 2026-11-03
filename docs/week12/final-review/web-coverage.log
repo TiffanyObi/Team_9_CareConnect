@@ -1,0 +1,72 @@
+
+> careconnect-react-app@1.0.0 test
+> jest --runInBand --coverage
+
+----------------------------------|---------|----------|---------|---------|---------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s               
+----------------------------------|---------|----------|---------|---------|---------------------------------
+All files                         |   89.82 |     80.4 |   82.84 |   89.82 |                                 
+ app                              |     100 |      100 |     100 |     100 |                                 
+  AppProviders.jsx                |     100 |      100 |     100 |     100 |                                 
+  router.jsx                      |     100 |      100 |     100 |     100 |                                 
+ components                       |   78.63 |    89.58 |   70.83 |   78.63 |                                 
+  AppHeader.jsx                   |     100 |      100 |     100 |     100 |                                 
+  AppointmentItem.jsx             |     100 |      100 |     100 |     100 |                                 
+  ContentCard.jsx                 |    87.5 |       50 |     100 |    87.5 | 13-14                           
+  DesktopSidebar.jsx              |     100 |      100 |     100 |     100 |                                 
+  DetailPanel.jsx                 |     100 |      100 |     100 |     100 |                                 
+  LogoutDialog.jsx                |   32.69 |       40 |      50 |   32.69 | 12-25,32-52                     
+  MedicationItem.jsx              |   23.07 |      100 |       0 |   23.07 | 4-13                            
+  MedicationLogList.jsx           |     100 |      100 |     100 |     100 |                                 
+  MobileMenu.jsx                  |   82.65 |      100 |      50 |   82.65 | 26-42                           
+  PageHeader.jsx                  |     100 |      100 |     100 |     100 |                                 
+  PreferenceFields.jsx            |     100 |      100 |      80 |     100 |                                 
+  PwaStatus.jsx                   |       0 |        0 |       0 |       0 | 1-14                            
+ data                             |     100 |      100 |     100 |     100 |                                 
+  appointments.js                 |     100 |      100 |     100 |     100 |                                 
+  medications.js                  |     100 |      100 |     100 |     100 |                                 
+ layouts                          |   94.55 |    85.36 |      50 |   94.55 |                                 
+  AppLayout.jsx                   |   93.93 |       85 |   45.45 |   93.93 | 30-31,35-40                     
+  AuthLayout.jsx                  |     100 |      100 |     100 |     100 |                                 
+ pages                            |   93.75 |    76.52 |   84.41 |   93.75 |                                 
+  AccessibilityOnboardingPage.jsx |     100 |       80 |     100 |     100 | 11                              
+  AppointmentConfirmationPage.jsx |   82.14 |       50 |     100 |   82.14 | 13-22                           
+  AppointmentDetailsPage.jsx      |   80.19 |       40 |   66.66 |   80.19 | 16-26,29-35,42-43               
+  AppointmentsPage.jsx            |     100 |       50 |     100 |     100 | 27,35-53                        
+  CarePage.jsx                    |     100 |       50 |     100 |     100 | 28-33                           
+  DashboardPage.jsx               |     100 |       60 |     100 |     100 | 18,25-26                        
+  EmergencyPage.jsx               |   98.14 |      100 |   66.66 |   98.14 | 17                              
+  ForgotPasswordPage.jsx          |     100 |      100 |     100 |     100 |                                 
+  HealthLogPage.jsx               |     100 |    78.94 |   83.33 |     100 | 29-43,68-69                     
+  HelpPage.jsx                    |     100 |    83.33 |     100 |     100 | 4                               
+  LoginPage.jsx                   |     100 |       80 |     100 |     100 | 13,21-22                        
+  MedicationDetailsPage.jsx       |   87.27 |    83.33 |     100 |   87.27 | 15-21                           
+  MedicationsPage.jsx             |   88.63 |    33.33 |     100 |   88.63 | 17-20,27                        
+  MessagesPage.jsx                |   92.41 |    78.18 |   88.88 |   92.41 | 68-74,76-84,122-125,246,333-337 
+  NewAppointmentPage.jsx          |   92.92 |    84.61 |     100 |   92.92 | 41-48,82,85-89,91               
+  NewMedicationPage.jsx           |   95.65 |    47.36 |     100 |   95.65 | 35-37                           
+  RouteErrorPage.jsx              |   55.55 |      100 |       0 |   55.55 | 4-5,8-9                         
+  SearchVisitsPage.jsx            |   97.71 |    86.79 |     100 |   97.71 | 65-68                           
+  SettingsPage.jsx                |   97.01 |      100 |    37.5 |   97.01 | 13-14                           
+  SignUpPage.jsx                  |   86.79 |    66.66 |     100 |   86.79 | 18-20,22-24,30                  
+ pwa                              |       0 |        0 |       0 |       0 |                                 
+  usePwa.js                       |       0 |        0 |       0 |       0 | 1-67                            
+ routing                          |   85.71 |       40 |     100 |   85.71 |                                 
+  RequireAuth.jsx                 |   85.71 |       40 |     100 |   85.71 | 11-12                           
+ services                         |    97.4 |    91.42 |     100 |    97.4 |                                 
+  authRepository.js               |    97.4 |    91.42 |     100 |    97.4 | 18-19,111-112                   
+ state                            |   89.84 |    73.03 |   88.88 |   89.84 |                                 
+  AppointmentsContext.jsx         |   89.33 |       75 |     100 |   89.33 | 13-16,19-20,57-58               
+  AuthContext.jsx                 |   96.15 |    88.23 |    87.5 |   96.15 | 52-54                           
+  HealthLogsContext.jsx           |   85.07 |    68.75 |      80 |   85.07 | 12-17,37,54-56                  
+  MedicationsContext.jsx          |   88.57 |    64.28 |    87.5 |   88.57 | 15-16,49,67-69,75-77,92-94      
+ utils                            |     100 |      100 |     100 |     100 |                                 
+  dateTime.js                     |     100 |      100 |     100 |     100 |                                 
+  medications.js                  |     100 |      100 |     100 |     100 |                                 
+----------------------------------|---------|----------|---------|---------|---------------------------------
+
+Test Suites: 14 passed, 14 total
+Tests:       32 passed, 32 total
+Snapshots:   0 total
+Time:        38.842 s
+Ran all test suites.

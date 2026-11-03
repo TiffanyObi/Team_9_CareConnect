@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-03T16:28:32.937Z",
+  "browser": "156.0.8078.80",
+  "method": "axe-core; NOT axe DevTools extension; not a manual screen-reader test",
+  "rows": [
+    {
+      "name": "login",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/login",
+      "violations": [],
+      "incomplete": [],
+      "passes": 24
+    },
+    {
+      "name": "dashboard",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/",
+      "violations": [],
+      "incomplete": [],
+      "passes": 24
+    },
+    {
+      "name": "appointments",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/appointments",
+      "violations": [],
+      "incomplete": [],
+      "passes": 24
+    },
+    {
+      "name": "medications",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/medications",
+      "violations": [],
+      "incomplete": [],
+      "passes": 24
+    },
+    {
+      "name": "settings",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/settings",
+      "violations": [],
+      "incomplete": [],
+      "passes": 27
+    },
+    {
+      "name": "messages",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/messages",
+      "violations": [],
+      "incomplete": [
+        "aria-prohibited-attr"
+      ],
+      "passes": 26
+    },
+    {
+      "name": "search",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/search",
+      "violations": [],
+      "incomplete": [],
+      "passes": 27
+    },
+    {
+      "name": "appointment-new",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/appointments/new",
+      "violations": [],
+      "incomplete": [],
+      "passes": 27
+    },
+    {
+      "name": "appointment-errors",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/appointments/new",
+      "violations": [],
+      "incomplete": [],
+      "passes": 27
+    },
+    {
+      "name": "logout-dialog",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "passes": 24
+    },
+    {
+      "name": "mobile-dashboard",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/",
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ],
+      "passes": 22
+    },
+    {
+      "name": "mobile-menu",
+      "url": "https://tiffanyobi.github.io/Team_9_CareConnect/#/",
+      "violations": [],
+      "incomplete": [
+        "label-content-name-mismatch"
+      ],
+      "passes": 24
+    }
+  ],
+  "errors": []
+}

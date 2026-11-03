@@ -1,0 +1,12 @@
+NOVEMBER 3 PRESENTATION REVIEW
+Tiffany's existing eighteen-minute speaker notes were found in the root of week_12_Submission and downloaded for review. Keep that team script and its assigned roles; the proposed timing checklist is a backup, not a new assignment of work.
+
+Required edits before recording
+1. At Testing and Quality, replace Flutter 84.68 percent with 83.97 percent (948/1,129). State that the fresh review passed 44 tests but failed ten golden-image comparisons. Do not claim every final automated test passes until resolved.
+2. Show the new architecture diagram with the existing architecture discussion.
+3. Name OpenAI Codex in AI usage; each member must confirm any other tools. A team-approved estimate may be disclosed as an estimate, but no measured percentage exists. Do not invent a percentage to fill the script.
+4. Say that the apps share selected care goals and visual conventions. Flutter appointment save and message send remain disabled drafts; Electron has no mobile/web medication or messaging workflows. Do not describe complete feature parity.
+5. Show the fresh coverage HTML and screenshots, not the older SharePoint ZIPs. Distinguish axe-core from the separate axe DevTools extension check.
+6. Present actual instructor feedback only after it is supplied and mapped to a fix.
+7. The script is not a recorded presentation. A final video link, all-member participation, runtime, audio and playback still need review.
+8. The original also asks for a separate 30–45 minute technical walkthrough. Faculty clarification remains pending. The shorter presentation must stay under twenty minutes.

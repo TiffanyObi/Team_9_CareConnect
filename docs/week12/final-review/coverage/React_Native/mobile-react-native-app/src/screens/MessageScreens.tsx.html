@@ -1,0 +1,97 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for mobile-react-native-app/src/screens/MessageScreens.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">mobile-react-native-app/src/screens</a> MessageScreens.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>10/10</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>2/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>6/6</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>3/3</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useRef, useState } from 'react'; import { Pressable, ScrollView, StyleSheet, View } from 'react-native'; import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'; import { NativeStackScreenProps } from '@react-navigation/native-stack'; import { AppText, Button, Card, FormField, Screen } from '../components/UI'; import { AccessibleModal } from '../components/AccessibleModal'; import { messages } from '../utils/data'; import { RootParams, TabParams } from '../navigation/RootNavigator';
+export function MessagesScreen({ navigation }: BottomTabScreenProps&lt;TabParams, 'Messages'&gt;): React.JSX.Element { const [compose, setCompose] = useState(false); const composeTrigger = useRef&lt;React.ElementRef&lt;typeof Pressable&gt;&gt;(null); return &lt;Screen&gt;&lt;View style={{ flex: 1 }} accessibilityElementsHidden={compose} importantForAccessibility={compose ? 'no-hide-descendants' : 'auto'}&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;Care team messages&lt;/AppText&gt;&lt;AppText secondary&gt;Private conversations with clear sharing&lt;/AppText&gt;{messages.map(m =&gt; &lt;Card key={m.id}&gt;&lt;AppText style={s.title}&gt;{m.subject}&lt;/AppText&gt;&lt;AppText&gt;{m.sender}&lt;/AppText&gt;&lt;Button label="Open message" accessibilityLabel={`Open message: ${m.subject}, from ${m.sender}`} secondary onPress={() =&gt; navigation.getParent()?.navigate('MessageDetail', { message: m })} /&gt;&lt;/Card&gt;)}&lt;Button label="New message" buttonRef={composeTrigger} accessibilityHint="Opens a draft form; sending is not yet available" onPress={() =&gt; setCompose(true)} /&gt;&lt;Card tone="success"&gt;&lt;AppText style={[s.title, s.darkText]}&gt;Privacy note&lt;/AppText&gt;&lt;AppText style={s.darkText}&gt;Messages show only the sender’s name on the lock screen.&lt;/AppText&gt;&lt;/Card&gt;&lt;/ScrollView&gt;&lt;/View&gt;&lt;AccessibleModal visible={compose} title="New message" returnFocusRef={composeTrigger} onClose={() =&gt; setCompose(false)}&gt;&lt;FormField label="Message caregiver" multiline /&gt;&lt;Button label="Send" disabled /&gt;&lt;/AccessibleModal&gt;&lt;/Screen&gt;; }
+export function MessageDetailScreen({ route }: NativeStackScreenProps&lt;RootParams, 'MessageDetail'&gt;): React.JSX.Element { const { message } = route.params; return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;{message.subject}&lt;/AppText&gt;&lt;AppText style={{ fontWeight: '700' }}&gt;From {message.sender}&lt;/AppText&gt;&lt;AppText style={{ fontSize: 18, marginTop: 12 }}&gt;{message.body}&lt;/AppText&gt;&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+const s = StyleSheet.create({ content: { padding: 20, paddingBottom: 32, gap: 12, maxWidth: 760, width: '100%', alignSelf: 'center' }, title: { fontSize: 18, fontWeight: '700' }, darkText: { color: '#10233F' } });
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-03T16:22:49.478Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    
