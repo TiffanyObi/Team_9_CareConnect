@@ -1,0 +1,1 @@
+genhtml coverage/lcov.info --output-directory '/Volumes/TerenceB/SWEN 661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/docs/week12/flutter-golden-review/coverage' --legend

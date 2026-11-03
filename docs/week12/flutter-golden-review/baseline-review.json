@@ -1,0 +1,102 @@
+[
+  {
+    "screen": "01-today.png",
+    "different_pixels": 374,
+    "total_pixels": 376980,
+    "max_channel_difference": 34,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "bbefac1fb68a96600cbd15e37dd316b5b8374fab44b9534a6e9714af1afe163a",
+    "current_sha256": "516c2efbcad194d8e48c8ceb9138e01d3841d2433424d4f33cb82871a774128c",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "02-accessibility-settings.png",
+    "different_pixels": 420,
+    "total_pixels": 376980,
+    "max_channel_difference": 38,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "33f26fc6da72379b2f5e4946990cd7f52b4858b7ae3c8e4f5c77e3a573128f2f",
+    "current_sha256": "d01ba64cf72a6ebf7d6b0ef8eb380d8297d18d845077161889825f106c786510",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "03-medications.png",
+    "different_pixels": 322,
+    "total_pixels": 376980,
+    "max_channel_difference": 42,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "d0a8a4444bcebe9b79e6950f47cedc9deeb71d1fbf0864dd92fb842d70fbc24c",
+    "current_sha256": "74a78721b4c9a9893208363b83d0d2af0fc3f02181bea0fe649064c7308c7ba2",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "04-medication-details.png",
+    "different_pixels": 304,
+    "total_pixels": 376980,
+    "max_channel_difference": 36,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "72b7b50e2a350a55013bb8e0a660b6ebf9252b568be93d274e4e36566d11fd4f",
+    "current_sha256": "8e5d49f2a892dd1dd12f499fdb305176bb26dc60a22c8ec27283d7669e59a305",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "05-appointments.png",
+    "different_pixels": 355,
+    "total_pixels": 376980,
+    "max_channel_difference": 42,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "6d5684d3bade40c9568e6c394b864cf9963cf6aa0ef63ee284e18622e869c9fc",
+    "current_sha256": "9a68f7b0ea405e35bb21b48fc5ce8ba1a9054b40e61135b304e5496e138d789f",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "06-appointment-details.png",
+    "different_pixels": 313,
+    "total_pixels": 376980,
+    "max_channel_difference": 30,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "1430095e395ff07fc0281acb2c9624a415e6e53cd39ab668169080847c5b8907",
+    "current_sha256": "b710bdbd91c407169c4012de64f0f33acec18e530b9913d0a729e8136bf2079b",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "07-messages.png",
+    "different_pixels": 373,
+    "total_pixels": 376980,
+    "max_channel_difference": 28,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "a6cfb79b736c078b1e522a689965a130069d327d073b9b8ab770b1d18b13f61c",
+    "current_sha256": "62252181d3c67bb6b150bc010f133019e3a29d71a60636b752381c0ad5494a79",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "08-message-details.png",
+    "different_pixels": 156,
+    "total_pixels": 376980,
+    "max_channel_difference": 25,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "494d0ab4f532b096ded81699905be829c305f3afb2dfac0f2c9aff2b57a03cd4",
+    "current_sha256": "ed14026d5d02649b124e274ad603a9702df345d0cfa9a32decb9e535fed33021",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "09-health-log.png",
+    "different_pixels": 278,
+    "total_pixels": 376980,
+    "max_channel_difference": 41,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "2c227afa1b8cf5e45a6c12bea32f288e00854bcd3b80c3731764864367ba97d3",
+    "current_sha256": "2652916cc266744ce72e4423e8961e4b3fa840a28ffb26b5bb804cf0300561c0",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  },
+  {
+    "screen": "10-emergency-assistance.png",
+    "different_pixels": 434,
+    "total_pixels": 376980,
+    "max_channel_difference": 26,
+    "same_as_prior_failure_render": true,
+    "old_sha256": "9d4b726761e0df3128dd76884e535cd3d2d02fbb20a69523dd78b0847cb61630",
+    "current_sha256": "8d223748c08fdad82d69ae0a498b66304dc755bb1c9d2cc07634134510440ceb",
+    "review": "No content, layout, control position or wrapping change seen; sparse glyph-edge color differences."
+  }
+]

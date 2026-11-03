@@ -1,0 +1,86 @@
+Reading tracefile coverage/lcov.info.
+Found 38 entries.
+Found common filename prefix "/Volumes/TerenceB/SWEN 661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/lib"
+Generating output.
+Processing file lib/features/medications/medication_log_repository.dart (0.000s)
+  lines=20 hit=8
+Processing file lib/features/care/health_log_repository.dart (0.000s)
+  lines=22 hit=9
+Processing file lib/features/care/appointment.dart (0.000s)
+  lines=1 hit=1
+Processing file lib/features/dashboard/today_screen.dart (0.000s)
+  lines=37 hit=37
+Processing file lib/core/widgets/app_card.dart (0.000s)
+  lines=7 hit=7
+Processing file lib/features/messages/message.dart (0.000s)
+  lines=5 hit=5
+Processing file lib/features/messages/message_repository.dart (0.000s)
+  lines=2 hit=2
+Processing file lib/app/app_routes.dart (0.000s)
+  lines=3 hit=3
+Processing file lib/features/messages/message_detail_screen.dart (0.000s)
+  lines=14 hit=14
+Processing file lib/features/medications/medication.dart (0.000s)
+  lines=6 hit=6
+Processing file lib/features/care/health_log.dart (0.000s)
+  lines=10 hit=1
+Processing file lib/features/medications/medication_controller.dart (0.000s)
+  lines=27 hit=27
+Processing file lib/core/database/app_database.dart (0.000s)
+  lines=19 hit=1
+Processing file lib/features/care/health_log_controller.dart (0.000s)
+  lines=24 hit=24
+Processing file lib/core/accessibility/accessibility_controller.dart (0.000s)
+  lines=14 hit=14
+Processing file lib/features/care/care_recipient.dart (0.000s)
+  lines=5 hit=5
+Processing file lib/app/theme/app_theme.dart (0.000s)
+  lines=41 hit=41
+Processing file lib/features/medications/medication_detail_screen.dart (0.000s)
+  lines=45 hit=45
+Processing file lib/core/accessibility/accessibility_settings_store.dart (0.000s)
+  lines=25 hit=0
+Processing file lib/features/care/care_repository.dart (0.000s)
+  lines=2 hit=2
+Processing file lib/features/auth/auth_screen.dart (0.000s)
+  lines=157 hit=143
+Processing file lib/app/app.dart (0.000s)
+  lines=78 hit=76
+Processing file lib/features/settings/accessibility_settings_screen.dart (0.000s)
+  lines=120 hit=95
+Processing file lib/features/medications/medication_repository.dart (0.000s)
+  lines=2 hit=2
+Processing file lib/features/care/care_screen.dart (0.000s)
+  lines=44 hit=43
+Processing file lib/app/app_shell.dart (0.000s)
+  lines=28 hit=27
+Processing file lib/features/auth/auth_repository.dart (0.000s)
+  lines=54 hit=14
+Processing file lib/features/medications/medication_log.dart (0.000s)
+  lines=8 hit=1
+Processing file lib/features/medications/medications_screen.dart (0.000s)
+  lines=59 hit=59
+Processing file lib/core/accessibility/accessibility_settings.dart (0.000s)
+  lines=9 hit=9
+Processing file lib/features/care/appointment_detail_screen.dart (0.000s)
+  lines=26 hit=26
+Processing file lib/features/auth/auth_controller.dart (0.000s)
+  lines=22 hit=21
+Processing file lib/core/widgets/app_button.dart (0.000s)
+  lines=12 hit=7
+Processing file lib/features/care/emergency_assistance_screen.dart (0.000s)
+  lines=24 hit=23
+Processing file lib/features/messages/messages_screen.dart (0.000s)
+  lines=42 hit=40
+Processing file lib/features/care/health_log_screen.dart (0.000s)
+  lines=71 hit=68
+Processing file lib/features/auth/patient_account.dart (0.000s)
+  lines=1 hit=1
+Processing file lib/app/app_router.dart (0.000s)
+  lines=43 hit=38
+Overall coverage rate:
+  source files: 38
+  lines.......: 83.7% (945 of 1129 lines)
+  functions...: no data found
+Message summary:
+  no messages were reported

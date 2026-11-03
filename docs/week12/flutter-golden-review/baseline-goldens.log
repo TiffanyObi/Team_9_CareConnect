@@ -1,0 +1,352 @@
+Resolving dependencies...
+Downloading packages...
+  cupertino_icons 1.0.9 (2.0.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  shared_preferences_foundation 2.5.7 (2.6.1 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.2 (2.4.4 available)
+Got dependencies!
+6 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /Volumes/TerenceB/SWEN 661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: captures 01-today.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/01-today.png": Pixel test failed, 0.10%, 374px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -1: captures 01-today.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 01-today.png visual evidence
+  
+00:00 +0 -1: captures 02-accessibility-settings.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/02-accessibility-settings.png": Pixel test failed, 0.11%, 420px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -2: captures 02-accessibility-settings.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 02-accessibility-settings.png visual evidence
+  
+00:00 +0 -2: captures 03-medications.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/03-medications.png": Pixel test failed, 0.09%, 322px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -3: captures 03-medications.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 03-medications.png visual evidence
+  
+00:00 +0 -3: captures 04-medication-details.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/04-medication-details.png": Pixel test failed, 0.08%, 304px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -4: captures 04-medication-details.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 04-medication-details.png visual evidence
+  
+00:00 +0 -4: captures 05-appointments.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/05-appointments.png": Pixel test failed, 0.09%, 355px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -5: captures 05-appointments.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 05-appointments.png visual evidence
+  
+00:01 +0 -5: captures 06-appointment-details.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/06-appointment-details.png": Pixel test failed, 0.08%, 313px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -6: captures 06-appointment-details.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 06-appointment-details.png visual evidence
+  
+00:01 +0 -6: captures 07-messages.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/07-messages.png": Pixel test failed, 0.10%, 373px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -7: captures 07-messages.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 07-messages.png visual evidence
+  
+00:01 +0 -7: captures 08-message-details.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/08-message-details.png": Pixel test failed, 0.04%, 156px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -8: captures 08-message-details.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 08-message-details.png visual evidence
+  
+00:01 +0 -8: captures 09-health-log.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/09-health-log.png": Pixel test failed, 0.07%, 278px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -9: captures 09-health-log.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 09-health-log.png visual evidence
+  
+00:01 +0 -9: captures 10-emergency-assistance.png visual evidence
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/week4/10-emergency-assistance.png": Pixel test failed, 0.12%, 434px diff detected.
+Failure feedback can be found at
+/Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Volumes/TerenceB/SWEN%20661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart:116:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -10: captures 10-emergency-assistance.png visual evidence [E]
+  Test failed. See exception logs above.
+  The test description was: captures 10-emergency-assistance.png visual evidence
+  
+00:01 +0 -10: (tearDownAll)
+00:01 +0 -10: Some tests failed.
+
+Failing tests:
+  /Volumes/TerenceB/SWEN 661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart: captures 01-today.png visual evidence
+  /Volumes/TerenceB/SWEN 661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart: captures 02-accessibility-settings.png visual evidence
+  /Volumes/TerenceB/SWEN 661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart: captures 03-medications.png visual evidence
+  /Volumes/TerenceB/SWEN 661/01_ACTIVE_PROJECTS/Team_9_Flutter_Golden_Fix/mobile-flutter-app/test/visual_evidence_test.dart: captures 04-medication-details.png visual evidence
+  ... and 6 more
