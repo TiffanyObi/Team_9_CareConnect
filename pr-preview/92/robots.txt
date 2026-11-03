@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://tiffanyobi.github.io/Team_9_CareConnect/sitemap.xml
