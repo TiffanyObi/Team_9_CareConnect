@@ -18,4 +18,6 @@ ios/build/
 .env.*
 !.env.example
 
-coverage/
+coverage/*
+!coverage/lcov-report/
+!coverage/lcov-report/**
