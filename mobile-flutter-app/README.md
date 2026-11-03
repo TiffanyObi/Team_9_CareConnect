@@ -30,7 +30,10 @@ flutter pub get
 flutter analyze
 flutter test
 flutter run
+flutter build apk --release
 ```
+
+The release APK is written to `build/app/outputs/flutter-apk/app-release.apk`. The build directory is intentionally ignored; submit the verified APK through the Week 12 SharePoint package rather than committing it to Git.
 
 ### Flutter Web accessibility preview
 
@@ -46,8 +49,8 @@ health logs. Data is not persisted across reloads, and this prototype must only
 use fictional demo information. Do not enter real patient data.
 
 The [Flutter Web accessibility report](../docs/week6/evidence/flutter-web-accessibility/ACCESSIBILITY_REPORT.md)
-records the automated results, browser limitations, and outstanding manual
-checks.
+records the historical automated results and browser limitations. Final manual
+mobile confirmations are documented in the combined mobile VPAT.
 
 Run the device-level integration suite with a running emulator, simulator, or
 physical device:
@@ -61,13 +64,15 @@ in [`../docs/week6/INTEGRATION_E2E_TESTING.md`](../docs/week6/INTEGRATION_E2E_TE
 
 For complete prerequisites and troubleshooting, see the repository's root `README.md` and `docs/DEVELOPER_SETUP.md`. Run the Week 4 gate with `./tool/verify_week4.sh`.
 
-The September 21–22, 2026 Week 6 verification passed with no analyzer issues, 54 of 54 automated tests, and 945/1,116 covered lines (84.68%). The responsive suite exercises the core evidence screens at 100% and 200% text scale on phone and tablet surfaces, and all ten reviewed golden comparisons pass. Generate the local HTML report with `genhtml coverage/lcov.info --output-directory coverage/html --legend`.
+The November 3, 2026 clean-checkout verification passed with no analyzer issues, 54 of 54 automated tests, and 948/1,129 covered lines (83.97%). The responsive suite exercises the core evidence screens at 100% and 200% text scale on phone and tablet surfaces, and all ten reviewed golden comparisons pass. Generate the local HTML report with `genhtml coverage/lcov.info --output-directory coverage/html --legend`.
+
+The final release APK built successfully at 53.4 MB. The Android toolchain reported an SDK XML version warning while still completing the build; align Android Studio and command-line tools if a future SDK turns that warning into an error. iOS builds require macOS, Xcode, a configured signing team for device distribution, and were not included in the final submitted artifact set.
 
 Run the repeatable security check with `./tool/security_audit.sh`. It performs static analysis, queries OSV for resolved hosted Pub packages, scans tracked files for common credential patterns, and checks Android and iOS transport exceptions.
 
 ## Week 4 evidence
 
-- Current screen evidence: [`../docs/week4/SCREENSHOT_INDEX.md`](../docs/week4/SCREENSHOT_INDEX.md)
+- Reviewed screen evidence: [`../docs/week4/SCREENSHOT_INDEX.md`](../docs/week4/SCREENSHOT_INDEX.md)
 - Unit, widget, accessibility, responsive, and visual-regression tests: [`test/`](test/)
 - Generated coverage data: [`coverage/lcov.info`](coverage/lcov.info)
 - Final verification record and device-only limitations: [`../docs/week4/VERIFICATION.md`](../docs/week4/VERIFICATION.md)
@@ -75,6 +80,15 @@ Run the repeatable security check with `./tool/security_audit.sh`. It performs s
 
 ## Week 6 verification
 
-See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md), [final execution ledger](../docs/week6/FINAL_TEST_PLAN_EXECUTION.md), and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for results, fixes, and known limits. The current Android build passed all three Flutter Maestro flows on Pixel 10 / Android 17 API 37. Automated checks do not replace VoiceOver or TalkBack review.
+See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md), [final execution ledger](../docs/week6/FINAL_TEST_PLAN_EXECUTION.md), and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for historical results, fixes, and known limits. The recorded Android run passed all three Flutter Maestro flows on Pixel 10 / Android 17 API 37. Final VoiceOver, TalkBack, keyboard, focus, display, target-size, and platform-behavior confirmations are documented in the combined mobile VPAT.
 
 Keyboard traversal, expanded Flutter guideline coverage, and cross-framework touch-target checks are documented in [Keyboard, guideline, and touch-target verification](../docs/week6/KEYBOARD_GUIDELINES_TOUCH_TARGETS.md).
+
+## Limitations
+
+- Account, accessibility, medication, and health-log data remains on the device and does not synchronize with a clinical service or the other CareConnect implementations.
+- Add appointment opens a draft form, but Save appointment is disabled. View calendar is also unavailable.
+- New message opens a draft, but Send is disabled; no message is delivered to a caregiver.
+- Emergency assistance displays guidance only. It does not call emergency services, alert a caregiver, or share location.
+- The Flutter Web preview uses in-memory repositories and loses data on reload; the native application uses local persistence.
+- The submitted build is Android. No signed iOS IPA is included.
