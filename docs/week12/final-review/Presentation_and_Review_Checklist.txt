@@ -1,0 +1,30 @@
+WEEK 12 REVIEW CHECKLIST — November 3 2026
+Deadline confirmed by professor: November 3 2026 at 11:59 PM EST.
+Review copies preserve the original final files. Do not submit both main Word versions.
+
+PROPOSED 19 MINUTE TEAM PRESENTATION — roles need team agreement
+00:00–02:00 Tiffany: problem, users, features and supported platforms.
+02:00–04:30 Tiffany: working mobile app; show sign-in, care task, settings.
+04:30–07:00 Terence: working Electron app; appointment, clipboard, focus and limitations.
+07:00–09:30 Zack: working web app; saved care task, responsive layout, PWA.
+09:30–11:30 Terence: VoiceOver and keyboard; dialog Tab/Shift+Tab, Escape, focus return, menu.
+11:30–14:00 Tiffany: architecture diagram, four framework choices, storage and code reuse.
+14:00–16:00 Zack: coverage, browser checks, accessibility corrections and current failures.
+16:00–18:00 All three: lessons, contributions, future work and final feedback.
+18:00–19:00 All three: AI tools, purpose, checks, and honest estimate only if agreed.
+Show working apps, not just slides. Retain individual recordings as evidence, not a substitute for all-member participation. No new slides are required if the team uses the Word diagrams and apps; if slides are used, supply PDF and PPTX.
+The original also requests a 30–45 minute checkout/build/test walkthrough. Prepare this separately only after faculty clarification, or retain it as a clearly separate technical supplement. Do not stretch the 19 minute presentation past its 20 minute limit.
+
+FACULTY CLARIFICATION DRAFT — not sent
+Dear Dr. Minagar, we are aligning Team 9's final package with your Week 12 update. The original assignment asks for both a 15–20 minute team video and a 30–45 minute checkout/build/test walkthrough. Should we submit both, or does one replace the other? We will include HTML coverage reports in the repository as originally requested. Please also confirm that the stated Android builds and one macOS desktop installer satisfy the build scope, given the rubric's 6+ platform wording. Thank you.
+
+TEAM REVIEW GATES
+Confirm other AI tool names and any presentation estimate; no measured percentage exists in the reviewed record.
+Supply the actual final instructor feedback so section 4 can map each comment to a fix and evidence.
+Resolve ten Flutter golden-image failures without silently approving new baselines.
+Confirm axe DevTools web evidence and attach screenshots for tested routes and states.
+Confirm working final Flutter APK install and launch against the submitted artifact.
+Review the revised Word document and reconcile all coverage evidence before replacing the original.
+Confirm final team video link, all three speakers, runtime, audio and playback.
+Confirm instructor access to SharePoint using the authorized instructor account.
+After team approval, upload the chosen Word file and required links/artifacts to the course page, click Submit, and save the receipt. Course submission has NOT been performed.

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "dashboard",
+    "requested": "https://tiffanyobi.github.io/Team_9_CareConnect/#/",
+    "final": "https://tiffanyobi.github.io/Team_9_CareConnect/#/",
+    "score": 1,
+    "failed": []
+  },
+  {
+    "name": "appointment-new",
+    "requested": "https://tiffanyobi.github.io/Team_9_CareConnect/#/appointments/new",
+    "final": "https://tiffanyobi.github.io/Team_9_CareConnect/#/appointments/new",
+    "score": 1,
+    "failed": []
+  },
+  {
+    "name": "settings",
+    "requested": "https://tiffanyobi.github.io/Team_9_CareConnect/#/settings",
+    "final": "https://tiffanyobi.github.io/Team_9_CareConnect/#/settings",
+    "score": 1,
+    "failed": []
+  },
+  {
+    "name": "messages",
+    "requested": "https://tiffanyobi.github.io/Team_9_CareConnect/#/messages",
+    "final": "https://tiffanyobi.github.io/Team_9_CareConnect/#/messages",
+    "score": 1,
+    "failed": []
+  }
+]

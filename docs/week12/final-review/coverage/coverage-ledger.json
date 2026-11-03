@@ -1,0 +1,38 @@
+[
+  {
+    "app": "mobile-flutter-app",
+    "covered_lines": 948,
+    "total_lines": 1129,
+    "line_percent": 83.97,
+    "source_commit": "518683b482999653dcf21358c6d892cb2323967b",
+    "test_status": "44 passed; 10 golden comparisons failed",
+    "index": "docs/week12/final-review/coverage/Flutter/index.html"
+  },
+  {
+    "app": "mobile-react-native-app",
+    "covered_lines": 195,
+    "total_lines": 197,
+    "line_percent": 98.98,
+    "source_commit": "518683b482999653dcf21358c6d892cb2323967b",
+    "test_status": "Passed",
+    "index": "docs/week12/final-review/coverage/React_Native/index.html"
+  },
+  {
+    "app": "desktop-electron-app",
+    "covered_lines": 521,
+    "total_lines": 544,
+    "line_percent": 95.77,
+    "source_commit": "518683b482999653dcf21358c6d892cb2323967b",
+    "test_status": "Passed",
+    "index": "docs/week12/final-review/coverage/Electron/index.html"
+  },
+  {
+    "app": "web-react-app",
+    "covered_lines": 2612,
+    "total_lines": 2908,
+    "line_percent": 89.82,
+    "source_commit": "518683b482999653dcf21358c6d892cb2323967b",
+    "test_status": "Passed",
+    "index": "docs/week12/final-review/coverage/React_Web/index.html"
+  }
+]

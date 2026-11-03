@@ -1,0 +1,97 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for mobile-react-native-app/src/screens/MedicationScreens.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">mobile-react-native-app/src/screens</a> MedicationScreens.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>20/20</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>10/10</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>8/8</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>3/3</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'; import { Alert, ScrollView, StyleSheet } from 'react-native'; import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'; import { NativeStackScreenProps } from '@react-navigation/native-stack'; import { AppText, Button, Card, Screen, StatusMessage } from '../components/UI'; import { useApp } from '../context/AppContext'; import { medications } from '../utils/data'; import { formatDateTime, isSameLocalDay } from '../utils/theme'; import { RootParams, TabParams } from '../navigation/RootNavigator';
+export function MedicationsScreen({ navigation }: BottomTabScreenProps&lt;TabParams, 'Medications'&gt;): React.JSX.Element { const { medicationLogs } = useApp(); return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;Medications&lt;/AppText&gt;&lt;AppText&gt;Your current medication schedule&lt;/AppText&gt;{medications.map(m =&gt; &lt;Card key={m.id} label={`${m.name}, ${m.dosage}, ${m.schedule}`}&gt;&lt;AppText style={s.title}&gt;{m.name}&lt;/AppText&gt;&lt;AppText&gt;{m.dosage} • {m.schedule}&lt;/AppText&gt;&lt;Button label="View details" accessibilityLabel={`View details for ${m.name}`} secondary onPress={() =&gt; navigation.getParent()?.navigate('MedicationDetail', { medication: m })} /&gt;&lt;/Card&gt;)}&lt;AppText accessibilityRole="header" style={s.section}&gt;Medication logs&lt;/AppText&gt;{medicationLogs.length === 0 ? &lt;AppText&gt;No doses logged yet.&lt;/AppText&gt; : medicationLogs.map(log =&gt; &lt;Card key={log.id}&gt;&lt;AppText&gt;{log.medicationName} taken&lt;/AppText&gt;&lt;AppText&gt;{formatDateTime(log.takenAt)}&lt;/AppText&gt;&lt;/Card&gt;)}&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+export function MedicationDetailScreen({ route }: NativeStackScreenProps&lt;RootParams, 'MedicationDetail'&gt;): React.JSX.Element { const { medication } = route.params; const { medicationLogs, markMedicationTaken } = useApp(); const [saving, setSaving] = React.useState(false); const latestLog = medicationLogs.find(log =&gt; log.medicationId === medication.id); const loggedToday = latestLog ? isSameLocalDay(latestLog.takenAt, new Date()) : false; const markTaken = async () =&gt; { setSaving(true); try { await markMedicationTaken(medication); } catch { Alert.alert('Medication not logged', 'Please try again.'); } finally { setSaving(false); } }; return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;{medication.name}&lt;/AppText&gt;&lt;AppText&gt;{medication.dosage} • {medication.schedule}&lt;/AppText&gt;&lt;Card tone="warning"&gt;&lt;AppText style={[s.title, s.darkText]}&gt;Today’s dose&lt;/AppText&gt;&lt;StatusMessage style={s.darkText} message={loggedToday ? 'Logged today' : 'Not logged today'} /&gt;&lt;AppText style={s.darkText}&gt;{latestLog ? `Last taken ${formatDateTime(latestLog.takenAt)}` : 'No previous doses logged'}&lt;/AppText&gt;&lt;/Card&gt;&lt;Card&gt;&lt;AppText style={s.title}&gt;Instructions&lt;/AppText&gt;&lt;AppText&gt;{medication.instructions}&lt;/AppText&gt;&lt;/Card&gt;&lt;Button label={saving ? 'Saving…' : 'Mark as taken'} disabled={saving} onPress={() =&gt; { void markTaken(); }} /&gt;&lt;Card tone="info"&gt;&lt;AppText style={[s.title, s.darkText]}&gt;Sharing preview&lt;/AppText&gt;&lt;AppText style={s.darkText}&gt;Caregiver sees: taken/missed status only.&lt;/AppText&gt;&lt;/Card&gt;&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+const s = StyleSheet.create({ content: { padding: 20, paddingBottom: 32, gap: 12, maxWidth: 760, width: '100%', alignSelf: 'center' }, title: { fontWeight: '700', fontSize: 18 }, section: { fontWeight: '800', fontSize: 20, marginTop: 8 }, darkText: { color: '#10233F' } });
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-03T16:22:49.478Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

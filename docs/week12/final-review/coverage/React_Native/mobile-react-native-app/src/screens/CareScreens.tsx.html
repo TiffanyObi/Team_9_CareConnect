@@ -1,0 +1,127 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for mobile-react-native-app/src/screens/CareScreens.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">mobile-react-native-app/src/screens</a> CareScreens.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>35/35</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">90% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>9/10</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>16/16</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>5/5</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useRef, useState } from 'react';
+import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AppText, Button, Card, FormField, Screen } from '../components/UI';
+import { AccessibleModal } from '../components/AccessibleModal';
+import { appointments } from '../utils/data'; import { RootParams, TabParams } from '../navigation/RootNavigator'; import { useApp } from '../context/AppContext'; import { formatTime } from '../utils/theme';
+export function CareScreen({ navigation }: BottomTabScreenProps&lt;TabParams, 'Care'&gt;): React.JSX.Element {
+ const [showAdd, setShowAdd] = useState(false); const addTrigger = useRef&lt;React.ElementRef&lt;typeof Pressable&gt;&gt;(null); return &lt;Screen&gt;&lt;View style={{ flex: 1 }} accessibilityElementsHidden={showAdd} importantForAccessibility={showAdd ? 'no-hide-descendants' : 'auto'}&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;Your appointments&lt;/AppText&gt;&lt;AppText&gt;Upcoming visits and questions to ask&lt;/AppText&gt;{appointments.map(a =&gt; &lt;Card key={a.id}&gt;&lt;AppText style={s.title}&gt;{a.title}&lt;/AppText&gt;&lt;AppText&gt;{a.dateAndTime}{'\n'}{a.location}&lt;/AppText&gt;&lt;Button label="View appointment" accessibilityLabel={`View appointment: ${a.title}`} secondary onPress={() =&gt; navigation.getParent()?.navigate('AppointmentDetail', { appointment: a })} /&gt;&lt;/Card&gt;)}&lt;Button label="Add appointment" buttonRef={addTrigger} accessibilityHint="Opens a draft form; saving is not yet available" onPress={() =&gt; setShowAdd(true)} /&gt;&lt;Button label="Health log" secondary onPress={() =&gt; navigation.getParent()?.navigate('HealthLog')} /&gt;&lt;Button label="Emergency assistance" danger onPress={() =&gt; navigation.getParent()?.navigate('Emergency')} /&gt;&lt;/ScrollView&gt;&lt;/View&gt;&lt;AccessibleModal returnFocusRef={addTrigger} visible={showAdd} title="Add appointment" onClose={() =&gt; setShowAdd(false)}&gt;&lt;FormField label="Appointment name" /&gt;&lt;FormField label="Date and time" /&gt;&lt;Button label="Save appointment" disabled /&gt;&lt;/AccessibleModal&gt;&lt;/Screen&gt;;
+}
+export function AppointmentDetailScreen({ route, navigation }: NativeStackScreenProps&lt;RootParams, 'AppointmentDetail'&gt;): React.JSX.Element { const { appointment } = route.params; return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;{appointment.title}&lt;/AppText&gt;&lt;AppText secondary&gt;{appointment.dateAndTime} • {appointment.location}&lt;/AppText&gt;&lt;Card&gt;&lt;AppText style={s.title}&gt;Before you go&lt;/AppText&gt;&lt;AppText&gt;Bring insurance card • Arrive 10 minutes early&lt;/AppText&gt;&lt;/Card&gt;&lt;Card tone="info"&gt;&lt;AppText style={[s.title, s.darkText]}&gt;Questions for the therapist&lt;/AppText&gt;&lt;AppText style={s.darkText}&gt;{'• Is my knee pain improving?\n• Which home exercises are safest?'}&lt;/AppText&gt;&lt;/Card&gt;&lt;Button label="Check in" onPress={() =&gt; navigation.navigate('HealthLog')} /&gt;&lt;Button label="Message caregiver" secondary onPress={() =&gt; navigation.navigate('Tabs', { screen: 'Messages' } as never)} /&gt;&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+export function HealthLogScreen(): React.JSX.Element { const { logs, addLog } = useApp(); const [symptom, setSymptom] = useState(''); const [notes, setNotes] = useState(''); const [saving, setSaving] = useState(false); const save = async () =&gt; { if (!symptom.trim()) { Alert.alert('Choose a symptom to continue.'); return; } setSaving(true); try { await addLog(symptom, notes.trim()); setSymptom(''); setNotes(''); Alert.alert('Health log saved.'); } catch { Alert.alert('Health log not saved', 'Please try again.'); } finally { setSaving(false); } }; return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;How are you feeling?&lt;/AppText&gt;&lt;AppText&gt;Record symptoms without animation or pressure&lt;/AppText&gt;&lt;FormField label="Symptom" value={symptom} onChangeText={setSymptom} placeholder="Knee pain, fatigue, headache…" /&gt;&lt;FormField label="Private notes (optional)" value={notes} onChangeText={setNotes} multiline placeholder="Add details about how you feel" /&gt;&lt;Button label={saving ? 'Saving…' : 'Save today’s log'} disabled={saving} onPress={() =&gt; { void save(); }} /&gt;&lt;AppText accessibilityRole="header" style={s.section}&gt;Recent health logs&lt;/AppText&gt;{logs.length === 0 ? &lt;AppText&gt;No symptoms logged yet.&lt;/AppText&gt; : logs.map(log =&gt; &lt;Card key={log.id}&gt;&lt;AppText style={s.title}&gt;{log.symptom}&lt;/AppText&gt;&lt;AppText&gt;{log.notes || <span class="branch-1 cbranch-no" title="branch not covered" >'No note added'}</span>{'\n'}{formatTime(log.recordedAt)}&lt;/AppText&gt;&lt;/Card&gt;)}&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+export function EmergencyScreen(): React.JSX.Element { return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;AppText heading&gt;Emergency assistance&lt;/AppText&gt;&lt;AppText secondary&gt;Use only when you or someone else may be in danger.&lt;/AppText&gt;&lt;Card tone="info"&gt;&lt;AppText style={[s.title, s.darkText]}&gt;Your location&lt;/AppText&gt;&lt;AppText style={s.darkText}&gt;This prototype does not share your location.&lt;/AppText&gt;&lt;/Card&gt;&lt;Button label="Call emergency services" accessibilityHint="Demo only. Shows an alert and does not place a call" danger onPress={() =&gt; Alert.alert('Demo only — no call placed', 'This prototype cannot call emergency services. Use your phone to call your local emergency number.')} /&gt;&lt;Button label="Alert caregiver" secondary disabled /&gt;&lt;Card&gt;&lt;AppText style={s.title}&gt;What happens next&lt;/AppText&gt;&lt;AppText&gt;{'This demo shows an alert only. It does not place a call, share your location, or record a response.'}&lt;/AppText&gt;&lt;/Card&gt;&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+const s = StyleSheet.create({ content: { padding: 20, paddingBottom: 32, gap: 12, maxWidth: 760, width: '100%', alignSelf: 'center' }, title: { fontWeight: '700', fontSize: 18 }, section: { fontWeight: '800', fontSize: 20, marginTop: 8 }, darkText: { color: '#10233F' } });
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-03T16:22:49.478Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

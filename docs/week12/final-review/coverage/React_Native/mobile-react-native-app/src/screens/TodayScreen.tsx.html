@@ -1,0 +1,94 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for mobile-react-native-app/src/screens/TodayScreen.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">mobile-react-native-app/src/screens</a> TodayScreen.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>7/7</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>3/3</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>2/2</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'; import { Alert, ScrollView, StyleSheet, View } from 'react-native'; import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'; import { useApp } from '../context/AppContext'; import { AppText, Button, Card, Screen, useColors } from '../components/UI'; import { TabParams } from '../navigation/RootNavigator'; import { formatCurrentDate } from '../utils/theme';
+export function TodayScreen({ navigation }: BottomTabScreenProps&lt;TabParams, 'Today'&gt;): React.JSX.Element { const c = useColors(); const { userName, signOut } = useApp(); const currentDate = formatCurrentDate(new Date()); return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={s.content}&gt;&lt;View style={s.header}&gt;&lt;AppText style={[s.logo, { color: c.teal }]}&gt;CareConnect&lt;/AppText&gt;&lt;Button label="Log out" secondary onPress={() =&gt; Alert.alert('Log out?', 'Are you sure you want to log out?', [{ text: 'Cancel' }, { text: 'Log out', onPress: signOut }])} /&gt;&lt;/View&gt;&lt;AppText heading&gt;Good morning, {userName}&lt;/AppText&gt;&lt;AppText secondary&gt;{currentDate} • 2 tasks remaining&lt;/AppText&gt;&lt;Card tone="warning" label="Medication due at 8 AM. Levetiracetam. Take with water."&gt;&lt;AppText style={[s.cardTitle, s.darkText]}&gt;Medication due at 8:00 AM&lt;/AppText&gt;&lt;AppText style={s.darkText}&gt;Levetiracetam • Take with water&lt;/AppText&gt;&lt;/Card&gt;&lt;Button label="Log medication" onPress={() =&gt; navigation.navigate('Medications')} /&gt;&lt;Card&gt;&lt;AppText style={s.cardTitle}&gt;Physical therapy&lt;/AppText&gt;&lt;AppText&gt;3:30 PM • Northside Clinic&lt;/AppText&gt;&lt;/Card&gt;&lt;Card&gt;&lt;AppText style={s.cardTitle}&gt;Caregiver connection&lt;/AppText&gt;&lt;AppText&gt;Mom can view medication status, not private notes.&lt;/AppText&gt;&lt;/Card&gt;&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+const s = StyleSheet.create({ content: { padding: 20, paddingBottom: 32, gap: 12, maxWidth: 760, width: '100%', alignSelf: 'center' }, header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, logo: { fontSize: 21, fontWeight: '800', color: '#0B7F79' }, cardTitle: { fontWeight: '700', fontSize: 18 }, darkText: { color: '#10233F' } });
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-03T16:22:49.478Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    
