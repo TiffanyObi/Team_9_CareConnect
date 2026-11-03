@@ -1,6 +1,6 @@
 # React Native testing
 
-This guide describes the current CareConnect React Native checks on the Week 6 main-derived source.
+This guide describes the final Week 12 CareConnect React Native checks.
 
 ## Automated checks
 
@@ -13,18 +13,18 @@ npm run lint
 npm run test:coverage -- --runInBand
 ```
 
-Current verified result on September 21, 2026:
+Current verified result on November 2, 2026:
 
 - 9 suites passed.
-- 48 tests passed with no failures or TODO tests.
+- 50 tests passed with no failures or TODO tests.
 - One reviewed snapshot passed.
-- Lines: 99.47%.
-- Statements: 95.21%.
-- Functions: 95.96%.
-- Branches: 89.11%.
-- TypeScript and ESLint passed.
+- Lines: 98.98%.
+- Statements: 94.77%.
+- Functions: 95.27%.
+- Branches: 89.21%.
+- TypeScript, ESLint, and all 21 Expo Doctor checks passed.
 
-Open `coverage/index.html` for the local HTML report. A high line percentage does not replace native screen-reader, focus, reflow, or E2E testing.
+Open `coverage/lcov-report/index.html` for the local HTML report. A high line percentage does not replace native screen-reader, focus, reflow, or E2E testing.
 
 ## Test scope
 
@@ -51,7 +51,7 @@ Five flows are stored in `.maestro/`:
 4. Health-log validation and saving.
 5. Message detail and draft cancellation.
 
-Use the repository [Week 6 integration and E2E guide](../docs/week6/INTEGRATION_E2E_TESTING.md) for native build, device, and JUnit commands. Historical five-flow iOS results and three-flow Android/iOS results exist, but a new React Native Android build on this host stopped during Gradle CMake configuration for Expo Modules Core and React Native Screens. Do not label an older installed application as a final-branch native run.
+Use the repository [Week 6 integration and E2E guide](../docs/week6/INTEGRATION_E2E_TESTING.md) for Maestro commands and historical results. For Week 12, a fresh release APK built successfully after aligning the Expo 57 dependency set. It was installed on an Android emulator and used for native core-flow and accessibility-tree checks. These final native checks supplement rather than replace the earlier Maestro evidence.
 
 ## Manual accessibility checks
 
@@ -63,7 +63,7 @@ Automated tests verify application requests and rendered properties, not the spe
 - Native 200% text, rotation, reflow, and target-size checks.
 - Native switches, system alerts, and stack Back controls.
 
-Record the build commit, device, OS, reader settings, tester, date, expected and actual results, exact speech, and evidence filename.
+Record the build commit, device, OS, reader settings, tester, date, expected and actual results, exact speech, and evidence filename. The [Week 12 manual checklist](../docs/week12/react-native/MANUAL_ACCESSIBILITY_CHECKLIST.md) separates completed emulator checks from the remaining human assistive-technology checks.
 
 ## Approved-plan percentage
 

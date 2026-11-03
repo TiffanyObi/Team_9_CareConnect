@@ -1,0 +1,100 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for mobile-react-native-app/src/screens/SignInScreen.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">mobile-react-native-app/src/screens</a> SignInScreen.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">94.44% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>17/18</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>34/34</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">80% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>4/5</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>2/2</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { useApp } from '../context/AppContext'; import { AppText, Button, Card, FormField, Screen, useColors } from '../components/UI'; import { colors } from '../utils/theme';
+export function SignInScreen(): React.JSX.Element { const c = useColors(); const { signIn, signUp, isBusy } = useApp(); const [create, setCreate] = useState(false); const [name, setName] = useState(''); const [email, setEmail] = useState('omartinez@careconnect.com'); const [password, setPassword] = useState('password'); const submit = async () =&gt; { if (!/^\S+@\S+\.\S+$/.test(email) || password.length &lt; 1 || (create &amp;&amp; !name.trim())) { Alert.alert('Check your details', 'Enter a valid email and password.'); return; } const error = create ? await signUp(name, email, password) : await signIn(email, password); if (error) Alert.alert(create ? 'Account not created' : 'Sign in failed', error); }; return &lt;Screen&gt;&lt;ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled"&gt;&lt;View style={styles.brand}&gt;&lt;AppText style={{ color: c.teal, fontSize: 22, fontWeight: '800' }}&gt;CareConnect&lt;/AppText&gt;&lt;Button label="Help" secondary onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >Alert.alert('Help', 'Help is available from your care team.')}</span> /&gt;&lt;/View&gt;&lt;AppText heading&gt;{create ? 'Create your account' : 'Sign in'}&lt;/AppText&gt;&lt;AppText secondary style={styles.lead}&gt;{create ? 'Set up secure access, then personalize Safeview.' : 'Use your existing CareConnect account.'}&lt;/AppText&gt;{create &amp;&amp; &lt;FormField label="Full name" value={name} onChangeText={setName} autoComplete="name" /&gt;}&lt;FormField label="Email" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoComplete="email" /&gt;&lt;FormField label={create ? 'Create password' : 'Password'} value={password} onChangeText={setPassword} secureTextEntry autoComplete={create ? 'new-password' : 'current-password'} /&gt;&lt;Card tone={create ? 'info' : 'success'} label="Privacy and saved preferences"&gt;&lt;AppText style={{ fontWeight: '700', color: colors.text }}&gt;{create ? 'Privacy' : 'After sign in'}&lt;/AppText&gt;&lt;AppText style={{ color: colors.text }}&gt;{create ? 'Your accessibility preferences and health information are private.' : 'Your saved text size, motion, alert, privacy, and sharing settings load automatically.'}&lt;/AppText&gt;&lt;/Card&gt;&lt;Button label={isBusy ? 'Please wait…' : create ? 'Create account and continue' : 'Sign in'} disabled={isBusy} onPress={() =&gt; { void submit(); }} /&gt;&lt;Button label={create ? 'I already have an account' : 'Create a new account'} secondary disabled={isBusy} onPress={() =&gt; setCreate(!create)} /&gt;&lt;/ScrollView&gt;&lt;/Screen&gt;; }
+const styles = StyleSheet.create({ content: { flexGrow: 1, maxWidth: 560, width: '100%', alignSelf: 'center', padding: 20, gap: 12 }, brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, lead: { marginBottom: 8 } });
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-03T00:45:54.042Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { render, screen } from '@testing-library/react-native';
-import { Button, minimumTouchTarget, preferredTouchTarget } from '../components/UI';
+import { fireEvent, render, screen } from '@testing-library/react-native';
+import { Button, FormField, minimumTouchTarget, preferredTouchTarget } from '../components/UI';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { SignInScreen } from '../screens/SignInScreen';
 import { safeSettings, useApp } from '../context/AppContext';
@@ -47,6 +47,25 @@ test('shared buttons guarantee at least a 44 point target', () => {
 test('disabled shared buttons leave keyboard traversal', () => {
   render(<Button label="Unavailable action" disabled />);
   expect(screen.getByLabelText('Unavailable action').props.focusable).toBe(false);
+});
+
+test('shared buttons expose a persistent visible keyboard focus border', () => {
+  render(<Button label="Keyboard action" onPress={jest.fn()} />);
+  const control = screen.getByLabelText('Keyboard action');
+  expect(flattenedStyle(control).borderWidth).toBe(1);
+  fireEvent(control, 'focus');
+  expect(flattenedStyle(screen.getByLabelText('Keyboard action')).borderWidth).toBe(3);
+  fireEvent(screen.getByLabelText('Keyboard action'), 'blur');
+  expect(flattenedStyle(screen.getByLabelText('Keyboard action')).borderWidth).toBe(1);
+});
+
+test('shared form fields keep a visible label and focus border', () => {
+  render(<FormField label="Example field" value="" onChangeText={jest.fn()} />);
+  const field = screen.getByLabelText('Example field');
+  expect(screen.getByText('Example field')).toBeTruthy();
+  expect(flattenedStyle(field).borderWidth).toBe(1);
+  fireEvent(field, 'focus');
+  expect(flattenedStyle(screen.getByLabelText('Example field')).borderWidth).toBe(3);
 });
 
 test('settings switches guarantee at least a 44 by 44 point target', () => {

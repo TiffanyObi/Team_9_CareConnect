@@ -6,13 +6,15 @@ The local demonstration account is `omartinez@careconnect.com` with password `pa
 
 ## Run and validate
 
-Use Node 22 LTS or a working npm installation, then run:
+Use Node 22 LTS, npm, Android Studio, and JDK 17, then run:
 
 ```sh
-npm install
+npm ci
 npm run lint
 npm run typecheck
 npm run security
+npm run test:coverage -- --runInBand
+npx expo-doctor
 npx expo start
 ```
 From the Expo terminal, press i for the iOS Simulator or a for an Android emulator. You can also run npm run ios or npm run android directly.
@@ -36,13 +38,19 @@ cd android
 JAVA_HOME=$(/usr/libexec/java_home -v 17) NODE_ENV=production ./gradlew :app:assembleRelease
 ```
 
-The APK is written to `android/app/build/outputs/apk/release/app-release.apk`. The same artifact can optionally be produced with EAS Build by signing in to Expo and running `npx eas-cli build --platform android --profile submission`; the `submission` profile explicitly requests an APK rather than the default Android App Bundle. The app configuration supplies Android and iOS bundle identifiers.
+The APK is written to `android/app/build/outputs/apk/release/app-release.apk`. The verified Week 12 artifact is named `CareConnect-SafeView-ReactNative-1.0.0.apk`; it was generated from a temporary native prebuild so generated Android files were not added to the repository. Its package ID is `edu.umgc.team9.careconnect`. The same artifact can optionally be produced with EAS Build by signing in to Expo and running `npx eas-cli build --platform android --profile submission`; the `submission` profile explicitly requests an APK rather than the default Android App Bundle. The app configuration supplies Android and iOS bundle identifiers.
 
 ## Security notes
 
-This prototype uses on-device persistence rather than a remote clinical backend. Passwords are salted and hashed locally, and no device location, contacts, or notification permissions are requested. The current npm audit reports moderate transitive advisories in React Navigation and Expo tooling; npm offers no non-breaking complete fix for the current Expo version. Before production use, move authentication and protected health information to an approved server over TLS, store session tokens with `expo-secure-store`, validate all backend inputs, and configure platform privacy disclosures.
+This prototype uses on-device persistence rather than a remote clinical backend. Passwords are salted and hashed locally, and no device location, contacts, or notification permissions are requested. A non-breaking `npm audit fix` removed the critical advisory found during finalization. The remaining audit findings are transitive Expo, React Native, and Jest tooling advisories; resolving them currently requires breaking dependency changes, so they are documented rather than force-fixed. Before production use, move authentication and protected health information to an approved server over TLS, store session tokens with `expo-secure-store`, validate all backend inputs, and configure platform privacy disclosures.
 
-## Week 6 verification
+## Week 12 final verification
+
+On November 2, 2026, all 50 Jest and React Native Testing Library tests passed in nine suites, with one reviewed snapshot. Coverage reached 94.77% statements, 89.21% branches, 95.27% functions, and 98.98% lines. ESLint, TypeScript, and all 21 Expo Doctor checks passed. The tracked HTML report is available at [`coverage/lcov-report/index.html`](coverage/lcov-report/index.html).
+
+A release APK was installed on an Android emulator and used to verify seeded-user sign-in, first-time account onboarding, saved accessibility preferences, medication logging with timestamp persistence, logout, and meaningful native accessibility labels. See the [Week 12 React Native verification report](../docs/week12/react-native/FINAL_VERIFICATION.md), [manual accessibility checklist](../docs/week12/react-native/MANUAL_ACCESSIBILITY_CHECKLIST.md), and [demo guide](../docs/week12/react-native/DEMO_GUIDE.md). Automated checks and the Android accessibility tree do not replace final TalkBack or VoiceOver testing.
+
+## Historical Week 6 verification
 
 On September 21, 2026, TypeScript and ESLint passed, and all 48 Jest tests passed in nine suites. Coverage was 99.47% lines, 95.21% statements, 95.96% functions, and 89.11% branches. See the [test setup guide](../docs/week6/INTEGRATION_E2E_TESTING.md), [final execution ledger](../docs/week6/FINAL_TEST_PLAN_EXECUTION.md), and [Terence testing handoff](../docs/week6/TERENCE_TESTING_HANDOFF.md) for commands, historical native evidence, and known limits. Automated checks do not replace VoiceOver or TalkBack review.
 
