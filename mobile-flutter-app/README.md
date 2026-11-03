@@ -64,7 +64,7 @@ in [`../docs/week6/INTEGRATION_E2E_TESTING.md`](../docs/week6/INTEGRATION_E2E_TE
 
 For complete prerequisites and troubleshooting, see the repository's root `README.md` and `docs/DEVELOPER_SETUP.md`. Run the Week 4 gate with `./tool/verify_week4.sh`.
 
-The November 3, 2026 clean-checkout verification passed with no analyzer issues, 54 of 54 automated tests, and 948/1,129 covered lines (83.97%). The responsive suite exercises the core evidence screens at 100% and 200% text scale on phone and tablet surfaces, and all ten reviewed golden comparisons pass. Generate the local HTML report with `genhtml coverage/lcov.info --output-directory coverage/html --legend`.
+The November 3 Flutter golden follow-up passes static analysis and all 54 automated tests on Flutter 3.47.7 / macOS arm64, with 945/1,129 covered lines (83.70%). Ten old screenshot references first failed, were visually reviewed, and were refreshed for the recorded renderer profile. A fresh normal full run then passed all ten exact comparisons; no tolerance or skipped tests were added. See the [review, test profile, before/after images, logs and HTML coverage](../docs/week12/flutter-golden-review/README.md). The responsive suite covers 100% and 200% text scale on phone and tablet surfaces. Generate a local report with `genhtml coverage/lcov.info --output-directory coverage/html --legend`.
 
 The final release APK built successfully at 53.4 MB. The Android toolchain reported an SDK XML version warning while still completing the build; align Android Studio and command-line tools if a future SDK turns that warning into an error. iOS builds require macOS, Xcode, a configured signing team for device distribution, and were not included in the final submitted artifact set.
 
